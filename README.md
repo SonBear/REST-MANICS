@@ -1,22 +1,26 @@
 # REST-MANICS
-Proyecto de basado en la búsqueda de mangas y comics dentro de un repositorio en la nube.
+Proyecto basado en la búsqueda de mangas y comics dentro de un repositorio en la nube.
 
 ## Nombre del software
-MANICS-REST-API
+MANICS-REST-API V1.0.0
+
 ## Autores
-Emmanuel Isai Chable Colli
-Ricardo Nicolas Canul Ibarra
-Iowa Olivera
++ Emmanuel Isai Chable Colli
++ Ricardo Nicolas Canul Ibarra
++ Iowa Olivera
 ## Titulo del documento 
 “Documento de Arquitectura de Software”
 
 # Introducción
 ## Propósito
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
+Ante la problematica de que muchas personas no pueden conseguir sea un comic o manga de manera física por distintos motivos(poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc)
+esto provoca que simplemente no puedan leer alguna de las muchas historias que los comics/mangas nos pueden ofrecer. 
+
 ## Alcance 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
+Lo que se propone es que los usuarios desde una conexion a internet puedan acceder a un amplio catalogo de comics y mangas, y que sean capaces de porder localizar alguno de sus productos favoritos, mediante la busqueda de texto o imagen. 
+
 ## Documentos de referencia
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
++ Por el momento no se
 
 # Arquitectura.
 ## Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)
@@ -89,4 +93,3 @@ Debido a las necesidades del proyecto, el proyecto de centrara en cumplir con al
 3. La **fiabilidad** siguiente el punto anterior el servicio rest siempre estará *disponible* para todo equipo o sistema que tenga conexion a internet.
 Al tratarse de un servicio basado en el protocolo http, *el manejo de errores* estará visible para el usuario mediante los codigos correctos http para cada problema que se presente. Este servicio utilizará transacciones las cuales significan que ante un error del sistema este tendrá la *capacidad de recuperar* la informacion afectada durante dicho problema.
 4. **Usabilidad** Este servicio estará planeado para realizar las diferentes funcionalidades de una manera sencilla,  esto debido a la utilización del formato de texto de intercambio de informacion más común dentro de la web los JSON.
-5. das
