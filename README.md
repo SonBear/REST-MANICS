@@ -81,13 +81,14 @@ Se encarga de realizar una busqueda mediante texto
 }
 ```
 ### Usuarios
-#### GET https://manicsrestapi/v1/usuarios
+#### GET Obtener usuarios
+    https://manicsrestapi/v1/usuarios
 ##### Descripción
 Devuelve todos los usuarios registrados. 
 ##### Respuesta
 ```JSON
 {
-    "respose": [
+    "response": [
         {
             id: int,
             username: string,
@@ -97,24 +98,27 @@ Devuelve todos los usuarios registrados.
             id: int,
             username: string,
             email: string
-        }
+        }...
     ]
 }
 ```
-#### GET https://manicsrestapi/v1/usuarios/{id}
+#### GET Obtener usuario
+    https://manicsrestapi/v1/usuarios/{id}
+
 ##### Descripción
 Devuelve el usuario con el id ingresado. 
 ##### Respuesta
 ```JSON
 {
-    "respose": {
+    "response": {
         "id": int,
         "username": string,
         "email": string
     }
 }
 ```
-#### POST https://manicsrestapi/v1/usuarios
+#### POST Crear usuario
+    https://manicsrestapi/v1/usuarios
 ##### Descripción
 Crea un nuevo usuario
 #### Campos requeridos
@@ -128,14 +132,15 @@ Crea un nuevo usuario
 ##### Respuesta
 ```JSON
 {
-    "respose": {
+    "response": {
         "id": int,
         "username": string,
         "email": string
     }
 }
 ```
-#### PUT https://manicsrestapi/v1/usuarios/{id}
+#### PUT Editar usuario
+    https://manicsrestapi/v1/usuarios/{id}
 ##### Descripción
 Actualiza la información de un usuario existente
 #### Campos requeridos
@@ -150,18 +155,124 @@ Actualiza la información de un usuario existente
 ##### Respuesta
 ```JSON
 {
-    "respose": {
+    "response": {
         "id": int,
         "username": string,
         "email": string
     }
 }
 ```
-#### DELETE https://manicsrestapi/v1/usuarios/{id}
+#### DELETE Eliminar usuario
+    https://manicsrestapi/v1/usuarios/{id}
 ##### Descripción
 Elimina el usuario del id dado. 
 ##### Respuesta
 Esta petición no devuelve una respuesta. 
+
+
+### Comics
+#### GET Obtener comics
+    https://manicsrestapi/v1/comics
+##### Descripción
+Devuelve todos los comics registrados. 
+##### Respuesta
+```JSON
+{
+    "response": [
+        {
+            "id": Integer,
+            "nombre": String,
+            "autor": String,
+            "fecha_publicacion": String,
+            "paginas": String
+            
+        },
+        {
+            "id": Integer,
+            "nombre": String,
+            "autor": String,
+            "fecha_publicacion": String,
+            "paginas": String
+        }...
+    ]
+}
+```
+#### GET Obtener comic
+    https://manicsrestapi/v1/comics/{id}
+
+##### Descripción
+Devuelve el comic con el id ingresado. 
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### POST Crear comic
+    https://manicsrestapi/v1/comics
+##### Descripción
+Crea un nuevo comic
+#### Campos requeridos
+```JSON
+{
+    "nombre": String,
+    "autor": String,
+    "fecha_publicacion": String,
+    "paginas": String
+}
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### PUT Editar comic
+    https://manicsrestapi/v1/comics/{id}
+##### Descripción
+Actualiza la información de un comic existente
+#### Campos requeridos
+```JSON
+{
+    "id": Integer,
+    "nombre": String,
+    "autor": String,
+    "fecha_publicacion": String,
+    "paginas": String
+}
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### DELETE Eliminar comic
+    https://manicsrestapi/v1/comics/{id}
+##### Descripción
+Elimina el comic del id dado. 
+##### Respuesta
+Esta petición no devuelve una respuesta. 
+
+
 # Criterios de calidad
 Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de calidad para el producto los cuales son los siguientes:
 + Adecuación funcional
