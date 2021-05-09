@@ -273,6 +273,193 @@ Elimina el comic del id dado.
 Esta petición no devuelve una respuesta. 
 
 
+
+### Mangas
+#### GET Obtener mangas
+    https://manicsrestapi/v1/mangas
+##### Descripción
+Devuelve todos los mangas registrados. 
+##### Respuesta
+```JSON
+{
+    "response": [
+        {
+            "id": Integer,
+            "nombre": String,
+            "autor": String,
+            "fecha_publicacion": String,
+            "paginas": String
+            
+        },
+        {
+            "id": Integer,
+            "nombre": String,
+            "autor": String,
+            "fecha_publicacion": String,
+            "paginas": String
+        }...
+    ]
+}
+```
+#### GET Obtener manga
+    https://manicsrestapi/v1/mangas/{id}
+
+##### Descripción
+Devuelve el manga con el id ingresado. 
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### POST Crear manga
+    https://manicsrestapi/v1/mangas
+##### Descripción
+Crea un nuevo manga
+#### Campos requeridos
+```JSON
+{
+    "nombre": String,
+    "autor": String,
+    "fecha_publicacion": String,
+    "paginas": String
+}
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### PUT Editar manga
+    https://manicsrestapi/v1/mangas/{id}
+##### Descripción
+Actualiza la información de un manga existente
+#### Campos requeridos
+```JSON
+{
+    "id": Integer,
+    "nombre": String,
+    "autor": String,
+    "fecha_publicacion": String,
+    "paginas": String
+}
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    }
+}
+```
+#### DELETE Eliminar manga
+    https://manicsrestapi/v1/mangas/{id}
+##### Descripción
+Elimina el manga del id dado. 
+##### Respuesta
+Esta petición no devuelve una respuesta. 
+
+
+### Comentarios
+#### GET Obtener comentarios
+    https://manicsrestapi/v1/comentarios
+##### Descripción
+Devuelve todos los comentarios. 
+##### Respuesta
+```JSON
+{
+    "response": [
+        {
+            "id": Integer,
+            "id_comic_manga": Integer,
+            "id_usuario": Integer,
+            "contenido": String,
+            "fecha_creacion": String
+            
+        },
+        {
+            "id": Integer,
+            "id_comic_manga": Integer,
+            "id_usuario": Integer,
+            "contenido": String,
+            "fecha_creacion": String
+            
+        }...
+    ]
+}
+```
+
+#### POST Crear comentario
+    https://manicsrestapi/v1/comentarios
+##### Descripción
+Crea un nuevo comentario
+#### Campos requeridos
+```JSON
+{
+    "id_comic_manga": Integer,
+    "id_usuario": Integer,
+    "contenido": String       
+},
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "id_comic_manga": Integer,
+        "id_usuario": Integer,
+        "contenido": String,
+        "fecha_creacion": String    
+    }
+}
+```
+#### PUT Editar comentario
+    https://manicsrestapi/v1/comentarios/{id}
+##### Descripción
+Actualiza la información de un manga existente
+#### Campos requeridos
+```JSON
+{
+    "id": Integer,
+    "contenido": String       
+},
+```
+##### Respuesta
+```JSON
+{
+    "response": {
+        "id": Integer,
+        "id_comic_manga": Integer,
+        "id_usuario": Integer,
+        "contenido": String,
+        "fecha_creacion": String    
+    }
+}
+```
+#### DELETE Eliminar comentario
+    https://manicsrestapi/v1/comentarios/{id}
+##### Descripción
+Elimina el comentario del id dado. 
+##### Respuesta
+Esta petición no devuelve una respuesta. 
+
 # Criterios de calidad
 Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de calidad para el producto los cuales son los siguientes:
 + Adecuación funcional
