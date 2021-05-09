@@ -7,7 +7,7 @@ MANICS-REST-API V1.0.0
 ## Autores
 + Emmanuel Isai Chable Colli
 + Ricardo Nicolas Canul Ibarra
-+ Iowa Olivera
++ Iowa Alejandro Olivera Pérez
 ## Titulo del documento 
 “Documento de Arquitectura de Software”
 
@@ -20,7 +20,8 @@ esto provoca que simplemente no puedan leer alguna de las muchas historias que l
 Lo que se propone es que los usuarios desde una conexion a internet puedan acceder a un amplio catalogo de comics y mangas, y que sean capaces de porder localizar alguno de sus productos favoritos, mediante la busqueda de texto o imagen. 
 
 ## Documentos de referencia
-+ Por el momento no se
+1. http://www.idglat.com/afiliacion/whitepapers/453167_API%20Strategy%20and%20Architecture%20A%20Coordinated%20Approach-LAS.pdf?tk=/:
+2. https://juanda.gitbooks.io/webapps/content/api/arquitectura-api-rest.html
 
 # Arquitectura.
 ## Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)
@@ -43,7 +44,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 ## Descripción de las entidades
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
 ## Diagrama entidad relación
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
+![image](https://user-images.githubusercontent.com/48814909/117584706-11049380-b0d4-11eb-828c-7d22a7327350.png)
+
 
 # Documentación de la API
 ## Documentación Individual de cada Endpoint por cada entidad
