@@ -24,7 +24,13 @@ Lo que se propone es que los usuarios desde una conexion a internet puedan acced
 
 # Arquitectura.
 ## Descripción de la arquitectura utilizada (Capas) (Describir responsabilidad de las capas)
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
+Para realizar este proyecto se decidió utilizar una arquitectura por capas de tal forma que sea posible configurar cada capa de manera independiente sin que el funcionamiento de una tenga consecuencias en otra facilitando así la conexión entre ellas. Las capas en la que se dividirá el proyecto son las siguientes: 
+
+1. Capa de seguridad: Debido a que nuestra API contará con información sensible de los usuarios registrados será necesarió contar con una capa de seguridad sólida en la cual se detendrán las posibles peticiones malintencionadas o sin autorización. 
+2. Capa de almacenamiento en caché: Con el fin de mantener una sensación de fluidez en nuestra plataforma será necesario contar con una capa de almacenamiento en caché que sea capaz de almacenar y devolver los resultados de algunas de las peticiones más comunes con el fin de reducir la carga a la base de datos y obtener mejores tiempos de respuesta. 
+3. Capa de representación: La capa de representación será la encargada de manejar las peticiones entrantes de tal forma que sean reconocibles por la api. En esta capa se manejará la sintaxis y la semantica. 
+4. Capa de negocio: Esta capa será la encargada de procesar todas las peticiones entrantes y es la única que se podrá comunicar con la capa de datos de tal forma que sea capaz de devolver a los clientes las respuestas correspondientes a sus solicitudes. 
+6. Capa de datos: Esta capa será la encargada de obtener y almacenar datos en nuestra base de datos de acuerdo a las solicitudes que le lleguen desde la capa de negocio. 
 
 ## Diagrama de arquitectura con descripción (Arquitectura del proyecto completo)
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
