@@ -90,14 +90,14 @@ Devuelve todos los usuarios registrados.
 {
     "response": [
         {
-            id: int,
-            username: string,
-            email: string
+            "id": int,
+            "username": string,
+            "email": string
         },
                 {
-            id: int,
-            username: string,
-            email: string
+            "id": int,
+            "username": string,
+            "email": string
         }...
     ]
 }
