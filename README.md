@@ -50,7 +50,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 # Documentación de la API
 ## Documentación Individual de cada Endpoint por cada entidad
 ### Buscada de informacion
-    https://manicsrestapi/search
+    https://manicsrestapi/v1/search
 ### Descripción
 Se encarga de realizar una busqueda mediante texto
 ### Campos requeridos
@@ -74,12 +74,94 @@ Se encarga de realizar una busqueda mediante texto
 }
 ```
 ### Ejemplos del Request
-    https://manicsrestapi/search/mangas?q=Berserk
+    https://manicsrestapi/v1/search/mangas?q=Berserk
 ```JSON
 {
     "status": "on-air"
 }
 ```
+### Usuarios
+#### GET https://manicsrestapi/v1/usuarios
+##### Descripción
+Devuelve todos los usuarios registrados. 
+##### Respuesta
+```JSON
+{
+    "respose": [
+        {
+            id: int,
+            username: string,
+            email: string
+        },
+                {
+            id: int,
+            username: string,
+            email: string
+        }
+    ]
+}
+```
+#### GET https://manicsrestapi/v1/usuarios/{id}
+##### Descripción
+Devuelve el usuario con el id ingresado. 
+##### Respuesta
+```JSON
+{
+    "respose": {
+        "id": int,
+        "username": string,
+        "email": string
+    }
+}
+```
+#### POST https://manicsrestapi/v1/usuarios
+##### Descripción
+Crea un nuevo usuario
+#### Campos requeridos
+```JSON
+{
+    "username": string,
+    "password": string,
+    "email": string
+}
+```
+##### Respuesta
+```JSON
+{
+    "respose": {
+        "id": int,
+        "username": string,
+        "email": string
+    }
+}
+```
+#### PUT https://manicsrestapi/v1/usuarios/{id}
+##### Descripción
+Actualiza la información de un usuario existente
+#### Campos requeridos
+```JSON
+{
+    "id": int,
+    "username": string,
+    "password": string,
+    "email": string
+}
+```
+##### Respuesta
+```JSON
+{
+    "respose": {
+        "id": int,
+        "username": string,
+        "email": string
+    }
+}
+```
+#### DELETE https://manicsrestapi/v1/usuarios/{id}
+##### Descripción
+Elimina el usuario del id dado. 
+##### Respuesta
+Esta petición no devuelve una respuesta. 
 # Criterios de calidad
 Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de calidad para el producto los cuales son los siguientes:
 + Adecuación funcional
