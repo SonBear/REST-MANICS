@@ -24,7 +24,7 @@ Lo que se propone es que los usuarios desde una conexión a internet puedan acce
 
 ## Documentos de referencia
 
-1. http://www.idglat.com/afiliacion/whitepapers/453167_API%20Strategy%20and%20Architecture%20A%20Coordinated%20Approach-LAS.pdf?tk=/:
+1. http://www.idglat.com/afiliacion/whitepapers/453167_API%20Strategy%20and%20Architecture%20A%20Coordinated%20Approach-LAS.pdf?tk=/
 
 2. https://juanda.gitbooks.io/webapps/content/api/arquitectura-api-rest.html
 
@@ -110,41 +110,27 @@ Se encarga de realizar una búsqueda mediante texto.
 
 ### Campos requeridos
 
-```JSON
-{
-    "response": 1232
-}
-```
-
-### Validaciones
-
 ```JAVA
-    @NotNull;
-```
-
-### Tipo de dato de cada campo
-
-```JAVA
-    int val;
+@NotNull
+@NotEmpty
+String query;
 ```
 
 ### Respuesta (Response)
 
 ```JSON
 {
-    "response": 1232
+    "resources": [
+        "http://www.example.com/",
+        "http://www.example.com/",
+        "http://www.example.com/"
+    ]
 }
 ```
 
 ### Ejemplos del Request
 
-    https://manicsrestapi/v1/search/mangas?q=Berserk
-
-```JSON
-{
-    "status": "on-air"
-}
-```
+    https://manicsrestapi/v1/search/mangas?q=boku+no+pico
 
 ### Usuarios
 
@@ -163,15 +149,15 @@ Devuelve todos los usuarios registrados.
 ```JSON
 [
     {
-        "id": Integer,
-        "username": String,
-        "email": String
+        "id": 45,
+        "username": "HikingCarrot7",
+        "email": "example@hotmail.com"
     },
     {
-        "id": Integer,
-        "username": String,
-        "email": String
-    }, ...
+        "id": 89,
+        "username": "Chito",
+        "email": "example@gmail.com"
+    }
 ]
 ```
 
@@ -187,9 +173,9 @@ Devuelve el usuario con el ID ingresado.
 
 ```JSON
 {
-    "id": Integer,
-    "username": String,
-    "email": String
+    "id": 45,
+    "username": "HikingCarrot7",
+    "email": "example@hotmail.com"
 }
 ```
 
@@ -203,21 +189,30 @@ Crea un nuevo usuario.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "username": String,
-    "password": String,
-    "email": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+@Size(min = 5, max = 10)
+String username;
+
+@NotNull
+@NotEmpty
+@Size(min = 6, max = 16)
+String password;
+
+@NotNull
+@NotEmpty
+@Email
+String email;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "username": String,
-    "email": String
+    "id": 45,
+    "username": "HikingCarrot7",
+    "email": "example@hotmail.com"
 }
 ```
 
@@ -231,22 +226,30 @@ Actualiza la información de un usuario existente.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "id": Integer,
-    "username": String,
-    "password": String,
-    "email": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+@Size(min = 5, max = 10)
+String username;
+
+@NotNull
+@NotEmpty
+@Size(min = 6, max = 16)
+String password;
+
+@NotNull
+@NotEmpty
+@Email
+String email;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "username": String,
-    "email": String
+    "id": 45,
+    "username": "newUsername",
+    "email": "newEmail@hotmail.com"
 }
 ```
 
@@ -256,7 +259,7 @@ Actualiza la información de un usuario existente.
 
 ##### Descripción
 
-Elimina el usuario del id dado.
+Elimina el usuario del ID dado.
 
 ##### Respuesta
 
@@ -279,19 +282,19 @@ Devuelve todos los comics registrados.
 ```JSON
 [
     {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
+        "id": 890,
+        "nombre": "The new 52",
+        "autor": "DC Comics",
+        "fecha_publicacion": "2011",
+        "paginas": 103
     },
     {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
-    }, ...
+        "id": 1067,
+        "nombre": "StrinSkrull Kill Krewg",
+        "autor": "StrinSteve Yeowell, Mark Millar, Grant Morrisong",
+        "fecha_publicacion": "1995",
+        "paginas": 136
+    }
 ]
 ```
 
@@ -301,17 +304,17 @@ Devuelve todos los comics registrados.
 
 ##### Descripción
 
-Devuelve el comic con el id ingresado.
+Devuelve el comic con el ID ingresado.
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
+    "id": 890,
+    "nombre": "The new 52",
+    "autor": "DC Comics",
+    "fecha_publicacion": "2011",
+    "paginas": 103
 }
 ```
 
@@ -325,26 +328,33 @@ Crea un nuevo comic.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+String nombre;
+
+@NotNull
+@NotEmpty
+String autor;
+
+@NotNull
+@NotEmpty
+String fechaPublicacion;
+
+@NotNull
+@Min(value = 0)
+Integer paginas;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "response": {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
-    }
+    "id": 890,
+    "nombre": "The new 52",
+    "autor": "DC Comics",
+    "fecha_publicacion": "2011",
+    "paginas": 103
 }
 ```
 
@@ -358,25 +368,33 @@ Actualiza la información de un comic existente.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+String nombre;
+
+@NotNull
+@NotEmpty
+String autor;
+
+@NotNull
+@NotEmpty
+String fechaPublicacion;
+
+@NotNull
+@Min(value = 0)
+Integer paginas;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
+    "id": 890,
+    "nombre": "newComicName",
+    "autor": "newComicAuthor",
+    "fecha_publicacion": "newDate",
+    "paginas": "newPages"
 }
 ```
 
@@ -409,20 +427,19 @@ Devuelve todos los mangas registrados.
 ```JSON
 [
     {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
-
+        "id": 5007,
+        "nombre": "Dragon ball",
+        "autor": "Akira Toriyama",
+        "fecha_publicacion": "1986",
+        "paginas": 365
     },
     {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
-    }, ...
+        "id": 56008,
+        "nombre": "Naruto",
+        "autor": "Masashi Kishimoto",
+        "fecha_publicacion": "1999",
+        "paginas": 2367
+    }
 ]
 ```
 
@@ -438,11 +455,11 @@ Devuelve el manga con el ID ingresado.
 
 ```JSON
 {
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
+    "id": 5007,
+    "nombre": "Dragon ball",
+    "autor": "Akira Toriyama",
+    "fecha_publicacion": "1986",
+    "paginas": 365
 }
 ```
 
@@ -456,24 +473,33 @@ Crea un nuevo manga.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+String nombre;
+
+@NotNull
+@NotEmpty
+String autor;
+
+@NotNull
+@NotEmpty
+String fechaPublicacion;
+
+@NotNull
+@Min(value = 0)
+Integer paginas;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
+    "id": 5007,
+    "nombre": "Dragon ball",
+    "autor": "Akira Toriyama",
+    "fecha_publicacion": "1986",
+    "paginas": 365
 }
 ```
 
@@ -487,25 +513,33 @@ Actualiza la información de un manga existente.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+String nombre;
+
+@NotNull
+@NotEmpty
+String autor;
+
+@NotNull
+@NotEmpty
+String fechaPublicacion;
+
+@NotNull
+@Min(value = 0)
+Integer paginas;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "nombre": String,
-    "autor": String,
-    "fecha_publicacion": String,
-    "paginas": String
+    "id": 5007,
+    "nombre": "newMangaName",
+    "autor": "newAuthorName",
+    "fecha_publicacion": "newDate",
+    "paginas": "newPages"
 }
 ```
 
@@ -515,7 +549,7 @@ Actualiza la información de un manga existente.
 
 ##### Descripción
 
-Elimina el manga del id dado.
+Elimina el manga del ID dado.
 
 ##### Respuesta
 
@@ -535,24 +569,22 @@ Devuelve todos los comentarios.
 
 ##### Respuesta
 
-```
+```JSON
 [
     {
-        "id": Integer,
-        "id_comic_manga": Integer,
-        "id_usuario": Integer,
-        "contenido": String,
-        "fecha_creacion": String
-
+        "id": 568,
+        "id_comic_manga": 190,
+        "id_usuario": 478,
+        "contenido": "Me gustó mucho este manga.",
+        "fecha_creacion": "Mayo, 2021"
     },
     {
-        "id": Integer,
-        "id_comic_manga": Integer,
-        "id_usuario": Integer,
-        "contenido": String,
-        "fecha_creacion": String
-
-    }, ...
+        "id": 789,
+        "id_comic_manga": 12,
+        "id_usuario": 4532,
+        "contenido": "Lo volvería a leer, muy interesante.",
+        "fecha_creacion": "Abril, 2020"
+    }
 ]
 ```
 
@@ -566,23 +598,30 @@ Crea un nuevo comentario.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "id_comic_manga": Integer,
-    "id_usuario": Integer,
-    "contenido": String
-}
+```JAVA
+@ManyToOne
+@JoinColumn(name = "id_comic/manga")
+Integer id_comic_manga;
+
+@ManyToOne
+@JoinColumn(name = "user_id")
+Integer user_id;
+
+@NotNull
+@NotEmpty
+@Max(value = 200)
+String contenido;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "id_comic_manga": Integer,
-    "id_usuario": Integer,
-    "contenido": String,
-    "fecha_creacion": String
+    "id": 789,
+    "id_comic_manga": 12,
+    "id_usuario": 4532,
+    "contenido": "Lo volvería a leer, muy interesante.",
+    "fecha_creacion": "Abril, 2020"
 }
 ```
 
@@ -596,22 +635,22 @@ Actualiza la información de un manga existente.
 
 ##### Campos requeridos
 
-```JSON
-{
-    "id": Integer,
-    "contenido": String
-}
+```JAVA
+@NotNull
+@NotEmpty
+@Max(value = 200)
+String contenido;
 ```
 
 ##### Respuesta
 
 ```JSON
 {
-    "id": Integer,
-    "id_comic_manga": Integer,
-    "id_usuario": Integer,
-    "contenido": String,
-    "fecha_creacion": String
+    "id": 789,
+    "id_comic_manga": 12,
+    "id_usuario": 4532,
+    "contenido": "NewContent",
+    "fecha_creacion": "Abril, 2020"
 }
 ```
 
