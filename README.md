@@ -77,25 +77,33 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 ## Diagrama de secuencia para los procesos más imporantes de la App (CRUD)
 
 ### Realizar busqueda por nombre
-![Diagrama de busqueda](assets/Diagrama_secuencia_busqueda.png)
+
+![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
 ### Registrar usuario
+
 ![Diagrama de registro usuario](assets/Diagrama_secuencia_registrarUsuario.png)
 
 ### Registrar manga/comic
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_registrarManga.png)
-El diagrma es similar para el caso de mangas y comics, el unico cambio son los servicios y reposirorios usados para hacer las operaciones.
+
+> El diagrma es similar para el caso de mangas y comics, el único cambio son los servicios y repositorios usados para hacer las operaciones.
 
 ### Obtener recomendaciones
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_obtenerRecomendaciones.png)
 
 ### Generar sugerencia
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_generarSugerencia.png)
 
 ### Generar comentario
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_generarComentario.png)
 
 ### Dar likes
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_likes.png)
 
 ## Diagrama de la base de datos
@@ -126,7 +134,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ### Descripción
 
-Se encarga de realizar una búsqueda mediante el titulo de un manga/comic.
+Se encarga de realizar una búsqueda mediante el título de un manga/comic.
 
 ### Campos requeridos
 
@@ -402,7 +410,7 @@ String autor;
 String fechaPublicacion;
 
 @NotNull
-@Min(value = 0)
+@Min(value = 1)
 Integer paginas;
 ```
 
@@ -507,7 +515,7 @@ String autor;
 String fechaPublicacion;
 
 @NotNull
-@Min(value = 0)
+@Min(value = 1)
 Integer paginas;
 ```
 
