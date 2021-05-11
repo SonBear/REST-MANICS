@@ -167,18 +167,6 @@ Se encarga de realizar una búsqueda mediante el título de un manga/comic.
 
 ### Campos requeridos (parámetros) 
 
-```JSON
-q -corresponde al paremetro de busqueda
-t -corresponde al tipo de articulo manga/comic (opcional)
-```
-
-### Validaciones
-
-```
-    Se espera que el parametro q no sea nullo y la cadena vacía. 
-```
-
-### Tipo de dato de cada campo
 
 ```JAVA
 @NotNull
@@ -189,40 +177,6 @@ String q;
 String t;
 ```
 
-### Respuesta (Response)
-
-```JSON
-[
-    {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "paginas": String
-    },
-    {
-        "id": Integer,
-        "nombre": String,
-        "autor": String,
-        "fecha_publicacion": String,
-        "capitulos_disponibles": [
-            {
-                "id": Integer,
-                "paginas":[
-                    {
-                        "id":Integer,
-                        "page":String
-                    }, ...
-                ]
-            },...
-        ]
-    }, ...
-]
-```
-
-### Ejemplos del Request
-
-    https://manicsrestapi/v1/search/mangas?q=Berserk&t=manga
 #### Respuesta
 ```JSON
 [
