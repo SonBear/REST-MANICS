@@ -16,11 +16,12 @@ MANICS-REST-API V1.0.0
 
 ## Propósito
 
-Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc...) que impiden el acceso a las historias que los comics/mangas nos regalan.
+Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc), Se propone en este documento una posible solucion de la cual se proporcionará informacion relevante al funcionamiento y estructura, como son: La arquitectura del sistema, el acceso a la información, la estructura de la base de datos y otros puntos importantes a destacar.
 
 ## Alcance
 
 Lo que se propone es que los usuarios desde una conexión a internet puedan acceder a un amplio catálogo de comics y mangas, siendo capaces de localizar alguno de sus productos favoritos, mediante la búsqueda de texto o imagen.
+Se busca que cualquier fanatico de comic/mangas pueda registrarse y tener a su disposición un amplio catalogo de estos articulos.
 
 ## Documentos de referencia
 
@@ -103,8 +104,36 @@ El diagrma es similar para el caso de mangas y comics, el unico cambio son los s
 ![Diagrama de bases de datos](assets/Diagrama_BD.png)
 
 ## Descripción de las entidades
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+### **Rol**
+#### Descripción
+``` 
+Representa el tipo de usuario, de la cual se planea utilizar dos: usuario público y administrador.
+```
+###  **Usuario**
+#### Descripción
+``` 
+Representa una persona/usuario el cual tendrá acceso a la utilización de la api REST.
+```
+###  **Sugerencia**
+#### Descripción
+``` 
+Representa un formato para las sugerencias realizadas por los usuarios al sistema en generar: sugerencias para mejorar el sistema ó para agragar más contenido mangas/comics.
+```
+###  **Manga**
+#### Descripción
+``` 
+Representa la estructura de un manga.
+```
+###  **Comic**
+#### Descripción
+``` 
+Representa la estructura de un comic.
+```
+###  **Categoria**
+#### Descripción
+``` 
+Representa el tipo de género que un manga o comic posee.
+```
 
 ## Diagrama ER
 
@@ -122,48 +151,94 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ### `GET` - Buscar comic/manga por texto
 
-    https://manicsrestapi/v1/search/{name}
+    https://manicsrestapi/v1/search?q=name
 
 ### Descripción
 
 Se encarga de realizar una búsqueda mediante el titulo de un manga/comic.
 
-### Campos requeridos
+### Campos requeridos (parámetros) 
 
 ```JSON
-{
-    "response": 1232
-}
+q -corresponde al paremetro de busqueda
+t -corresponde al tipo de articulo manga/comic (opcional)
 ```
 
 ### Validaciones
 
-```JAVA
-    @NotNull;
+```
+    Se espera que el parametro q no sea nullo y la cadena vacía. 
 ```
 
 ### Tipo de dato de cada campo
 
 ```JAVA
-    int val;
+    String q;
+    String t;
 ```
 
 ### Respuesta (Response)
 
 ```JSON
-{
-    "response": 1232
-}
+[
+    {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "paginas": String
+    },
+    {
+        "id": Integer,
+        "nombre": String,
+        "autor": String,
+        "fecha_publicacion": String,
+        "capitulos_disponibles": [
+            {
+                "id": Integer,
+                "paginas":[
+                    {
+                        "id":Integer,
+                        "page":String
+                    }, ...
+                ]
+            },...
+        ]
+    }, ...
+]
 ```
 
 ### Ejemplos del Request
 
-    https://manicsrestapi/v1/search/mangas?q=Berserk
-
+    https://manicsrestapi/v1/search/mangas?q=Berserk&t=manga
+#### Respuesta
 ```JSON
-{
-    "status": "on-air"
-}
+[
+     {
+        "id": 1,
+        "nombre": "Berserk",
+        "autor": "Kentaro Miura",
+        "fecha_publicacion": "1988",
+        "capitulos_disponibles": [
+            {
+                "id": 1,
+                "capitulo_nombre": "prologo",
+                "paginas": [
+                    {
+                        "id" : 1,
+                        "page": "https://imgdrive/1231.png"
+                    },
+                    {
+                        "id" : 2,
+                        "page": "https://imgdrive/1232.png"
+                    }, ...
+                ]
+            }, ...
+            
+        ]
+    }, ...
+
+]
 ```
 
 ### Usuarios
@@ -674,3 +749,9 @@ Debido a las necesidades del proyecto, el proyecto de centrará en cumplir con a
 3. **Fiabilidad**: Al tratarse de un servicio basado en el protocolo HTTP, _el manejo de errores_ estará visible para el usuario mediante los códigos correctos HTTP para cada problema que se presente. Este servicio utilizará transacciones las cuales significan que ante un error del sistema este tendrá la _capacidad de recuperar_ la información afectada.
 
 4. **Usabilidad**: Este servicio estará planeado para realizar las diferentes funcionalidades de una manera sencilla, esto debido a la utilización del formato de texto de intercambio de informacion más común dentro de la web: JSON.
+
+5. Al utilizar un sistema del cache para las busquedas, las busquedas entre titulos de mangas o comics serán rapidas, ya que estan se almacenarán en cache y podran volver hacer usadas cuando se encuentre ante una busqueda similar. Y esto corresponde al **eficiencia de desempeño**
+
+6. **Compatibilidad** La arquitectura de capas utilizada nos garantiza que diferentes componentes del sistema, no generen una dependencia fuerte entre los componentes o con las librerias a utilizar, ya que no habra una conexion directa si no más bien se utilizará interfaces como intermediarios para las librerias a usar. 
+
+7. Lo que respecta a la **Mantenibilidad** siguiendo el punto anterior al ser los componentes idependientes unos de otros estos prodrán actualizarse o mejorarse cada vez que se requiera sin tener que modificar componentes de otras capas.
