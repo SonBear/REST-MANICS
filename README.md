@@ -76,7 +76,27 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ## Diagrama de secuencia para los procesos más imporantes de la App (CRUD)
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+### Realizar busqueda por nombre
+![Diagrama de busqueda](assets/Diagrama_secuencia_busqueda.png)
+
+### Registrar usuario
+![Diagrama de registro usuario](assets/Diagrama_secuencia_registrarUsuario.png)
+
+### Registrar manga/comic
+![Diagrama de busqueda](assets/Diagrama_secuencia_registrarManga.png)
+El diagrma es similar para el caso de mangas y comics, el unico cambio son los servicios y reposirorios usados para hacer las operaciones.
+
+### Obtener recomendaciones
+![Diagrama de busqueda](assets/Diagrama_secuencia_obtenerRecomendaciones.png)
+
+### Generar sugerencia
+![Diagrama de busqueda](assets/Diagrama_secuencia_generarSugerencia.png)
+
+### Generar comentario
+![Diagrama de busqueda](assets/Diagrama_secuencia_generarComentario.png)
+
+### Dar likes
+![Diagrama de busqueda](assets/Diagrama_secuencia_likes.png)
 
 ## Diagrama de la base de datos
 
@@ -102,11 +122,11 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ### `GET` - Buscar comic/manga por texto
 
-    https://manicsrestapi/v1/search
+    https://manicsrestapi/v1/search/{name}
 
 ### Descripción
 
-Se encarga de realizar una búsqueda mediante texto.
+Se encarga de realizar una búsqueda mediante el titulo de un manga/comic.
 
 ### Campos requeridos
 
