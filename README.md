@@ -11,7 +11,7 @@ MANICS-REST-API V1.0.0
 - Emmanuel Isaí Chablé Collí
 - Ricardo Nicolás Canul Ibarra
 - Iowa Alejandro Olivera Pérez
-
+---
 # Introducción
 
 ## Propósito
@@ -21,7 +21,7 @@ Ante la problemática de que muchas personas no pueden conseguir un comic o mang
 ## Alcance
 
 Lo que se propone es que los usuarios desde una conexión a internet puedan acceder a un amplio catálogo de comics y mangas, siendo capaces de localizar alguno de sus productos favoritos, mediante la búsqueda de texto o imagen.
-Se busca que cualquier fanático de comics/mangas pueda registrarse y tener a su disposición un amplio catalogo de estos artículos.
+Se busca que cualquier fanático de comics/mangas pueda registrarse y tener a su disposición un amplio catálogo de estos artículos. De igual manera darle a ciertos usuarios de confianza privilegios para que puedan actualizar y subir nuevo contenido mangas/comics.
 
 ## Documentos de referencia
 
@@ -31,7 +31,6 @@ Se busca que cualquier fanático de comics/mangas pueda registrarse y tener a su
 
 3. https://iso25000.com/index.php/normas-iso-25000/iso-25010
 
----
 
 # Arquitectura
 
@@ -83,10 +82,12 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
+
 ### Realizar busqueda por imagen
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaImagen.png)
 
+>La busqueda son iguales en ambos casos manga/comic solo es especificar el la ruta a que tipo de contenido estamos buscando.
 ### Registrar usuario
 
 ![Diagrama de registro usuario](assets/Diagrama_secuencia_registrarUsuario.png)
@@ -101,6 +102,8 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_obtenerRecomendaciones.png)
 
+>Las recomendaciones se basan en encontrar con un intervalo, una serie de mangas/comics calificados en base a ese intervalo.
+
 ### Generar sugerencia
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_generarSugerencia.png)
@@ -113,6 +116,8 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_likes.png)
 
+    Los diagramas anteriores nos muestran una pequeña aproximacion de algunas de las funcionalidades del sistema.
+
 ## Diagrama de la base de datos
 
 ![Diagrama de bases de datos](assets/Diagrama_BD.png)
@@ -123,49 +128,51 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 #### Descripción
 
-```
-Representa el tipo de usuario, de la cual se planea utilizar dos: usuario público y administrador.
-```
+
+    Representa el tipo de usuario, de la cual se planea utilizar dos: usuario público y administrador.
+
 
 ### **Usuario**
 
 #### Descripción
 
-```
-Representa una persona/usuario el cual tendrá acceso a la utilización de la api REST.
-```
+
+    Representa una persona/usuario el cual tendrá acceso a la utilización de la api REST.
+
 
 ### **Sugerencia**
 
 #### Descripción
 
-```
-Representa un formato para las sugerencias realizadas por los usuarios al sistema en generar: sugerencias para mejorar el sistema ó para agregar más contenido mangas/comics.
-```
+
+    Representa un formato para las sugerencias realizadas por los usuarios al sistema en general: 
+    - para mejorar el sistema
+    - para agregar más contenido mangas/comics
+
 
 ### **Manga**
 
 #### Descripción
 
-```
-Representa la estructura de un manga.
-```
+
+    Representa la estructura de un manga.
+
 
 ### **Comic**
 
 #### Descripción
 
-```
-Representa la estructura de un comic.
-```
+
+    Representa la estructura de un comic.
+
 
 ### **Categoría**
 
 #### Descripción
 
-```
-Representa el tipo de género que un manga o comic posee.
-```
+
+    Representa el tipo de género que un manga o comic posee.
+
 
 ## Diagrama ER
 
@@ -251,7 +258,7 @@ String urlImg; // Url de la imagen a analizar.
 
 #### Request
 
-    https://manicsrestapi/v1/search/manga?urlImg=https://www.example.com/img=one%20piece
+    https://manicsrestapi/v1/search/manga?urlImg=https://www.example.com/img=one%20piece.png
 
 #### Respuesta
 
@@ -399,7 +406,7 @@ Crea un nuevo usuario.
 @NotNull
 @NotEmpty
 @Size(min = 5, max = 10)
-String username;
+String username; 
 
 @NotNull
 @NotEmpty
@@ -967,6 +974,7 @@ Elimina el comentario del ID dado.
 Esta petición no devuelve una respuesta.
 
 ## Criterios de calidad
+---
 
 Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de calidad para el producto:
 
