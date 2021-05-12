@@ -1,6 +1,6 @@
 # Documento de arquitectura de software
 
-Proyecto basado en la búsqueda de mangos y comics dentro de un repositorio en la nube.
+Proyecto basado en la búsqueda de mangas y comics dentro de un repositorio en la nube.
 
 ## Nombre del software
 
@@ -16,12 +16,12 @@ MANICS-REST-API V1.0.0
 
 ## Propósito
 
-Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc), Se propone en este documento una posible solucion de la cual se proporcionará informacion relevante al funcionamiento y estructura, como son: La arquitectura del sistema, el acceso a la información, la estructura de la base de datos y otros puntos importantes a destacar.
+Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc), Se propone en este documento una posible solución de la cuál se proporcionará información relevante al funcionamiento y estructura, como son: La arquitectura del sistema, el acceso a la información, la estructura de la base de datos y otros puntos importantes a destacar.
 
 ## Alcance
 
 Lo que se propone es que los usuarios desde una conexión a internet puedan acceder a un amplio catálogo de comics y mangas, siendo capaces de localizar alguno de sus productos favoritos, mediante la búsqueda de texto o imagen.
-Se busca que cualquier fanatico de comic/mangas pueda registrarse y tener a su disposición un amplio catalogo de estos articulos.
+Se busca que cualquier fanatico de comic/mangas pueda registrarse y tener a su disposición un amplio catálogo de estos artículos.
 
 ## Documentos de referencia
 
@@ -81,6 +81,9 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
+### Realizar busqueda por imagen
+
+
 ### Registrar usuario
 
 ![Diagrama de registro usuario](assets/Diagrama_secuencia_registrarUsuario.png)
@@ -89,7 +92,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_registrarManga.png)
 
-> El diagrma es similar para el caso de mangas y comics, el único cambio son los servicios y repositorios usados para hacer las operaciones.
+> El diagrama es similar para el caso de mangas y comics, el único cambio son los servicios y repositorios usados para hacer las operaciones.
 
 ### Obtener recomendaciones
 
@@ -137,7 +140,7 @@ Representa la estructura de un manga.
 ``` 
 Representa la estructura de un comic.
 ```
-###  **Categoria**
+###  **Categoría**
 #### Descripción
 ``` 
 Representa el tipo de género que un manga o comic posee.
@@ -180,28 +183,12 @@ String t;
 #### Respuesta
 ```JSON
 [
-     {
-        "id": 1,
-        "nombre": "Berserk",
-        "autor": "Kentaro Miura",
-        "fecha_publicacion": "1988",
-        "capitulos_disponibles": [
-            {
-                "id": 1,
-                "capitulo_nombre": "prologo",
-                "paginas": [
-                    {
-                        "id" : 1,
-                        "page": "https://imgdrive/1231.png"
-                    },
-                    {
-                        "id" : 2,
-                        "page": "https://imgdrive/1232.png"
-                    }, ...
-                ]
-            }, ...
-            
-        ]
+   {
+    "id": 5007,
+    "nombre": "Dragon ball",
+    "autor": "Akira Toriyama",
+    "fecha_publicacion": "1986",
+    "paginas": 365
     }, ...
 
 ]
