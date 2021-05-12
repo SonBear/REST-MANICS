@@ -1,6 +1,6 @@
 # Documento de arquitectura de software
 
-Proyecto basado en la búsqueda de mangos y comics dentro de un repositorio en la nube.
+Proyecto basado en la búsqueda de mangas y comics dentro de un repositorio en la nube.
 
 ## Nombre del software
 
@@ -16,12 +16,12 @@ MANICS-REST-API V1.0.0
 
 ## Propósito
 
-Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc), Se propone en este documento una posible solucion de la cual se proporcionará informacion relevante al funcionamiento y estructura, como son: La arquitectura del sistema, el acceso a la información, la estructura de la base de datos y otros puntos importantes a destacar.
+Ante la problemática de que muchas personas no pueden conseguir un comic o manga de manera física por distintos motivos (poder adquisitivo, inexistencias de puntos de venta, pérdida de tiempo en la compra, etc), Se propone en este documento una solución de la cual se proporcionará información relevante al funcionamiento y estructura, como son: La arquitectura del sistema, el acceso a la información, la estructura de la base de datos y otros puntos importantes a destacar.
 
 ## Alcance
 
 Lo que se propone es que los usuarios desde una conexión a internet puedan acceder a un amplio catálogo de comics y mangas, siendo capaces de localizar alguno de sus productos favoritos, mediante la búsqueda de texto o imagen.
-Se busca que cualquier fanatico de comic/mangas pueda registrarse y tener a su disposición un amplio catalogo de estos articulos.
+Se busca que cualquier fanático de comics/mangas pueda registrarse y tener a su disposición un amplio catalogo de estos artículos.
 
 ## Documentos de referencia
 
@@ -39,7 +39,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 1. **Capa de seguridad**: Debido a que nuestra API contará con información sensible de los usuarios registrados será necesario contar con una capa de seguridad sólida en la cual se detendrán las posibles peticiones malintencionadas o sin autorización.
 
-2. **Capa REST**: Manejar todas las peticiones HTTP que se efectuen hacia nuestra RESTFul API.
+2. **Capa REST**: Manejar todas las peticiones HTTP que se efectúen hacia nuestra RESTFul API.
 
 3. **Capa de negocio**: Contendrá toda la lógica del negocio (Casos de uso, entidades, etc...).
 
@@ -51,7 +51,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de bases de datos](assets/Diagrama_arquitectura.png)
 
-> El efoque está en aislar en la medida de lo posible las reglas del negocio. Se trata de que las reglas del negocio tengan una comunicación completamente indirecta (por medio de interfaces) con todos los agentes externos.
+> El enfoque está en aislar en la medida de lo posible las reglas del negocio. Se trata de que las reglas del negocio tengan una comunicación completamente indirecta (por medio de interfaces) con todos los agentes externos.
 
 **Componente de seguridad**: Principalmente constará de 2 funciones principales.
 
@@ -71,13 +71,13 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 **Implementación de los repositorios**: Todo el código relacionado a JPA (Anotaciones, Repositorios, Configuraciones, etc...).
 
-**Sistema de Caché**: Menejo de la caché dentro del sistema.
+**Sistema de Caché**: Manejo de la caché dentro del sistema.
 
 **Elasticsearch**: Búsquedas de información.
 
-## Diagrama de secuencia para los procesos más imporantes de la App (CRUD)
+## Diagrama de secuencia para los procesos más importantes de la App (CRUD)
 
-### Realizar busqueda por nombre
+### Realizar búsqueda por nombre
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
@@ -89,7 +89,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_registrarManga.png)
 
-> El diagrma es similar para el caso de mangas y comics, el único cambio son los servicios y repositorios usados para hacer las operaciones.
+> El diagrama es similar para el caso de mangas y comics, el único cambio son los servicios y repositorios usados para hacer las operaciones.
 
 ### Obtener recomendaciones
 
@@ -125,7 +125,7 @@ Representa una persona/usuario el cual tendrá acceso a la utilización de la ap
 ###  **Sugerencia**
 #### Descripción
 ``` 
-Representa un formato para las sugerencias realizadas por los usuarios al sistema en generar: sugerencias para mejorar el sistema ó para agragar más contenido mangas/comics.
+Representa un formato para las sugerencias realizadas por los usuarios al sistema en generar: sugerencias para mejorar el sistema ó para agregar más contenido mangas/comics.
 ```
 ###  **Manga**
 #### Descripción
@@ -754,9 +754,9 @@ Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de
 - Mantenibilidad
 - Portabilidad
 
-Debido a las necesidades del proyecto, el proyecto de centrará en cumplir con alguno de ellos:
+Debido a las necesidades del proyecto, el proyecto se centrará en cumplir con alguno de ellos:
 
-1. La **seguridad** es muy importante para la gran mayoria de sistemas de hoy en día por lo que es un punto que, sin lugar a dudas, se debe de tratar. Para fines de este proyecto, se considerará las siguientes funcionalidades:
+1. La **seguridad** es muy importante para la gran mayoría de sistemas de hoy en día por lo que es un punto que, sin lugar a dudas, se debe de tratar. Para fines de este proyecto, se considerará las siguientes funcionalidades:
 
    - El servicio rest estará reestringido para dos tipos de usuarios:
      - Administrador.
@@ -767,10 +767,10 @@ Debido a las necesidades del proyecto, el proyecto de centrará en cumplir con a
 
 3. **Fiabilidad**: Al tratarse de un servicio basado en el protocolo HTTP, _el manejo de errores_ estará visible para el usuario mediante los códigos correctos HTTP para cada problema que se presente. Este servicio utilizará transacciones las cuales significan que ante un error del sistema este tendrá la _capacidad de recuperar_ la información afectada.
 
-4. **Usabilidad**: Este servicio estará planeado para realizar las diferentes funcionalidades de una manera sencilla, esto debido a la utilización del formato de texto de intercambio de informacion más común dentro de la web: JSON.
+4. **Usabilidad**: Este servicio estará planeado para realizar las diferentes funcionalidades de una manera sencilla, esto debido a la utilización del formato de texto de intercambio de información más común dentro de la web: JSON.
 
-5. Al utilizar un sistema del cache para las busquedas, las busquedas entre titulos de mangas o comics serán rapidas, ya que estan se almacenarán en cache y podran volver hacer usadas cuando se encuentre ante una busqueda similar. Y esto corresponde al **eficiencia de desempeño**
+5. Al utilizar un sistema del cache para las búsquedas, las búsquedas entre títulos de mangas o comics serán rápidas, ya que estas se almacenarán en cache y podrán volver a ser usadas cuando se encuentre ante una busqueda similar. Y esto corresponde a **eficiencia de desempeño**
 
-6. **Compatibilidad** La arquitectura de capas utilizada nos garantiza que diferentes componentes del sistema, no generen una dependencia fuerte entre los componentes o con las librerias a utilizar, ya que no habra una conexion directa si no más bien se utilizará interfaces como intermediarios para las librerias a usar. 
+6. **Compatibilidad** La arquitectura de capas utilizada nos garantiza que diferentes componentes del sistema, no generen una dependencia fuerte entre los componentes o con las librerías a utilizar, ya que no habrá una conexión directa si no más bien se utilizará interfaces como intermediarios para las librerías a usar. 
 
-7. Lo que respecta a la **Mantenibilidad** siguiendo el punto anterior al ser los componentes idependientes unos de otros estos prodrán actualizarse o mejorarse cada vez que se requiera sin tener que modificar componentes de otras capas.
+7. Lo que respecta a la **Mantenibilidad** siguiendo el punto anterior al ser los componentes independientes unos de otros estos podrán actualizarse o mejorarse cada vez que se requiera sin tener que modificar componentes de otras capas.
