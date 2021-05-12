@@ -84,6 +84,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
 ### Realizar busqueda por imagen
+
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaImagen.png)
 
 ### Registrar usuario
@@ -117,34 +118,52 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 ![Diagrama de bases de datos](assets/Diagrama_BD.png)
 
 ## Descripción de las entidades
+
 ### **Rol**
+
 #### Descripción
-``` 
+
+```
 Representa el tipo de usuario, de la cual se planea utilizar dos: usuario público y administrador.
 ```
-###  **Usuario**
+
+### **Usuario**
+
 #### Descripción
-``` 
+
+```
 Representa una persona/usuario el cual tendrá acceso a la utilización de la api REST.
 ```
-###  **Sugerencia**
+
+### **Sugerencia**
+
 #### Descripción
-``` 
+
+```
 Representa un formato para las sugerencias realizadas por los usuarios al sistema en generar: sugerencias para mejorar el sistema ó para agregar más contenido mangas/comics.
 ```
-###  **Manga**
+
+### **Manga**
+
 #### Descripción
-``` 
+
+```
 Representa la estructura de un manga.
 ```
-###  **Comic**
+
+### **Comic**
+
 #### Descripción
-``` 
+
+```
 Representa la estructura de un comic.
 ```
-###  **Categoría**
+
+### **Categoría**
+
 #### Descripción
-``` 
+
+```
 Representa el tipo de género que un manga o comic posee.
 ```
 
@@ -162,27 +181,28 @@ Representa el tipo de género que un manga o comic posee.
 
 ---
 
-### `GET` - Buscar comic/manga por texto
+#### `GET` - Buscar comic/manga por texto
 
-    https://manicsrestapi/v1/search?q=name
+    https://manicsrestapi/v1/search/{manga/comic}?q=name
 
-### Descripción
+#### Descripción
 
 Se encarga de realizar una búsqueda mediante el título de un manga/comic.
 
-### Campos requeridos (parámetros) 
-
+#### Campos requeridos (parámetros) y validaciones
 
 ```JAVA
 @NotNull
 @NotEmpty
-String query; //nombre del título a buscar
-@NotNull
-@NotEmpty
-String type; //tipo de artículo manga/comic
+String query; // Nombre del título a buscar.
 ```
 
+#### Request
+
+    https://manicsrestapi/v1/search/manga?q=Berserk
+
 #### Respuesta
+
 ```JSON
 [
      {
@@ -202,38 +222,39 @@ String type; //tipo de artículo manga/comic
                     {
                         "id" : 2,
                         "page": "https://imgdrive/1232.png"
-                    }, ...
+                    }
                 ]
-            }, ...
-            
+            }
         ]
-    }, ...
+    }
 
 ]
 ```
 
-### `GET` - Buscar comic/manga por imagen
+#### `GET` - Buscar comic/manga por imagen
 
-    https://manicsrestapi/v1/search
+    https://manicsrestapi/v1/search/{manga/comic}?urlImg=https://www.example.com/
 
-### Descripción
+#### Descripción
 
 Se encarga de realizar una búsqueda mediante la imagen de un manga/comic.
 
-### Campos requeridos (parámetros) 
-
+#### Campos requeridos (parámetros) y validaciones
 
 ```JAVA
 @NotNull
 @NotEmpty
-String urlImg; //url de la imagen a analizar
-@NotNull
-@NotEmpty
-String type; //tipo de artículo manga/comic
+String urlImg; // Url de la imagen a analizar.
 ```
->Se espera que la imagen este subida en internet y que se pueda acceder mediante una url, el formato admitido de imagen son: PNG, JPEG.
+
+> Se espera que la imagen este subida en internet y que se pueda acceder mediante una url, el formato admitido de imagen son: PNG, JPEG.
+
+#### Request
+
+    https://manicsrestapi/v1/search/manga?urlImg=https://www.example.com/img=one%20piece
 
 #### Respuesta
+
 ```JSON
 [
     {
@@ -253,49 +274,56 @@ String type; //tipo de artículo manga/comic
                     {
                         "id" : 2,
                         "page": "https://imgdrive/1232.png"
-                    }, ...
+                    }
                 ]
-            }, ...
-            
+            }
         ]
-    }, ...
-
+    }
 ]
 ```
+
 ### Recomendaciones
+
 ---
-### `GET` - Buscar comic/manga por imagen
 
-    https://manicsrestapi/v1/recommendations/{id}
+#### `GET` - Buscar comic/manga por número de recomendaciones
 
-### Descripción
+    https://manicsrestapi/v1/recommendations/{comic/manga}/?min=x&max=y
+
+#### Descripción
 
 Se encarga de encontrar las recomendaciones de un manga/comic de un usuario, con respecto a los otros usuarios del sistema.
 
-### Campos requeridos (parámetros) 
-
+#### Campos requeridos (parámetros) y validaciones
 
 ```JAVA
 @NotNull
 @NotEmpty
-Long id; //id de usuario
+@Min(value = 0) // Número entero positivo.
+Integer min; // Número mínimo de recomendaciones.
+
 @NotNull
-String type; //tipo de artículo manga/comic
-@NotNull
-int number; //número de recomendaciones
+@NotEmpty
+@Min(value = 0) // Número entero positivo.
+Integer max; // Número máximo de recomendaciones.
 ```
 
+#### Request
+
+    https://manicsrestapi/v1/recommendations/comic/?min=0&max=120
+
 #### Respuesta
+
 ```JSON
 [
-    { 
+    {
         "id": 890,
         "nombre": "The new 52",
         "autor": "DC Comics",
         "fecha_publicacion": "2011",
         "paginas": 103
-    }, 
-    { 
+    },
+    {
         "id": 191,
         "nombre": "Superman 1978",
         "autor": "DC Comics",
@@ -314,11 +342,11 @@ int number; //número de recomendaciones
 
     https://manicsrestapi/v1/usuarios
 
-##### Descripción
+#### Descripción
 
 Devuelve todos los usuarios registrados.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 [
@@ -339,11 +367,15 @@ Devuelve todos los usuarios registrados.
 
     https://manicsrestapi/v1/usuarios/{id}
 
-##### Descripción
+#### Descripción
 
 Devuelve el usuario con el ID ingresado.
 
-##### Respuesta
+#### Request
+
+    https://manicsrestapi/v1/usuarios/45
+
+#### Respuesta
 
 ```JSON
 {
@@ -357,11 +389,11 @@ Devuelve el usuario con el ID ingresado.
 
     https://manicsrestapi/v1/usuarios
 
-##### Descripción
+#### Descripción
 
 Crea un nuevo usuario.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -380,7 +412,16 @@ String password;
 String email;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "username": "HikingCarrot7",
+    "email": "example@hotmail.com"
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -394,11 +435,11 @@ String email;
 
     https://manicsrestapi/v1/usuarios/{id}
 
-##### Descripción
+#### Descripción
 
 Actualiza la información de un usuario existente.
 
-##### Campos requeridos
+#### Campos requeridos
 
 ```JAVA
 @NotNull
@@ -417,7 +458,16 @@ String password;
 String email;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "username": "newUsername",
+    "email": "newEmail@hotmail.com"
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -431,11 +481,11 @@ String email;
 
     https://manicsrestapi/v1/usuarios/{id}
 
-##### Descripción
+#### Descripción
 
 Elimina el usuario del ID dado.
 
-##### Respuesta
+#### Respuesta
 
 Esta petición no devuelve una respuesta.
 
@@ -447,11 +497,11 @@ Esta petición no devuelve una respuesta.
 
     https://manicsrestapi/v1/comics
 
-##### Descripción
+#### Descripción
 
 Devuelve todos los comics registrados.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 [
@@ -460,6 +510,7 @@ Devuelve todos los comics registrados.
         "nombre": "The new 52",
         "autor": "DC Comics",
         "fecha_publicacion": "2011",
+        "recomendaciones": 23,
         "paginas": 103
     },
     {
@@ -467,8 +518,9 @@ Devuelve todos los comics registrados.
         "nombre": "StrinSkrull Kill Krewg",
         "autor": "StrinSteve Yeowell, Mark Millar, Grant Morrisong",
         "fecha_publicacion": "1995",
+        "recomendaciones": 8754,
         "paginas": 136
-    }, ...
+    }
 ]
 ```
 
@@ -476,11 +528,11 @@ Devuelve todos los comics registrados.
 
     https://manicsrestapi/v1/comics/{id}
 
-##### Descripción
+#### Descripción
 
 Devuelve el comic con el ID ingresado.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 {
@@ -488,6 +540,7 @@ Devuelve el comic con el ID ingresado.
     "nombre": "The new 52",
     "autor": "DC Comics",
     "fecha_publicacion": "2011",
+    "recomendaciones": 23,
     "paginas": 103
 }
 ```
@@ -496,11 +549,11 @@ Devuelve el comic con el ID ingresado.
 
     https://manicsrestapi/v1/comics
 
-##### Descripción
+#### Descripción
 
 Crea un nuevo comic.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -520,7 +573,18 @@ String fechaPublicacion;
 Integer paginas;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "nombre": "The new 52",
+    "autor": "DC Comics",
+    "fecha_publicacion": "2011",
+    "paginas": 103
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -528,6 +592,7 @@ Integer paginas;
     "nombre": "The new 52",
     "autor": "DC Comics",
     "fecha_publicacion": "2011",
+    "recomendaciones": 0,
     "paginas": 103
 }
 ```
@@ -536,11 +601,11 @@ Integer paginas;
 
     https://manicsrestapi/v1/comics/{id}
 
-##### Descripción
+#### Descripción
 
 Actualiza la información de un comic existente.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -560,7 +625,18 @@ String fechaPublicacion;
 Integer paginas;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "nombre": "newComicName",
+    "autor": "newComicAuthor",
+    "fecha_publicacion": "newDate",
+    "paginas": "newPages"
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -568,6 +644,7 @@ Integer paginas;
     "nombre": "newComicName",
     "autor": "newComicAuthor",
     "fecha_publicacion": "newDate",
+    "recomendaciones": 403,
     "paginas": "newPages"
 }
 ```
@@ -576,11 +653,11 @@ Integer paginas;
 
     https://manicsrestapi/v1/comics/{id}
 
-##### Descripción
+#### Descripción
 
 Elimina el comic del ID dado.
 
-##### Respuesta
+#### Respuesta
 
 Esta petición no devuelve una respuesta.
 
@@ -592,11 +669,11 @@ Esta petición no devuelve una respuesta.
 
     https://manicsrestapi/v1/mangas
 
-##### Descripción
+#### Descripción
 
 Devuelve todos los mangas registrados.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 [
@@ -605,6 +682,7 @@ Devuelve todos los mangas registrados.
         "nombre": "Dragon ball",
         "autor": "Akira Toriyama",
         "fecha_publicacion": "1986",
+        "recomendaciones": 10345,
         "paginas": 365
     },
     {
@@ -612,6 +690,7 @@ Devuelve todos los mangas registrados.
         "nombre": "Naruto",
         "autor": "Masashi Kishimoto",
         "fecha_publicacion": "1999",
+        "recomendaciones": 8943,
         "paginas": 2367
     }
 ]
@@ -621,11 +700,11 @@ Devuelve todos los mangas registrados.
 
     https://manicsrestapi/v1/mangas/{id}
 
-##### Descripción
+#### Descripción
 
 Devuelve el manga con el ID ingresado.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 {
@@ -633,6 +712,7 @@ Devuelve el manga con el ID ingresado.
     "nombre": "Dragon ball",
     "autor": "Akira Toriyama",
     "fecha_publicacion": "1986",
+    "recomendaciones": 342,
     "paginas": 365
 }
 ```
@@ -641,11 +721,11 @@ Devuelve el manga con el ID ingresado.
 
     https://manicsrestapi/v1/mangas
 
-##### Descripción
+#### Descripción
 
 Crea un nuevo manga.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -665,7 +745,18 @@ String fechaPublicacion;
 Integer paginas;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "nombre": "Dragon ball",
+    "autor": "Akira Toriyama",
+    "fecha_publicacion": "1986",
+    "paginas": 365
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -673,6 +764,7 @@ Integer paginas;
     "nombre": "Dragon ball",
     "autor": "Akira Toriyama",
     "fecha_publicacion": "1986",
+    "recomendaciones": 0,
     "paginas": 365
 }
 ```
@@ -681,11 +773,11 @@ Integer paginas;
 
     https://manicsrestapi/v1/mangas/{id}
 
-##### Descripción
+#### Descripción
 
 Actualiza la información de un manga existente.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -705,7 +797,18 @@ String fechaPublicacion;
 Integer paginas;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "nombre": "newMangaName",
+    "autor": "newAuthorName",
+    "fecha_publicacion": "newDate",
+    "paginas": "newPages"
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -713,6 +816,7 @@ Integer paginas;
     "nombre": "newMangaName",
     "autor": "newAuthorName",
     "fecha_publicacion": "newDate",
+    "recomendaciones": 198,
     "paginas": "newPages"
 }
 ```
@@ -721,11 +825,11 @@ Integer paginas;
 
     https://manicsrestapi/v1/mangas/{id}
 
-##### Descripción
+#### Descripción
 
 Elimina el manga del ID dado.
 
-##### Respuesta
+#### Respuesta
 
 Esta petición no devuelve una respuesta.
 
@@ -737,11 +841,11 @@ Esta petición no devuelve una respuesta.
 
     https://manicsrestapi/v1/comentarios
 
-##### Descripción
+#### Descripción
 
 Devuelve todos los comentarios.
 
-##### Respuesta
+#### Respuesta
 
 ```JSON
 [
@@ -766,11 +870,11 @@ Devuelve todos los comentarios.
 
     https://manicsrestapi/v1/comentarios
 
-##### Descripción
+#### Descripción
 
 Crea un nuevo comentario.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @ManyToOne
@@ -787,7 +891,18 @@ Integer user_id;
 String contenido;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "id": 789,
+    "id_comic_manga": 12,
+    "id_usuario": 4532,
+    "contenido": "Lo volvería a leer, muy interesante.",
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -803,11 +918,11 @@ String contenido;
 
     https://manicsrestapi/v1/comentarios/{id}
 
-##### Descripción
+#### Descripción
 
 Actualiza la información de un manga existente.
 
-##### Campos requeridos
+#### Campos requeridos y validaciones
 
 ```JAVA
 @NotNull
@@ -816,7 +931,18 @@ Actualiza la información de un manga existente.
 String contenido;
 ```
 
-##### Respuesta
+#### Request
+
+```JSON
+{
+    "id": 789,
+    "id_comic_manga": 12,
+    "id_usuario": 4532,
+    "contenido": "NewContent",
+}
+```
+
+#### Respuesta
 
 ```JSON
 {
@@ -832,15 +958,15 @@ String contenido;
 
     https://manicsrestapi/v1/comentarios/{id}
 
-##### Descripción
+#### Descripción
 
 Elimina el comentario del ID dado.
 
-##### Respuesta
+#### Respuesta
 
 Esta petición no devuelve una respuesta.
 
-# Criterios de calidad
+## Criterios de calidad
 
 Según el modelo de calidad ISO/IEC 25010 nos proponen una serie de atributos de calidad para el producto:
 
@@ -868,8 +994,8 @@ Debido a las necesidades del proyecto, el proyecto se centrará en cumplir con a
 
 4. **Usabilidad**: Este servicio estará planeado para realizar las diferentes funcionalidades de una manera sencilla, esto debido a la utilización del formato de texto de intercambio de información más común dentro de la web: JSON.
 
-5. Al utilizar un sistema del cache para las búsquedas, las búsquedas entre títulos de mangas o comics serán rápidas, ya que estas se almacenarán en cache y podrán volver a ser usadas cuando se encuentre ante una busqueda similar. Y esto corresponde a **eficiencia de desempeño**
+5. Al utilizar un sistema caché para las búsquedas, las búsquedas entre títulos de mangas o comics serán rápidas, ya que estas se almacenarán en caché y podrán volver a ser usadas cuando se encuentre ante una búsqueda similar. Y esto corresponde a **eficiencia de desempeño**.
 
-6. **Compatibilidad** La arquitectura de capas utilizada nos garantiza que diferentes componentes del sistema, no generen una dependencia fuerte entre los componentes o con las librerías a utilizar, ya que no habrá una conexión directa si no más bien se utilizará interfaces como intermediarios para las librerías a usar. 
+6. **Compatibilidad** La arquitectura de capas utilizada nos garantiza que diferentes componentes del sistema, no generen una dependencia fuerte entre los componentes o con las librerías a utilizar, ya que no habrá una conexión directa si no más bien se utilizará interfaces como intermediarios para las librerías a usar.
 
 7. Lo que respecta a la **Mantenibilidad** siguiendo el punto anterior al ser los componentes independientes unos de otros estos podrán actualizarse o mejorarse cada vez que se requiera sin tener que modificar componentes de otras capas.
