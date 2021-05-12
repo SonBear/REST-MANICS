@@ -84,7 +84,7 @@ Para realizar este proyecto, se decidió utilizar una arquitectura por capas de 
 ![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaManga.png)
 
 ### Realizar busqueda por imagen
-
+![Diagrama de busqueda](assets/Diagrama_secuencia_busquedaImagen.png)
 
 ### Registrar usuario
 
@@ -176,10 +176,10 @@ Se encarga de realizar una búsqueda mediante el título de un manga/comic.
 ```JAVA
 @NotNull
 @NotEmpty
-String query;
+String query; //nombre del título a buscar
 @NotNull
 @NotEmpty
-String type;
+String type; //tipo de artículo manga/comic
 ```
 
 #### Respuesta
@@ -226,12 +226,12 @@ Se encarga de realizar una búsqueda mediante la imagen de un manga/comic.
 ```JAVA
 @NotNull
 @NotEmpty
-String urlImg;
+String urlImg; //url de la imagen a analizar
 @NotNull
 @NotEmpty
-String type;
+String type; //tipo de artículo manga/comic
 ```
->Se espera que la imagen esté subida en la nube y que se pueda acceder mediante una url, el formato admitido de imagen son: PNG, JPEG.
+>Se espera que la imagen este subida en internet y que se pueda acceder mediante una url, el formato admitido de imagen son: PNG, JPEG.
 
 #### Respuesta
 ```JSON
@@ -259,6 +259,49 @@ String type;
             
         ]
     }, ...
+
+]
+```
+### Recomendaciones
+---
+### `GET` - Buscar comic/manga por imagen
+
+    https://manicsrestapi/v1/recommendations/{id}
+
+### Descripción
+
+Se encarga de encontrar las recomendaciones de un manga/comic de un usuario, con respecto a los otros usuarios del sistema.
+
+### Campos requeridos (parámetros) 
+
+
+```JAVA
+@NotNull
+@NotEmpty
+Long id; //id de usuario
+@NotNull
+String type; //tipo de artículo manga/comic
+@NotNull
+int number; //número de recomendaciones
+```
+
+#### Respuesta
+```JSON
+[
+    { 
+        "id": 890,
+        "nombre": "The new 52",
+        "autor": "DC Comics",
+        "fecha_publicacion": "2011",
+        "paginas": 103
+    }, 
+    { 
+        "id": 191,
+        "nombre": "Superman 1978",
+        "autor": "DC Comics",
+        "fecha_publicacion": "1978",
+        "paginas": 20
+    }
 
 ]
 ```
@@ -425,7 +468,7 @@ Devuelve todos los comics registrados.
         "autor": "StrinSteve Yeowell, Mark Millar, Grant Morrisong",
         "fecha_publicacion": "1995",
         "paginas": 136
-    }
+    }, ...
 ]
 ```
 
