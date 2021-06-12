@@ -25,6 +25,9 @@ public class Page {
     @JsonBackReference
     private Chapter chapter;
 
+    @Column(name = "numero_pagina")
+    private Integer pageNumber;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -53,10 +56,18 @@ public class Page {
         this.imageUrl = imageUrl;
     }
 
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
     @Override
     public String toString() {
-        return "Page [chapter=" + chapter + ", id=" + id + ", imageUrl=" + imageUrl + "]";
+        return "Page [chapter=" + chapter + ", id=" + id + ", imageUrl=" + imageUrl + ", pageNumber=" + pageNumber
+                + "]";
     }
-    
     
 }

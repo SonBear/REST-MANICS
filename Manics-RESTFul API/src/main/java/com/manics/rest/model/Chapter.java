@@ -29,8 +29,8 @@ public class Chapter {
     @JsonBackReference
     private Manga manga;
 
-    @OneToMany(mappedBy = "chapter")
-    private List<Page> pages;
+    @Column(name = "numero_capitulo")
+    private Integer chapterNumber;
 
     @Column(name = "nombre")
     private String name;
@@ -40,6 +40,9 @@ public class Chapter {
 
     @Column(name="total_paginas")
     private Integer pageTotal;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<Page> pages;
 
     public Integer getId() {
         return id;
@@ -90,11 +93,18 @@ public class Chapter {
         this.pageTotal = pageTotal;
     }
 
-    @Override
-    public String toString() {
-        return "Chapter [id=" + id + ", manga=" + manga + ", name=" + name + ", pageTotal=" + pageTotal + ", pages="
-                + pages + ", publicationDate=" + publicationDate + "]";
+    public Integer getChapterNumber() {
+        return chapterNumber;
     }
 
-    
+    public void setChapterNumber(Integer chapterNumber) {
+        this.chapterNumber = chapterNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Chapter [chapterNumber=" + chapterNumber + ", id=" + id + ", manga=" + manga + ", name=" + name
+                + ", pageTotal=" + pageTotal + ", pages=" + pages + ", publicationDate=" + publicationDate + "]";
+    }
+
 }
