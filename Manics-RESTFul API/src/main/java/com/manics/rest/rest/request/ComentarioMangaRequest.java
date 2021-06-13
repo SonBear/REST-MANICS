@@ -1,4 +1,4 @@
-package com.manics.rest.model.request;
+package com.manics.rest.rest.request;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

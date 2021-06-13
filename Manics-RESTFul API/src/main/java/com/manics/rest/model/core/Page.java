@@ -1,4 +1,4 @@
-package com.manics.rest.model;
+package com.manics.rest.model.core;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,31 +6,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "mangas_capitulos_paginas")
+@Table(name = "pages")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pagina_id")
-    private Integer id;
+    @Column
+    private Integer pageId;
 
     @ManyToOne
-    @JoinColumn(name = "capitulo_id")
+    @JoinColumn(name = "chapter_id")
     @JsonBackReference
     private Chapter chapter;
 
-    @Column(name = "numero_pagina")
+    @Column
     private Integer pageNumber;
 
-    @Column(name = "image_url")
+    @Column
     private String imageUrl;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getPageId() {
+        return pageId;
     }
 
     @JsonIgnore
@@ -42,14 +39,6 @@ public class Page {
         this.chapter = chapter;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public Integer getPageNumber() {
         return pageNumber;
     }
@@ -58,10 +47,22 @@ public class Page {
         this.pageNumber = pageNumber;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString() {
-        return "Page [chapter=" + chapter + ", id=" + id + ", imageUrl=" + imageUrl + ", pageNumber=" + pageNumber
-                + "]";
+        return "Page{" +
+                "pageId=" + pageId +
+                ", chapter=" + chapter +
+                ", pageNumber=" + pageNumber +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 
 }

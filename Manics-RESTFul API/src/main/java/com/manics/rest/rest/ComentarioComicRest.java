@@ -7,7 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.manics.rest.model.ComentarioComic;
-import com.manics.rest.model.request.ComentarioComicRequest;
+import com.manics.rest.rest.request.ComentarioComicRequest;
 import com.manics.rest.service.ComentarioComicService;
 
 import org.springframework.beans.factory.annotation.Autowired;

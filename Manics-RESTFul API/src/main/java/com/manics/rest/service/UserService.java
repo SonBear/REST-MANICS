@@ -15,8 +15,8 @@ import java.util.Objects;
 @Service
 public class UserService {
 
-    private UserRepository userRepo;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepo, PasswordEncoder passwordEncoder) {

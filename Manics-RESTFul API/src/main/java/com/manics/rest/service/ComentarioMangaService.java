@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.ComentarioManga;
-import com.manics.rest.model.request.ComentarioMangaRequest;
+import com.manics.rest.rest.request.ComentarioMangaRequest;
 import com.manics.rest.repository.ComentarioMangaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
