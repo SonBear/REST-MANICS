@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.manics.rest.model.ComentarioComic;
-import com.manics.rest.model.request.ComentarioComicRequest;
-import com.manics.rest.service.ComentarioComicService;
+import com.manics.rest.model.ComentarioManga;
+import com.manics.rest.model.request.ComentarioMangaRequest;
+import com.manics.rest.service.ComentarioMangaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,38 +23,38 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api/comics")
-public class ComentarioComicRest {
+@RequestMapping("/api/mangas")
+public class ComentarioMangaRest {
     
     @Autowired
-    private ComentarioComicService comentarioComicService;
+    private ComentarioMangaService ComentarioMangaService;
 
     @GetMapping("/comentarios")
-    public ResponseEntity<List<ComentarioComic>> getComentariosComics() {
-        return ResponseEntity.ok().body(comentarioComicService.getComentarios());
+    public ResponseEntity<List<ComentarioManga>> getComentariosComics() {
+        return ResponseEntity.ok().body(ComentarioMangaService.getComentarios());
     }
 
     @GetMapping("/comentarios/{id}")
-    public ResponseEntity<ComentarioComic> getComentarioComic(@PathVariable Integer id) {
-        ComentarioComic comentario = comentarioComicService.getComentario(id);
+    public ResponseEntity<ComentarioManga> getProfesor(@PathVariable Integer id) {
+        ComentarioManga comentario = ComentarioMangaService.getComentario(id);
         return ResponseEntity.ok().body(comentario);
     }
 
     @PostMapping("/comentarios")
-    public ResponseEntity<ComentarioComic> createComentario(@RequestBody @Valid ComentarioComicRequest request) throws URISyntaxException{
-        ComentarioComic comentario = comentarioComicService.crearComentario(request);
+    public ResponseEntity<ComentarioManga> createComentario(@RequestBody @Valid ComentarioMangaRequest request) throws URISyntaxException{
+        ComentarioManga comentario = ComentarioMangaService.crearComentario(request);
         return ResponseEntity.created(new URI("/comentarios/" + comentario.getId())).body(comentario);
     }
 
     @PutMapping("/comentarios/{id}")
-    public ResponseEntity<ComentarioComic> updateComentario(@PathVariable Integer id, @RequestBody ComentarioComicRequest request) {
-        ComentarioComic comentario = comentarioComicService.updateComentario(id, request);
+    public ResponseEntity<ComentarioManga> updateComentario(@PathVariable Integer id, @RequestBody ComentarioMangaRequest request) {
+        ComentarioManga comentario = ComentarioMangaService.updateComentario(id, request);
         return ResponseEntity.ok(comentario);
     }
 
     @DeleteMapping("/comentarios/{id}")
-    public ResponseEntity<ComentarioComic> deleteComentario(@PathVariable Integer id) {
-        ComentarioComic comentario = comentarioComicService.deleteComentario(id);
+    public ResponseEntity<ComentarioManga> deleteComentario(@PathVariable Integer id) {
+        ComentarioManga comentario = ComentarioMangaService.deleteComentario(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comentario);
     }
 }

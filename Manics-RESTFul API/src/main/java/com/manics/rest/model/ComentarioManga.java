@@ -1,5 +1,7 @@
 package com.manics.rest.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,16 +18,26 @@ public class ComentarioManga {
     private Integer id;
 
     @Column(name = "user_id")
-    private String user_id;
+    private Integer user_id;
 
     @Column(name = "manga_id")
-    private String manga_id;
+    private Integer manga_id;
 
     @Column(name = "contenido")
     private String contenido;
 
     @Column(name = "fecha_publicacion")
-    private String fecha_publicacion;
+    private Date fecha_publicacion;
+
+    public ComentarioManga() {
+
+    }
+
+    public ComentarioManga(Integer user_id, Integer manga_id, String contenido) {
+        this.user_id = user_id;
+        this.manga_id = manga_id;
+        this.contenido = contenido;
+    }
 
     public Integer getId() {
         return id;
@@ -35,19 +47,19 @@ public class ComentarioManga {
         this.id = id;
     }
 
-    public String getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
-    public String getManga_id() {
+    public Integer getManga_id() {
         return manga_id;
     }
 
-    public void setManga_id(String manga_id) {
+    public void setManga_id(Integer manga_id) {
         this.manga_id = manga_id;
     }
 
@@ -59,11 +71,11 @@ public class ComentarioManga {
         this.contenido = contenido;
     }
 
-    public String getFecha_publicacion() {
+    public Date getFecha_publicacion() {
         return fecha_publicacion;
     }
 
-    public void setFecha_publicacion(String fecha_publicacion) {
+    public void setFecha_publicacion(Date fecha_publicacion) {
         this.fecha_publicacion = fecha_publicacion;
     }
 
@@ -72,6 +84,7 @@ public class ComentarioManga {
         return "ComentarioManga [contenido=" + contenido + ", fecha_publicacion=" + fecha_publicacion + ", id=" + id
                 + ", manga_id=" + manga_id + ", user_id=" + user_id + "]";
     }
+
 
 
 
