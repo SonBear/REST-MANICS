@@ -1,24 +1,16 @@
 package com.manics.rest.model;
 
-import java.sql.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "mangas_capitulos")
 public class Chapter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "capitulo_id")
@@ -38,7 +30,7 @@ public class Chapter {
     @Column(name = "fecha_publicacion")
     private Date publicationDate;
 
-    @Column(name="total_paginas")
+    @Column(name = "total_paginas")
     private Integer pageTotal;
 
     @OneToMany(mappedBy = "chapter")
