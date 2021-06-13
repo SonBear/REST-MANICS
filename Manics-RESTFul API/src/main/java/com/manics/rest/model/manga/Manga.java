@@ -1,4 +1,4 @@
-package com.manics.rest.model;
+package com.manics.rest.model.manga;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.manics.rest.model.Category;
+
 
 @Entity
 @Table(name="mangas")
@@ -23,6 +25,9 @@ public class Manga {
 
     @Column(name = "nombre")
     private String name;
+
+    @Column(name = "autor")
+    private String author;
     
     @Column(name="anio_publicacion")
     private Integer publicationYear;
@@ -32,10 +37,10 @@ public class Manga {
 
     @OneToOne
     @JoinColumn(name = "categoria_id")
-    private Category categoria;
+    private Category category;
 
     @OneToMany(mappedBy = "manga")
-    private List<Chapter> Chapters;
+    private List<ChapterManga> Chapters;
 
     public Integer getId() {
         return id;
@@ -69,25 +74,34 @@ public class Manga {
         this.availableChapters = availableChapters;
     }
 
-    public Category getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Category categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<Chapter> getChapters() {
+    public List<ChapterManga> getChapters() {
         return Chapters;
     }
 
-    public void setChapters(List<Chapter> chapters) {
+    public void setChapters(List<ChapterManga> chapters) {
         Chapters = chapters;
+    }
+    
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
-        return "Manga [Chapters=" + Chapters + ", availableChapters=" + availableChapters + ", categoria=" + categoria
+        return "Manga [Chapters=" + Chapters + ", availableChapters=" + availableChapters + ", categoria=" + category
                 + ", id=" + id + ", name=" + name + ", publicationDate=" + publicationYear + "]";
     }
 

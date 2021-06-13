@@ -1,4 +1,4 @@
-package com.manics.rest.model;
+package com.manics.rest.model.manga;
 
 import java.sql.Date;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "mangas_capitulos")
-public class Chapter {
+public class ChapterManga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "capitulo_id")
@@ -42,7 +42,7 @@ public class Chapter {
     private Integer pageTotal;
 
     @OneToMany(mappedBy = "chapter")
-    private List<Page> pages;
+    private List<PageManga> pages;
 
     public Integer getId() {
         return id;
@@ -61,11 +61,11 @@ public class Chapter {
         this.manga = manga;
     }
 
-    public List<Page> getPages() {
+    public List<PageManga> getPages() {
         return pages;
     }
 
-    public void setPages(List<Page> pages) {
+    public void setPages(List<PageManga> pages) {
         this.pages = pages;
     }
 

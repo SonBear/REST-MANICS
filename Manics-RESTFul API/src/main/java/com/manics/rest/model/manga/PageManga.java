@@ -1,4 +1,4 @@
-package com.manics.rest.model;
+package com.manics.rest.model.manga;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "mangas_capitulos_paginas")
-public class Page {
+public class PageManga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pagina_id")
@@ -23,7 +23,7 @@ public class Page {
     @ManyToOne
     @JoinColumn(name = "capitulo_id")
     @JsonBackReference
-    private Chapter chapter;
+    private ChapterManga chapter;
 
     @Column(name = "numero_pagina")
     private Integer pageNumber;
@@ -40,11 +40,11 @@ public class Page {
     }
 
     @JsonIgnore
-    public Chapter getChapter() {
+    public ChapterManga getChapter() {
         return chapter;
     }
 
-    public void setChapter(Chapter chapter) {
+    public void setChapter(ChapterManga chapter) {
         this.chapter = chapter;
     }
 
