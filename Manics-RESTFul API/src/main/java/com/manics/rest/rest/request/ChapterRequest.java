@@ -1,12 +1,10 @@
-package com.manics.rest.model.request.manga;
-
-import java.sql.Date;
-import java.util.List;
+package com.manics.rest.rest.request;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-public class ChapterMangaRequest {
+public class ChapterRequest {
 
     @NotNull
     private Integer chapterNumber;
@@ -14,17 +12,16 @@ public class ChapterMangaRequest {
     @NotEmpty
     @NotNull
     private String name;
-    
-    @NotNull
-    private Date publicationDate;
-    
-    @NotNull
-    private Integer pageTotal;
-    
-    @NotNull
-    private List<PageMangaRequest> pages;
 
-  
+    @NotNull
+    private String publicationDate;
+
+    @NotNull
+    private Integer totalPages;
+
+    @NotNull
+    private List<PageRequest> pages;
+
     public Integer getChapterNumber() {
         return chapterNumber;
     }
@@ -41,29 +38,28 @@ public class ChapterMangaRequest {
         this.name = name;
     }
 
-    public Date getPublicationDate() {
+    public String getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
     }
 
-    public Integer getPageTotal() {
-        return pageTotal;
+    public Integer getTotalPages() {
+        return totalPages;
     }
 
-    public void setPageTotal(Integer pageTotal) {
-        this.pageTotal = pageTotal;
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public List<PageMangaRequest> getPages() {
+    public List<PageRequest> getPages() {
         return pages;
     }
 
-    public void setPages(List<PageMangaRequest> pages) {
+    public void setPages(List<PageRequest> pages) {
         this.pages = pages;
     }
 
-    
 }

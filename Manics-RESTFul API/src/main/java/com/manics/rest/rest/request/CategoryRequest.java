@@ -1,17 +1,17 @@
-package com.manics.rest.model.request;
+package com.manics.rest.rest.request;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class CategoryRequest {
-    
-    @NotNull
-    @NotEmpty
-    String name;
 
     @NotNull
     @NotEmpty
-    String description;
+    private String name;
+
+    @NotNull
+    @NotEmpty
+    private String description;
 
     public String getName() {
         return name;
@@ -29,5 +29,4 @@ public class CategoryRequest {
         this.description = description;
     }
 
-    
 }

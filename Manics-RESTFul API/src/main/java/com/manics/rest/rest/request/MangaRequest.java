@@ -1,19 +1,18 @@
-package com.manics.rest.model.request.manga;
-
-import java.util.List;
+package com.manics.rest.rest.request;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.lang.NonNull;
+import java.util.List;
 
 public class MangaRequest {
+
+    private Integer categoriaId;
 
     @NotNull
     @NotEmpty
     private String name;
 
-    @NonNull
+    @NotNull
     @NotEmpty
     private String author;
 
@@ -21,13 +20,9 @@ public class MangaRequest {
     private Integer publicationYear;
 
     @NotNull
-    private Integer avaiableChapters;
+    private Integer availableChapters;
 
-    @NotNull
-    private Integer categoriaId;
-
-    @NonNull
-    private List<ChapterMangaRequest> Chapters;
+    private List<ChapterRequest> chapters;
 
     public Integer getPublicationYear() {
         return publicationYear;
@@ -45,12 +40,12 @@ public class MangaRequest {
         this.author = author;
     }
 
-    public Integer getAvaiableChapters() {
-        return avaiableChapters;
+    public Integer getAvailableChapters() {
+        return availableChapters;
     }
 
-    public void setAvaiableChapters(Integer avaiableChapters) {
-        this.avaiableChapters = avaiableChapters;
+    public void setAvailableChapters(Integer availableChapters) {
+        this.availableChapters = availableChapters;
     }
 
     public Integer getCategoriaId() {
@@ -61,12 +56,12 @@ public class MangaRequest {
         this.categoriaId = categoriaId;
     }
 
-    public List<ChapterMangaRequest> getChapters() {
-        return Chapters;
+    public List<ChapterRequest> getChapters() {
+        return chapters;
     }
 
-    public void setChapters(List<ChapterMangaRequest> chapters) {
-        Chapters = chapters;
+    public void setChapters(List<ChapterRequest> chapters) {
+        this.chapters = chapters;
     }
 
     public String getName() {
@@ -77,5 +72,5 @@ public class MangaRequest {
         this.name = name;
     }
 
-    
+
 }
