@@ -5,6 +5,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "sugerencias")
 public class Suggestion {
 
     @Id
@@ -15,8 +16,8 @@ public class Suggestion {
 
     @OneToOne
     @NotNull
-    @JoinColumn(name = "usuarios")
-    private Integer userId;
+    @JoinColumn(name = "user_id")
+    private User user;
     
 
     @Column
@@ -26,6 +27,11 @@ public class Suggestion {
     @Column 
     @NotNull
     private Date creationDate;
+
+    public Suggestion(Integer userId, String content, Date creationDate){
+        this.userId  = userId;
+
+    }
 
 
     public Integer getId(){
