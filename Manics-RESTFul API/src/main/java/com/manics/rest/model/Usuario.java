@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints={
+    @UniqueConstraint(columnNames ={"usuario","email"})
+ })
 public class Usuario {
 
     @Id
@@ -19,7 +21,7 @@ public class Usuario {
     @JsonIgnore
     private String password;
 
-    @Column(unique=true)
+    @Column
     private String email;
 
     @Column

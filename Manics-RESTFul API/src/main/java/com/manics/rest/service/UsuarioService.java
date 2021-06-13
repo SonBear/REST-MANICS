@@ -1,10 +1,10 @@
 package com.manics.rest.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.manics.rest.exception.NotFoundException;
+import com.manics.rest.exception.UsuarioRegistradoException;
 import com.manics.rest.model.Usuario;
 import com.manics.rest.model.request.UsuarioRequest;
 import com.manics.rest.repository.UsuarioRepository;
@@ -42,10 +42,15 @@ public class UsuarioService {
 
     //POST
     public Usuario crearUsuario(UsuarioRequest request) {
+        Usuario usuario = UsuarioRepository.findByUsuario(request.getUsuario());
+        if(!(usuario == null)){
+            throw new  UsuarioRegistradoException(request.getUsuario());
+        }
+
         String token = UUID.randomUUID().toString();
-        Usuario usuario = new Usuario(request.getUsuario(), passwordEncoder.encode(request.getPassword()), request.getEmail(),token);
-        UsuarioRepository.save(usuario);
-        return usuario;
+        Usuario new_usuario = new Usuario(request.getUsuario(), passwordEncoder.encode(request.getPassword()), request.getEmail(),token);
+        UsuarioRepository.save(new_usuario);
+        return new_usuario;
     }
 
     //PUT
