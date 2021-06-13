@@ -27,7 +27,7 @@ public class Manga {
     private Category categoria;
 
     @OneToMany(mappedBy = "manga")
-    private List<Chapter> Chapters;
+    private List<Chapter> chapters;
 
     public Integer getId() {
         return id;
@@ -70,16 +70,16 @@ public class Manga {
     }
 
     public List<Chapter> getChapters() {
-        return Chapters;
+        return chapters;
     }
 
     public void setChapters(List<Chapter> chapters) {
-        Chapters = chapters;
+        this.chapters = chapters;
     }
 
     @Override
     public String toString() {
-        return "Manga [Chapters=" + Chapters + ", availableChapters=" + availableChapters + ", categoria=" + categoria
+        return "Manga [Chapters=" + chapters + ", availableChapters=" + availableChapters + ", categoria=" + categoria
                 + ", id=" + id + ", name=" + name + ", publicationDate=" + publicationYear + "]";
     }
 

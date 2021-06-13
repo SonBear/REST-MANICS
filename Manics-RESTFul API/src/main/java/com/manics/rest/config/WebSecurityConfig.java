@@ -1,7 +1,9 @@
 package com.manics.rest.config;
 
-import com.manics.rest.service.UsuarioService;
-
+import com.manics.rest.config.jwt.JwtConfig;
+import com.manics.rest.config.jwt.JwtTokenVerifier;
+import com.manics.rest.config.jwt.JwtUserAuthenticationFilter;
+import com.manics.rest.config.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,28 +14,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    private final TokenFilter tokenFilter;
-    private final CustomUserDetailsService userDetailsService;
-    private final UsuarioService usuarioService;
-    private final CustomLogoutHandler customLogoutHandler;
+    private final UserDetailsServiceImp userDetailsService;
+    private final JwtConfig jwtConfig;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    public WebSecurity(PasswordEncoder passwordEncoder, TokenFilter tokenFilter,
-            CustomUserDetailsService userDetailsService, UsuarioService usuarioService,
-            CustomLogoutHandler customLogoutHandler) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder,
+                             UserDetailsServiceImp userDetailsService,
+                             JwtConfig jwtConfig,
+                             JwtUtils jwtUtils) {
 
         this.passwordEncoder = passwordEncoder;
-        this.tokenFilter = tokenFilter;
         this.userDetailsService = userDetailsService;
-        this.usuarioService = usuarioService;
-        this.customLogoutHandler = customLogoutHandler;
+        this.jwtConfig = jwtConfig;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -43,12 +43,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No crear cookie
-                .and().csrf().disable().httpBasic().disable() // Authorization: Basic base64(usuario:contrasena) x.x
-                .authorizeRequests().antMatchers("/login", "/register").permitAll().anyRequest().authenticated().and()
-                .logout().logoutUrl("/logout").addLogoutHandler(customLogoutHandler).and()
-                .addFilter(new UsuarioAuthenticationFilter(authenticationManager(), usuarioService))
-                .addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
+        http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No crear cookie
+                .and().csrf().disable()
+                .httpBasic().disable() // Authorization: Basic base64(usuario:contrasena) x.x
+                .authorizeRequests().antMatchers("/login", "/register").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtUserAuthenticationFilter(authenticationManager(), jwtConfig, jwtUtils))
+                .addFilterAfter(new JwtTokenVerifier(jwtUtils), JwtUserAuthenticationFilter.class);
     }
 
     @Bean
