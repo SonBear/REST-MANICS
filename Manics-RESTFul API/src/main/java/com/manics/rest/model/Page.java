@@ -1,20 +1,14 @@
 package com.manics.rest.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mangas_capitulos_paginas")
 public class Page {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pagina_id")
@@ -69,5 +63,5 @@ public class Page {
         return "Page [chapter=" + chapter + ", id=" + id + ", imageUrl=" + imageUrl + ", pageNumber=" + pageNumber
                 + "]";
     }
-    
+
 }

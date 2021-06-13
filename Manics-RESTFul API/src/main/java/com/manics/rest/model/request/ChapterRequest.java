@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class ChapterRequest {
+
     private Integer mangaId;
 
     private Integer chapterNumber;

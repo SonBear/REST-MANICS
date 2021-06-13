@@ -1,21 +1,13 @@
 package com.manics.rest.model;
 
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 
 @Entity
-@Table(name="mangas")
+@Table(name = "mangas")
 public class Manga {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "manga_id")
@@ -23,8 +15,8 @@ public class Manga {
 
     @Column(name = "nombre")
     private String name;
-    
-    @Column(name="anio_publicacion")
+
+    @Column(name = "anio_publicacion")
     private Integer publicationYear;
 
     @Column(name = "capitulos_disponibles")
@@ -91,5 +83,5 @@ public class Manga {
                 + ", id=" + id + ", name=" + name + ", publicationDate=" + publicationYear + "]";
     }
 
-    
+
 }

@@ -1,15 +1,11 @@
 package com.manics.rest.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "categorias")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoria_id")
@@ -50,5 +46,4 @@ public class Category {
         return "Categoria [description=" + description + ", id=" + id + ", name=" + name + "]";
     }
 
-    
 }
