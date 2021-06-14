@@ -2,12 +2,13 @@ package com.manics.rest.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import com.manics.rest.exception.BadRequestException;
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Story;
 import com.manics.rest.repository.ChapterRepository;
-import com.manics.rest.repository.PageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,11 @@ public class ChapterService {
     
     private final ChapterRepository chapterRepository;
     private final StoryService storyService;
-    private final PageRepository pageRepository;
 
     @Autowired
-    private ChapterService(ChapterRepository chapterRepository, StoryService storyService
-    ,PageRepository pageRepository){
+    private ChapterService(ChapterRepository chapterRepository, StoryService storyService){
         this.chapterRepository = chapterRepository;
         this.storyService = storyService;
-      this.pageRepository = pageRepository;
     }
 
     public List<Chapter> getChapters(){
@@ -39,6 +37,9 @@ public class ChapterService {
     }
    
     public Chapter createChapter(Integer storyId, Chapter chapter){
+        if (Objects.isNull(storyId))
+            throw new BadRequestException("Atributo storyId no incluido");
+
         Story story = storyService.getStoryById(storyId);
         chapter.setStory(story);
         chapterRepository.save(chapter);
@@ -47,15 +48,7 @@ public class ChapterService {
 
     //Revisar por que no se borraaaa
     public Chapter updateChapter(Integer chapterId, Chapter newChapter){
-        Chapter chapter = getChapterById(chapterId);
-       
-        chapter.getPages().forEach((page)->{
-            pageRepository.delete(page);
-            System.out.println(page.getPageNumber());
-        });
-        newChapter.getPages().forEach((page)->
-            page.setChapter(chapter)
-        );
+        Chapter chapter = getChapterById(chapterId);       
         chapter.updateChapter(newChapter);
         chapterRepository.save(chapter);
         return chapter;

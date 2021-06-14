@@ -23,15 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PageRest {
-    @Autowired
-    private PageService pageService;
-    @Autowired
-    private PageMapper pageMapper;
+   
+    private final  PageService pageService;
+    
+    private final PageMapper pageMapper;
 
+    @Autowired
+    private PageRest(PageService pageService, PageMapper pageMapper) {
+        this.pageService = pageService;
+        this.pageMapper = pageMapper;
+    }
+    
     @GetMapping("/paginas")
     public ResponseEntity<List<Page>> getPages(){
         return ResponseEntity.ok().body(pageService.getPages());
     }
+
 
     @GetMapping("/paginas/{id}")
     public ResponseEntity<Page> getPageById(@PathVariable Integer id) {

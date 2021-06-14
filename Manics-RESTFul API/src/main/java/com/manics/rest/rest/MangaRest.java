@@ -44,7 +44,7 @@ public class MangaRest {
                 storyMapper.storyRequestToManga(request)
         );
 
-        return ResponseEntity.created(new URI("/mangas/" + manga.getId())).body(manga);
+        return ResponseEntity.created(new URI("/mangas/" + manga.getStoryId())).body(manga);
     }
 
     @PutMapping("/mangas/{id}")

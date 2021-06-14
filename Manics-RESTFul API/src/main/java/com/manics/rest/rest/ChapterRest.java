@@ -24,11 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ChapterRest {
-    @Autowired
-    private ChapterService chapterService;
+    
+    private final ChapterService chapterService;
+    private final ChapterMapper chapterMapper;
 
-    @Autowired 
-    private ChapterMapper chapterMapper;
+    @Autowired
+    private ChapterRest(ChapterService chapterService, ChapterMapper chapterMapper) {
+        this.chapterService = chapterService;
+        this.chapterMapper = chapterMapper;
+    }
 
     @GetMapping("/capitulos")
     public ResponseEntity<List<Chapter>> getChapters(){

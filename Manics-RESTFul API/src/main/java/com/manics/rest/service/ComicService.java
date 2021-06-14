@@ -16,13 +16,14 @@ public class ComicService {
 
     private final ComicRepository comicRepository;
     private final CategoryService categoryService;
+    
 
     @Autowired
-    public ComicService(ComicRepository comicRepository, CategoryService categoryService) {
+    private ComicService(ComicRepository comicRepository, CategoryService categoryService) {
         this.comicRepository = comicRepository;
         this.categoryService = categoryService;
     }
-
+ 
     public List<Comic> getComics() {
         List<Comic> comics = new ArrayList<>();
         comicRepository.findAll().iterator().forEachRemaining(comics::add);
@@ -37,27 +38,20 @@ public class ComicService {
     public Comic createComic(Integer categoryId, Comic comic) {
         Category category = categoryService.getCategory(categoryId);
         comic.setCategory(category);
-
         return comicRepository.save(comic);
     }
 
-    //falta guardar los capitulos
     public Comic updateComic(Integer comicId, Integer categoryId, Comic newComic) {
         Comic comic = getComicById(comicId);
-
         Category category = categoryService.getCategory(categoryId);
         comic.updateStory(category, newComic);
-
         comicRepository.save(comic);
-
         return comic;
     }
 
     public Comic deleteComic(Integer comicId) {
         Comic comic = getComicById(comicId);
-
         comicRepository.delete(comic);
-
         return comic;
     }
 

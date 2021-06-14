@@ -2,6 +2,7 @@ package com.manics.rest.model.core;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "stories")
@@ -11,7 +12,7 @@ public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_id")
-    private Integer id;
+    private Integer storyId;
 
     @Column
     private String name;
@@ -32,8 +33,13 @@ public class Story {
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<Chapter> chapters;
 
-    public Integer getId() {
-        return id;
+    
+    public Integer getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(Integer storyId) {
+        this.storyId = storyId;
     }
 
     public String getName() {
@@ -90,12 +96,16 @@ public class Story {
         setAuthor(story.getAuthor());
         setAvailableChapters(story.getAvailableChapters());
         setPublicationYear(story.getPublicationYear());
+        if(!Objects.isNull(story.chapters)){
+            story.getChapters().forEach((chapter)-> chapter.setStory(this));
+            setChapters(story.getChapters());
+        }
     }
 
     @Override
     public String toString() {
         return "Story{" +
-                "id=" + id +
+                "storyId=" + storyId +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationYear=" + publicationYear +

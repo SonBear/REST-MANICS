@@ -2,7 +2,9 @@ package com.manics.rest.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import com.manics.rest.exception.BadRequestException;
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
@@ -34,6 +36,8 @@ public class PageService {
     }
 
     public Page createPage(Integer chapterId, Page page){
+        if(Objects.isNull(chapterId))
+            throw new BadRequestException("Atributo chapterId no incluido");
         Chapter chapter = chapterService.getChapterById(chapterId);
         page.setChapter(chapter);
         pageRepository.save(page);

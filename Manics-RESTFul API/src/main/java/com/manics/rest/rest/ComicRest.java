@@ -48,7 +48,7 @@ public class ComicRest {
     public ResponseEntity<Comic> createComic(@RequestBody @Valid StoryRequest request) throws URISyntaxException{
         Comic comic = comicService.createComic(
             request.getCategoryId(), storyMapper.storyRequestToComic(request));
-        return ResponseEntity.created(new URI("/comics/" + comic.getId())).body(comic);
+        return ResponseEntity.created(new URI("/comics/" + comic.getStoryId())).body(comic);
     }
 
     @PutMapping("/comics/{id}")

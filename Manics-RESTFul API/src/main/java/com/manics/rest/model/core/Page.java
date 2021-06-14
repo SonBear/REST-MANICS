@@ -64,7 +64,6 @@ public class Page {
     public String toString() {
         return "Page{" +
                 "pageId=" + pageId +
-                ", chapter=" + chapter +
                 ", pageNumber=" + pageNumber +
                 ", imageUrl='" + imageUrl + '\'' +
                 '}';
