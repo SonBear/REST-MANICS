@@ -1,4 +1,4 @@
-package com.manics.rest.rest.request;
+package com.manics.rest.rest.request.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

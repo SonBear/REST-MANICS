@@ -1,5 +1,7 @@
 package com.manics.rest.model.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,11 +31,26 @@ public class Story {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "story",
+            cascade = CascadeType.ALL
+    )
     private List<Chapter> chapters;
+
+    @OneToMany(
+            mappedBy = "story",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private List<Comment> comments;
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,6 +99,10 @@ public class Story {
 
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public void updateStory(Category category, Story story) {

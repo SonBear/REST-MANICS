@@ -3,6 +3,7 @@ package com.manics.rest.service;
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.exception.UsuarioRegistradoException;
 import com.manics.rest.model.auth.User;
+import com.manics.rest.model.auth.UserRole;
 import com.manics.rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Service
@@ -36,16 +38,12 @@ public class UserService {
                 );
     }
 
-    public User createUser(User user) {
-        return createUser(user.getUsername(), user.getEmail(), user.getPassword());
-    }
+    public User createUser(User newUser) {
+        User user = userRepo.findByUsername(newUser.getUsername());
 
-    public User createUser(String username, String email, String password) {
-        User user = userRepo.findByUsername(username);
+        if (!Objects.isNull(user)) throw new UsuarioRegistradoException(newUser.getUsername());
 
-        if (!Objects.isNull(user)) throw new UsuarioRegistradoException(username);
-
-        User newUser = new User(username, email, passwordEncoder.encode(password));
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         return userRepo.save(newUser);
     }
@@ -60,6 +58,15 @@ public class UserService {
         user.setUsername(newUsername);
         user.setEmail(newEmail);
         user.setPassword(passwordEncoder.encode(newPassword));
+
+        return userRepo.save(user);
+    }
+
+    public User updateUserRoles(Integer userId, Set<UserRole> newUserRoles) {
+        User user = getUserById(userId);
+
+        if (!Objects.isNull(newUserRoles) && !newUserRoles.isEmpty())
+            user.setRoles(newUserRoles);
 
         return userRepo.save(user);
     }

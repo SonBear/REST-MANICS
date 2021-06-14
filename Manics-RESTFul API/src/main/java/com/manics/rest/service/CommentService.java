@@ -2,6 +2,7 @@ package com.manics.rest.service;
 
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Comment;
+import com.manics.rest.model.core.Story;
 import com.manics.rest.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByStoryId(Integer storyId) {
-        return commentRepository.findByStoryId(storyId);
+        return commentRepository.findByStory_Id(storyId);
     }
 
     public List<Comment> getCommentsByUserId(Integer userId) {
@@ -50,7 +51,9 @@ public class CommentService {
 
     public Comment createComment(Comment comment) {
         userService.checkIfUserExist(comment.getUserId());
-        storyService.checkIfStoryExists(comment.getStoryId());
+
+        Story story = storyService.getStoryById(comment.getStoryId());
+        comment.setStory(story);
 
         return commentRepository.save(comment);
     }

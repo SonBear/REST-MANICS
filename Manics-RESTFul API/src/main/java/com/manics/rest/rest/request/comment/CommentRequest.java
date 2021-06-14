@@ -1,22 +1,15 @@
-package com.manics.rest.rest.request;
+package com.manics.rest.rest.request.comment;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class CommentRequest {
+public class CommentRequest extends CommentUpdateRequest {
 
-    @Min(value = 1)
-    @NotNull
+    @NotNull(message = "Se requiere el id del usuario para crear un comentario.")
     private Integer userId;
 
-    @Min(value = 1)
-    @NotNull
+    @NotNull(message = "Se requiere el id del relato para crear un comentario.")
     private Integer storyId;
-
-    @NotNull
-    @NotEmpty
-    private String content;
 
     public Integer getUserId() {
         return userId;
@@ -34,21 +27,14 @@ public class CommentRequest {
         this.storyId = storyId;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     @Override
     public String toString() {
         return "CommentRequest{" +
                 "userId=" + userId +
                 ", storyId=" + storyId +
-                ", content='" + content + '\'' +
+                ", content='" + getContent() + '\'' +
                 '}';
     }
 
 }
+

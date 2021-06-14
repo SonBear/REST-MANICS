@@ -1,9 +1,11 @@
 package com.manics.rest.model.core;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comments")
@@ -17,8 +19,10 @@ public class Comment {
     @Column
     private Integer userId;
 
-    @Column
-    private Integer storyId;
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    @JsonBackReference
+    private Story story;
 
     @Column
     private String content;
@@ -47,12 +51,16 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Integer getStoryId() {
-        return storyId;
+    public Story getStory() {
+        return story;
     }
 
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
+    public void setStory(Story story) {
+        this.story = story;
+    }
+
+    public Integer getStoryId() {
+        return story.getId();
     }
 
     public String getContent() {
@@ -68,11 +76,24 @@ public class Comment {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", storyId=" + storyId +
+                ", storyId=" + story +
                 ", content='" + content + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
