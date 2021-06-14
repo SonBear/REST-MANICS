@@ -44,6 +44,7 @@ public class MangaService {
         return mangaRepository.save(manga);
     }
 
+    //Falta guardar los capitulos
     public Manga updateManga(Integer mangaId, Integer categoryId, Manga newManga) {
         Manga manga = getMangaById(mangaId);
 

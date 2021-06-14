@@ -22,7 +22,6 @@ public class ChapterRequest {
     @NotNull
     private Integer totalPages;
 
-    @NotNull
     private List<PageRequest> pages;
 
     public Integer getChapterNumber() {

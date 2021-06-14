@@ -89,8 +89,11 @@ public class Chapter {
         this.pages = pages;
     }
 
-    public void updateChapter(List<Chapter> chapters) {
-
+    public void updateChapter(Chapter chapter) {
+        setChapterNumber(chapter.getChapterNumber());
+        setName(chapter.getName());
+        setPublicationDate(chapter.getPublicationDate());
+        setTotalPages(chapter.getTotalPages());
     }
 
     @Override

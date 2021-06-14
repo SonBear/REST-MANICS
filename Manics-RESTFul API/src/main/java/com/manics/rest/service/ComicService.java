@@ -41,6 +41,7 @@ public class ComicService {
         return comicRepository.save(comic);
     }
 
+    //falta guardar los capitulos
     public Comic updateComic(Integer comicId, Integer categoryId, Comic newComic) {
         Comic comic = getComicById(comicId);
 
