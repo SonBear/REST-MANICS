@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Service
-public class MangaService {
+public class MangaService extends StoryService {
 
     private final MangaRepository mangaRepository;
     private final CategoryService categoryService;
@@ -41,12 +41,14 @@ public class MangaService {
         Category category = categoryService.getCategory(categoryId);
 
         manga.setCategory(category);
+
         return mangaRepository.save(manga);
     }
 
-    
+
     public Manga updateManga(Integer mangaId, Integer categoryId, Manga newManga) {
         Manga manga = getMangaById(mangaId);
+
         Category category = categoryService.getCategory(categoryId);
         manga.updateStory(category, newManga);
         mangaRepository.save(manga);
@@ -58,10 +60,6 @@ public class MangaService {
         Manga manga = getMangaById(mangaId);
         mangaRepository.delete(manga);
         return manga;
-    }
-
-    public boolean isCategoryBeingUse(Category category) {
-        return mangaRepository.findAllByCategory(category).size() > 0;
     }
 
 }

@@ -77,6 +77,10 @@ public class UserService {
         return user;
     }
 
+    public boolean existsUser(String username) {
+        return !Objects.isNull(userRepo.findByUsername(username));
+    }
+
     public void checkIfUserExist(Integer userId) {
         getUserById(userId);
     }

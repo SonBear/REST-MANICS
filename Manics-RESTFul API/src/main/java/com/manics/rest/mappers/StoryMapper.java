@@ -1,19 +1,18 @@
 package com.manics.rest.mappers;
 
-import java.util.Objects;
-
 import com.manics.rest.model.Comic;
 import com.manics.rest.model.Manga;
 import com.manics.rest.model.core.Story;
 import com.manics.rest.rest.request.StoryRequest;
-
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.Objects;
+
 @Mapper(componentModel = "spring")
 public abstract class StoryMapper {
-    
+
     @AfterMapping
     protected void updateBidirectionalRelationships(@MappingTarget Story story) {
         if (!Objects.isNull(story.getChapters()))
@@ -24,5 +23,7 @@ public abstract class StoryMapper {
     }
 
     public abstract Manga storyRequestToManga(StoryRequest storyRequest);
+
     public abstract Comic storyRequestToComic(StoryRequest storyRequest);
+
 }

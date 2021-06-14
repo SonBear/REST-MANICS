@@ -22,9 +22,15 @@ public class StartupConfig implements ApplicationRunner {
 
         System.out.printf("Default admin username: %s%nDefault admin password: %s%n", defaultUsername, defaultPassword);
 
-        userService.createUser(
-                new User("admin", "admin@gmail.com", defaultPassword, Sets.newHashSet(UserRole.ADMIN))
-        );
+        if (!userService.existsUser(defaultUsername))
+            userService.createUser(
+                    new User(
+                            "admin",
+                            "admin@gmail.com",
+                            defaultPassword,
+                            Sets.newHashSet(UserRole.ADMIN)
+                    )
+            );
     }
 
 }
