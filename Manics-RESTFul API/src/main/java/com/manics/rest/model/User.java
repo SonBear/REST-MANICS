@@ -3,7 +3,8 @@ package com.manics.rest.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-
+import java.io.Serializable;
+import java.util.List;
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username", "email"})
@@ -24,6 +25,11 @@ public class User {
     @Column
     private String email;
 
+    @OneToMany( mappedBy="user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Column
+    @JsonIgnore
+    private List<Suggestion> suggestions;
+
     public User() {
 
     }
@@ -40,6 +46,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public List<Suggestion> getSuggestions(){
+        return suggestions;
     }
 
     public void setUsername(String username) {

@@ -1,68 +1,73 @@
-package com.manics.rest.model.request;
+package com.manics.rest.model;
 
-import java.sql.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.persistence.*;
+import java.io.Serializable;
 @Entity
 @Table(name = "sugerencias")
 public class Suggestion {
 
     @Id
     @Column(name = "suggestion_id")
-    @GeneratedValue(strategy = GeneratuionType.IDENTITY)
-    private Integer suggestionId; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id; 
 
 
-    @OneToOne
-    @NotNull
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable =false)
+    @JsonBackReference
     private User user;
     
 
-    @Column
-    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column 
-    @NotNull
-    private Date creationDate;
+    @Column(name = "creationDate")
+    private ZonedDateTime creationDate = ZonedDateTime.now();
 
-    public Suggestion(Integer userId, String content, Date creationDate){
-        this.userId  = userId;
-
+    public Suggestion(User user, String content){
+        this.content = content;
+        this.user = user;
     }
-
 
     public Integer getId(){
-        return suggestionId;
+        return Id;
     }
 
-    public Integer getUser(){
-        return userId;
+    public User getUser(){
+        return user;
     }
 
-    public Sting getContent(){
+    public String getContent(){
         return content;
     }
 
-    public Date getDate(){
-        return fechaCreacion;
+    public ZonedDateTime getDate(){
+        return creationDate;
     }
 
-    public String setContent(String content){
+
+    public void setContent(String content){
         this.content = content;
     }
     
-    public Integer setUserId(Integer userId){
-        this.userId = userId;
+    public void setUser(User user){
+        this.user = user;
     }
 
-    public Date getCreationDate(Date creationDate){
-        this.creationDate = creationDate;
+    @Override
+    public String toString() {
+        return "Suggestion{" +
+                "suggestionId=" + Id +
+                ", user='" + user + '\'' +
+                ", content='" + content + '\'' +
+                ", fecha de creacion='" + creationDate + '\'' +
+                '}';
     }
-
-
-
 
 }
