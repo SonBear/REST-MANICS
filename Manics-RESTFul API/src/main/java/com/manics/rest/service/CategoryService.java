@@ -15,16 +15,15 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    private final MangaService mangaService;
-
-    private final ComicService comicService;
+    @Autowired
+    private MangaService mangaService;
+    
+    @Autowired
+    private ComicService comicService;
 
     @Autowired
-    private CategoryService(CategoryRepository categoryRepository, MangaService mangaService,
-            ComicService comicService) {
+    private CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.mangaService = mangaService;
-        this.comicService = comicService;
     }
 
     public List<Category> getCategories() {

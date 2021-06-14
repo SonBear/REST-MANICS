@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("comics")
 public class ComicRest {
     
     private final ComicService comicService;
@@ -34,30 +36,30 @@ public class ComicRest {
         this.storyMapper = storyMapper;
     }
 
-    @GetMapping("/comics")
+    @GetMapping
     public ResponseEntity<List<Comic>> getComics(){
         return ResponseEntity.ok().body(comicService.getComics());
     }
 
-    @GetMapping("/comics/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Comic> getComicById(@PathVariable Integer id){
         return ResponseEntity.status(HttpStatus.FOUND).body(comicService.getComicById(id));
     }
 
-    @PostMapping("/comics")
+    @PostMapping
     public ResponseEntity<Comic> createComic(@RequestBody @Valid StoryRequest request) throws URISyntaxException{
         Comic comic = comicService.createComic(
             request.getCategoryId(), storyMapper.storyRequestToComic(request));
         return ResponseEntity.created(new URI("/comics/" + comic.getStoryId())).body(comic);
     }
 
-    @PutMapping("/comics/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Comic> updateComic(@PathVariable Integer id, @RequestBody @Valid StoryRequest request){
         Comic comic = comicService.updateComic(id, request.getCategoryId(), storyMapper.storyRequestToComic(request));
         return ResponseEntity.ok().body(comic);
     }
 
-    @DeleteMapping("/comics/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Comic> deleteComic(@PathVariable Integer id){
         return ResponseEntity.ok().body(comicService.deleteComic(id));
     }

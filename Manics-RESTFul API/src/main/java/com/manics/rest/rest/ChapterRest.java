@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("capitulos")
 public class ChapterRest {
     
     private final ChapterService chapterService;
@@ -34,29 +36,29 @@ public class ChapterRest {
         this.chapterMapper = chapterMapper;
     }
 
-    @GetMapping("/capitulos")
+    @GetMapping
     public ResponseEntity<List<Chapter>> getChapters(){
         return ResponseEntity.ok().body(chapterService.getChapters());
     }
 
-    @GetMapping("/capitulos/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Chapter> getChapterById(@PathVariable Integer id){
         return ResponseEntity.status(HttpStatus.FOUND).body(chapterService.getChapterById(id));
     }
 
-    @PostMapping("/capitulos")
+    @PostMapping
     public ResponseEntity<Chapter> createChapter(@RequestBody @Valid ChapterRequest request) throws URISyntaxException{
         Chapter chapter = chapterService.createChapter(request.getStoryId(), chapterMapper.chapterRquestToChapter(request));
         return ResponseEntity.created(new URI("/capitulos/" + chapter.getChapterId())).body(chapter);
     }
 
-    @PutMapping("/capitulos/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Chapter> updateChapter(@PathVariable Integer id, @RequestBody @Valid ChapterRequest request){
         Chapter chapter = chapterService.updateChapter(id, chapterMapper.chapterRquestToChapter(request));
         return ResponseEntity.ok().body(chapter);
     }
 
-    @DeleteMapping("/capitulos/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer id){
         return ResponseEntity.ok().body(chapterService.deleteChapter(id));
     }
