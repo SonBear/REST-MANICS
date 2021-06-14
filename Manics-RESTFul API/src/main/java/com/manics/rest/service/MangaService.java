@@ -33,12 +33,13 @@ public class MangaService {
         return mangaRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new NotFoundException(String.format("No se encontró el manga con el id: %d", id))
+                        () -> new NotFoundException(String.format("No encontramos el manga con el id: %d", id))
                 );
     }
 
     public Manga createManga(Integer categoryId, Manga manga) {
         Category category = categoryService.getCategory(categoryId);
+
         manga.setCategory(category);
         return mangaRepository.save(manga);
     }

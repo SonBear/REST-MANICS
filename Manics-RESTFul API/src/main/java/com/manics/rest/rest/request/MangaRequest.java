@@ -6,21 +6,21 @@ import java.util.List;
 
 public class MangaRequest {
 
-    @NotNull
+    @NotNull(message = "El nuevo manga necesita una categoría.")
     private Integer categoryId;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita el nombre del manga para el registro.")
+    @NotEmpty(message = "El nombre del manga no puede estar vacío.")
     private String name;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita un autor para el registro del manga.")
+    @NotEmpty(message = "El nombre del autor no puede estar vacío.")
     private String author;
 
-    @NotNull
+    @NotNull(message = "Se necesita el año de publicación del manga.")
     private Integer publicationYear;
 
-    @NotNull
+    @NotNull(message = "Los capítulos disponibles son obligatorios.")
     private Integer availableChapters;
 
     private List<ChapterRequest> chapters;

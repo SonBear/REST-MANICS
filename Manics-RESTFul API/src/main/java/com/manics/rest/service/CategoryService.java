@@ -1,6 +1,7 @@
 package com.manics.rest.service;
 
 import com.manics.rest.exception.CategoryInUseException;
+import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class CategoryService {
     public Category getCategory(Integer categoryId) {
         return categoryRepository
                 .findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("No found"));
+                .orElseThrow(() ->
+                        new NotFoundException(String.format("No encontramos la categoria con el id: %d", categoryId))
+                );
     }
 
     public Category createCategory(Category category) {

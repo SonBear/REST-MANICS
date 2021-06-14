@@ -1,7 +1,7 @@
 package com.manics.rest.rest;
 
 import com.manics.rest.mappers.UserMapper;
-import com.manics.rest.model.User;
+import com.manics.rest.model.auth.User;
 import com.manics.rest.rest.request.UserRequest;
 import com.manics.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.manics.rest.model;
+package com.manics.rest.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
