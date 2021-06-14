@@ -46,12 +46,11 @@ public class ChapterService {
         return chapter;
     }
 
-    //Revisar por que no se borraaaa
     public Chapter updateChapter(Integer chapterId, Chapter newChapter){
         Chapter chapter = getChapterById(chapterId);       
         chapter.updateChapter(newChapter);
         chapterRepository.save(chapter);
-        return chapter;
+        return getChapterById(chapterId);
     }
 
     public Chapter deleteChapter(Integer chapterId){

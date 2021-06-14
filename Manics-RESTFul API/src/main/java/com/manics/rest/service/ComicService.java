@@ -46,7 +46,7 @@ public class ComicService {
         Category category = categoryService.getCategory(categoryId);
         comic.updateStory(category, newComic);
         comicRepository.save(comic);
-        return comic;
+        return getComicById(comicId);
     }
 
     public Comic deleteComic(Integer comicId) {

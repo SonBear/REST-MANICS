@@ -50,7 +50,7 @@ public class MangaService {
         Category category = categoryService.getCategory(categoryId);
         manga.updateStory(category, newManga);
         mangaRepository.save(manga);
-        return manga;
+        return getMangaById(mangaId);
     }
 
 
