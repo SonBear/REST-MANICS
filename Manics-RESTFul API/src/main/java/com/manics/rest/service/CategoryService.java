@@ -17,6 +17,9 @@ public class CategoryService {
     @Autowired
     private MangaService mangaService;
 
+    @Autowired
+    private ComicService comicService;
+
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().iterator().forEachRemaining(categories::add);
@@ -45,7 +48,7 @@ public class CategoryService {
     public Category deleteCategory(Integer categoryId) {
         Category category = getCategory(categoryId);
 
-        if (mangaService.isCategoryBeingUse(category))
+        if (mangaService.isCategoryBeingUse(category) || comicService.isCategoryBeingUse(category))
             throw new RuntimeException("La categoria no puede eliminarse");
 
         categoryRepository.delete(category);
