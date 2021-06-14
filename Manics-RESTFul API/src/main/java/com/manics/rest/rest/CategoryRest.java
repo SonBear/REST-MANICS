@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("categorias")
 public class CategoryRest {
 
     private final CategoryService categoryService;
@@ -24,24 +24,24 @@ public class CategoryRest {
         this.categoryMapper = categoryMapper;
     }
 
-    @GetMapping("/categorias")
+    @GetMapping
     public ResponseEntity<List<Category>> getCategories() {
         return ResponseEntity.ok().body(categoryService.getCategories());
     }
 
-    @GetMapping("/categorias/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Category> getCategory(@PathVariable Integer id) {
         return ResponseEntity.ok().body(categoryService.getCategory(id));
     }
 
-    @PostMapping("/categorias")
+    @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryRequest request) {
         return ResponseEntity.ok().body(
                 categoryService.createCategory(categoryMapper.categoryRequestToCategory(request))
         );
     }
 
-    @PutMapping("/categorias/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
                                                    @RequestBody @Valid CategoryRequest request) {
 
@@ -50,7 +50,7 @@ public class CategoryRest {
         );
     }
 
-    @DeleteMapping("/categorias/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Category> deleteCategory(@PathVariable Integer id) {
         return ResponseEntity.ok().body(categoryService.deleteCategory(id));
     }

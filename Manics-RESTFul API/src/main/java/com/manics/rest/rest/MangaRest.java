@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("mangas")
 public class MangaRest {
 
     private final MangaService mangaService;
@@ -27,19 +27,18 @@ public class MangaRest {
         this.mangaMapper = mangaMapper;
     }
 
-    @GetMapping("/mangas")
+    @GetMapping
     public ResponseEntity<List<Manga>> getMangas() {
         return ResponseEntity.ok().body(mangaService.getMangas());
     }
 
-    @GetMapping("/mangas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Manga> getMangaById(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.FOUND).body(mangaService.getMangaById(id));
     }
 
-    @PostMapping("/mangas")
+    @PostMapping
     public ResponseEntity<Manga> createManga(@RequestBody @Valid MangaRequest request) throws URISyntaxException {
-
         Manga manga = mangaService.createManga(
                 request.getCategoryId(),
                 mangaMapper.mangaRequestToManga(request)
@@ -48,7 +47,7 @@ public class MangaRest {
         return ResponseEntity.created(new URI("/mangas/" + manga.getId())).body(manga);
     }
 
-    @PutMapping("/mangas/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Manga> updateManga(@PathVariable Integer id,
                                              @RequestBody @Valid MangaRequest request) {
 
@@ -59,7 +58,7 @@ public class MangaRest {
         ));
     }
 
-    @DeleteMapping("/mangas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Manga> deleteManga(@PathVariable(name = "id") Integer mangaId) {
         return ResponseEntity.ok().body(mangaService.deleteManga(mangaId));
     }

@@ -1,5 +1,6 @@
 package com.manics.rest.service;
 
+import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.Manga;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.MangaRepository;
@@ -32,12 +33,13 @@ public class MangaService {
         return mangaRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new RuntimeException("dfasd")
+                        () -> new NotFoundException(String.format("No encontramos el manga con el id: %d", id))
                 );
     }
 
     public Manga createManga(Integer categoryId, Manga manga) {
         Category category = categoryService.getCategory(categoryId);
+
         manga.setCategory(category);
 
         return mangaRepository.save(manga);

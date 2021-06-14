@@ -1,6 +1,6 @@
 package com.manics.rest.mappers;
 
-import com.manics.rest.model.User;
+import com.manics.rest.model.auth.User;
 import com.manics.rest.rest.request.UserRequest;
 import org.mapstruct.Mapper;
 

@@ -1,7 +1,7 @@
 package com.manics.rest.config;
 
 import com.manics.rest.exception.NotFoundException;
-import com.manics.rest.model.User;
+import com.manics.rest.model.auth.User;
 import com.manics.rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -5,12 +5,12 @@ import javax.validation.constraints.NotNull;
 
 public class CategoryRequest {
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita un nombre para la categoría.")
+    @NotEmpty(message = "El nombre de la categoría no puede estar vacío.")
     private String name;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita una descripción para la categoría.")
+    @NotEmpty(message = "La descripción de la categoría no puede estar vacía.")
     private String description;
 
     public String getName() {

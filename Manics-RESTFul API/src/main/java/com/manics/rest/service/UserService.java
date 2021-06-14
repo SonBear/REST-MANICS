@@ -2,7 +2,7 @@ package com.manics.rest.service;
 
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.exception.UsuarioRegistradoException;
-import com.manics.rest.model.User;
+import com.manics.rest.model.auth.User;
 import com.manics.rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +24,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getUser() {
+    public List<User> getUsers() {
         return userRepo.findAll();
     }
 
@@ -68,6 +68,10 @@ public class UserService {
         User user = getUserById(userId);
         userRepo.deleteById(userId);
         return user;
+    }
+
+    public void checkIfUserExist(Integer userId) {
+        getUserById(userId);
     }
 
 }
