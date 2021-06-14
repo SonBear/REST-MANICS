@@ -23,7 +23,7 @@ public class MangaRest {
     private final StoryMapper storyMapper;
 
     @Autowired
-    private MangaRest(MangaService mangaService, StoryMapper storyMapper) {
+    public MangaRest(MangaService mangaService, StoryMapper storyMapper) {
         this.mangaService = mangaService;
         this.storyMapper = storyMapper;
     }
@@ -47,7 +47,7 @@ public class MangaRest {
                 storyMapper.storyRequestToManga(request)
         );
 
-        return ResponseEntity.created(new URI("/mangas/" + manga.getStoryId())).body(manga);
+        return ResponseEntity.created(new URI("/mangas/" + manga.getId())).body(manga);
     }
 
     @PutMapping("/{id}")

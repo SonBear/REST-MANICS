@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    // @JsonIgnore
+    @JsonIgnore
     private Set<UserRole> roles = Sets.newHashSet(UserRole.NORMAL);
 
     public User() {
