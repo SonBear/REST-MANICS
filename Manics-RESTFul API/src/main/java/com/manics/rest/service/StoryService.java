@@ -24,7 +24,4 @@ public class StoryService {
                 );
     }
 
-    public void checkIfStoryExists(Integer storyId) {
-        getStoryById(storyId);
-    }
 }

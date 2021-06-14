@@ -2,10 +2,12 @@ package com.manics.rest.rest;
 
 import com.manics.rest.mappers.CommentMapper;
 import com.manics.rest.model.core.Comment;
-import com.manics.rest.rest.request.CommentRequest;
+import com.manics.rest.rest.request.comment.CommentRequest;
+import com.manics.rest.rest.request.comment.CommentUpdateRequest;
 import com.manics.rest.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +29,7 @@ public class CommentRest {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Comment>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());
     }
@@ -36,7 +39,7 @@ public class CommentRest {
         return ResponseEntity.ok(commentService.getCommentById(commentId));
     }
 
-    @GetMapping("/stories/{id}")
+    @GetMapping("/relatos/{id}")
     public ResponseEntity<List<Comment>> getCommentsByStoryId(@PathVariable(name = "id") Integer storyId) {
         return ResponseEntity.ok(commentService.getCommentsByStoryId(storyId));
     }
@@ -61,10 +64,10 @@ public class CommentRest {
 
     @PutMapping("/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable(name = "id") Integer commentId,
-                                                 @RequestBody @Valid CommentRequest commentRequest) {
+                                                 @RequestBody @Valid CommentUpdateRequest commentRequest) {
 
         return ResponseEntity.ok(
-                commentService.updateComment(commentId, commentMapper.commentRequestToComment(commentRequest))
+                commentService.updateComment(commentId, commentMapper.commentUpdateRequestToComment(commentRequest))
         );
     }
 
