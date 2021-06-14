@@ -39,7 +39,6 @@ public class ComicRest {
     }
 
     @PostMapping
-
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Comic> createComic(@RequestBody @Valid StoryRequest request) throws URISyntaxException {
 

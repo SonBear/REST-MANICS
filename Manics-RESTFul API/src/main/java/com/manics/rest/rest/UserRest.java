@@ -28,7 +28,6 @@ public class UserRest {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
@@ -55,6 +54,7 @@ public class UserRest {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
         User user = userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
