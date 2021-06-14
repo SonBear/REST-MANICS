@@ -21,7 +21,6 @@ public class StartupConfig implements ApplicationRunner {
         String defaultPassword = "admin";
 
         System.out.printf("Default admin username: %s%nDefault admin password: %s%n", defaultUsername, defaultPassword);
-        System.out.println(userService.existsUser(defaultUsername));
 
         if (!userService.existsUser(defaultUsername))
             userService.createUser(

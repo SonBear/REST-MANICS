@@ -29,7 +29,6 @@ public class MangaRest {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Manga>> getMangas() {
         return ResponseEntity.ok().body(mangaService.getMangas());
     }
@@ -40,6 +39,7 @@ public class MangaRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> createManga(@RequestBody @Valid StoryRequest request) throws URISyntaxException {
 
         Manga manga = mangaService.createManga(
@@ -51,6 +51,7 @@ public class MangaRest {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> updateManga(@PathVariable Integer id,
                                              @RequestBody @Valid StoryRequest request) {
 
@@ -62,6 +63,7 @@ public class MangaRest {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> deleteManga(@PathVariable(name = "id") Integer mangaId) {
         return ResponseEntity.ok().body(mangaService.deleteManga(mangaId));
     }

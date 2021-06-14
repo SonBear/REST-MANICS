@@ -1,6 +1,5 @@
 package com.manics.rest.rest.request.comment;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class CommentRequest extends CommentUpdateRequest {
