@@ -8,6 +8,8 @@ public class PageRequest {
     @NotNull
     private Integer pageNumber;
 
+    private Integer chapterId;
+
     @NotEmpty
     @NotNull
     private String imageUrl;
@@ -27,6 +29,21 @@ public class PageRequest {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public Integer getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(Integer chapterId) {
+        this.chapterId = chapterId;
+    }
+
+    @Override
+    public String toString() {
+        return "PageRequest [chapterId=" + chapterId + ", imageUrl=" + imageUrl + ", pageNumber=" + pageNumber + "]";
+    }
+
+    
 
 
 }
