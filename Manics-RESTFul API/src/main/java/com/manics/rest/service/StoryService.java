@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StoryService {
+    
+    private final StoryRepository storyRepository;
 
     @Autowired
-    private StoryRepository storyRepository;
+    private StoryService(StoryRepository storyRepository){
+        this.storyRepository = storyRepository;
+    }
 
     public Story getStoryById(Integer storyId) {
         return storyRepository

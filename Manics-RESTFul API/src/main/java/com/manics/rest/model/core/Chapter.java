@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "chapters")
@@ -89,8 +90,15 @@ public class Chapter {
         this.pages = pages;
     }
 
-    public void updateChapter(List<Chapter> chapters) {
-
+    public void updateChapter(Chapter chapter) {
+        setChapterNumber(chapter.getChapterNumber());
+        setName(chapter.getName());
+        setPublicationDate(chapter.getPublicationDate());
+        setTotalPages(chapter.getTotalPages());
+        if(!Objects.isNull(chapter.getPages())){
+            chapter.getPages().forEach((page) -> page.setChapter(this));
+            setPages(chapter.getPages());
+        }
     }
 
     @Override

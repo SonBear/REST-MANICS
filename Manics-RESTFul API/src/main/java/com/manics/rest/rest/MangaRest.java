@@ -1,8 +1,8 @@
 package com.manics.rest.rest;
 
-import com.manics.rest.mappers.MangaMapper;
+import com.manics.rest.mappers.StoryMapper;
 import com.manics.rest.model.Manga;
-import com.manics.rest.rest.request.MangaRequest;
+import com.manics.rest.rest.request.StoryRequest;
 import com.manics.rest.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +20,12 @@ import java.util.List;
 public class MangaRest {
 
     private final MangaService mangaService;
-    private final MangaMapper mangaMapper;
+    private final StoryMapper storyMapper;
 
     @Autowired
-    private MangaRest(MangaService mangaService, MangaMapper mangaMapper) {
+    private MangaRest(MangaService mangaService, StoryMapper storyMapper) {
         this.mangaService = mangaService;
-        this.mangaMapper = mangaMapper;
+        this.storyMapper = storyMapper;
     }
 
     @GetMapping
@@ -40,23 +40,24 @@ public class MangaRest {
     }
 
     @PostMapping
-    public ResponseEntity<Manga> createManga(@RequestBody @Valid MangaRequest request) throws URISyntaxException {
+    public ResponseEntity<Manga> createManga(@RequestBody @Valid StoryRequest request) throws URISyntaxException {
+
         Manga manga = mangaService.createManga(
                 request.getCategoryId(),
-                mangaMapper.mangaRequestToManga(request)
+                storyMapper.storyRequestToManga(request)
         );
 
-        return ResponseEntity.created(new URI("/mangas/" + manga.getId())).body(manga);
+        return ResponseEntity.created(new URI("/mangas/" + manga.getStoryId())).body(manga);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Manga> updateManga(@PathVariable Integer id,
-                                             @RequestBody @Valid MangaRequest request) {
+                                             @RequestBody @Valid StoryRequest request) {
 
         return ResponseEntity.ok().body(mangaService.updateManga(
                 id,
                 request.getCategoryId(),
-                mangaMapper.mangaRequestToManga(request)
+                storyMapper.storyRequestToManga(request)
         ));
     }
 

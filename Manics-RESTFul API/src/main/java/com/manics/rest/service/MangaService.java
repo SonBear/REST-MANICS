@@ -18,7 +18,7 @@ public class MangaService {
     private final CategoryService categoryService;
 
     @Autowired
-    public MangaService(MangaRepository mangaRepository, CategoryService categoryService) {
+    private MangaService(MangaRepository mangaRepository, CategoryService categoryService) {
         this.mangaRepository = mangaRepository;
         this.categoryService = categoryService;
     }
@@ -41,27 +41,22 @@ public class MangaService {
         Category category = categoryService.getCategory(categoryId);
 
         manga.setCategory(category);
-
         return mangaRepository.save(manga);
     }
 
+    
     public Manga updateManga(Integer mangaId, Integer categoryId, Manga newManga) {
         Manga manga = getMangaById(mangaId);
-
         Category category = categoryService.getCategory(categoryId);
         manga.updateStory(category, newManga);
-
         mangaRepository.save(manga);
-
         return manga;
     }
 
 
     public Manga deleteManga(Integer mangaId) {
         Manga manga = getMangaById(mangaId);
-
         mangaRepository.delete(manga);
-
         return manga;
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "stories")
@@ -13,7 +14,7 @@ public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_id")
-    private Integer id;
+    private Integer storyId;
 
     @Column
     private String name;
@@ -47,6 +48,13 @@ public class Story {
 
     public Integer getId() {
         return id;
+    
+    public Integer getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(Integer storyId) {
+        this.storyId = storyId;
     }
 
     public void setId(Integer id) {
@@ -111,12 +119,16 @@ public class Story {
         setAuthor(story.getAuthor());
         setAvailableChapters(story.getAvailableChapters());
         setPublicationYear(story.getPublicationYear());
+        if(!Objects.isNull(story.chapters)){
+            story.getChapters().forEach((chapter)-> chapter.setStory(this));
+            setChapters(story.getChapters());
+        }
     }
 
     @Override
     public String toString() {
         return "Story{" +
-                "id=" + id +
+                "storyId=" + storyId +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationYear=" + publicationYear +
