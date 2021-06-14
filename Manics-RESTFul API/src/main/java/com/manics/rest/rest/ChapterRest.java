@@ -14,6 +14,7 @@ import com.manics.rest.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,18 +48,21 @@ public class ChapterRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> createChapter(@RequestBody @Valid ChapterRequest request) throws URISyntaxException{
         Chapter chapter = chapterService.createChapter(request.getStoryId(), chapterMapper.chapterRquestToChapter(request));
         return ResponseEntity.created(new URI("/capitulos/" + chapter.getChapterId())).body(chapter);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> updateChapter(@PathVariable Integer id, @RequestBody @Valid ChapterRequest request){
         Chapter chapter = chapterService.updateChapter(id, chapterMapper.chapterRquestToChapter(request));
         return ResponseEntity.ok().body(chapter);
     }
-
+    
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer id){
         return ResponseEntity.ok().body(chapterService.deleteChapter(id));
     }

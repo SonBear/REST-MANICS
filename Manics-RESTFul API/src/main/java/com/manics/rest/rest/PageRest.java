@@ -13,6 +13,7 @@ import com.manics.rest.service.PageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,18 +48,21 @@ public class PageRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page> createPage(@RequestBody @Valid PageRequest request) throws URISyntaxException {
         Page page = pageService.createPage(request.getChapterId(), pageMapper.pageRequestToPage(request));
         return ResponseEntity.created(new URI("/paginas/" + page.getPageId())).body(page);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page> updatePage(@PathVariable Integer id, @RequestBody @Valid PageRequest request) {
         Page page = pageService.updatePage(id, pageMapper.pageRequestToPage(request));
         return ResponseEntity.ok().body(page);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page> deletePage(@PathVariable Integer id) {
         Page page = pageService.deletePage(id);
         return ResponseEntity.ok().body(page);

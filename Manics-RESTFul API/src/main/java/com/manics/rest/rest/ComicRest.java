@@ -14,6 +14,7 @@ import com.manics.rest.service.ComicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +48,7 @@ public class ComicRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Comic> createComic(@RequestBody @Valid StoryRequest request) throws URISyntaxException{
         Comic comic = comicService.createComic(
             request.getCategoryId(), storyMapper.storyRequestToComic(request));
@@ -54,12 +56,14 @@ public class ComicRest {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Comic> updateComic(@PathVariable Integer id, @RequestBody @Valid StoryRequest request){
         Comic comic = comicService.updateComic(id, request.getCategoryId(), storyMapper.storyRequestToComic(request));
         return ResponseEntity.ok().body(comic);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Comic> deleteComic(@PathVariable Integer id){
         return ResponseEntity.ok().body(comicService.deleteComic(id));
     }
