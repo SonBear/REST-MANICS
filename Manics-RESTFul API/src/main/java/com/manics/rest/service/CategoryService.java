@@ -16,10 +16,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    private MangaService mangaService;
-    
-    @Autowired
-    private ComicService comicService;
+    private StoryService storyService;
 
     @Autowired
     private CategoryService(CategoryRepository categoryRepository) {
@@ -56,7 +53,7 @@ public class CategoryService {
     public Category deleteCategory(Integer categoryId) {
         Category category = getCategory(categoryId);
 
-        if (mangaService.isCategoryBeingUse(category) || comicService.isCategoryBeingUse(category))
+        if (storyService.isCategoryBeingUse(category))
             throw new CategoryInUseException();
 
         categoryRepository.delete(category);

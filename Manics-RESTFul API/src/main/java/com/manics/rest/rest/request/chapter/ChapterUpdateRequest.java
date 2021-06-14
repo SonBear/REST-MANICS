@@ -1,17 +1,16 @@
-package com.manics.rest.rest.request;
+package com.manics.rest.rest.request.chapter;
+
+import com.manics.rest.rest.request.page.PageRequest;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class ChapterRequest {
-
+public class ChapterUpdateRequest {
 
     @NotNull
     private Integer chapterNumber;
 
-    private Integer storyId;
-    
     @NotEmpty
     @NotNull
     private String name;
@@ -64,20 +63,15 @@ public class ChapterRequest {
         this.pages = pages;
     }
 
-    public Integer getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
-    }
-
     @Override
     public String toString() {
-        return "ChapterRequest [chapterNumber=" + chapterNumber + ", name=" + name + ", pages=" + pages
-                + ", publicationDate=" + publicationDate + ", storyId=" + storyId + ", totalPages=" + totalPages + "]";
+        return "ChapterUpdateRequest{" +
+                "chapterNumber=" + chapterNumber +
+                ", name='" + name + '\'' +
+                ", publicationDate='" + publicationDate + '\'' +
+                ", totalPages=" + totalPages +
+                ", pages=" + pages +
+                '}';
     }
-
-    
 
 }

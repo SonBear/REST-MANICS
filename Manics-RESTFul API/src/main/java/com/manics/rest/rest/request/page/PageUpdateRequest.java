@@ -1,14 +1,12 @@
-package com.manics.rest.rest.request;
+package com.manics.rest.rest.request.page;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class PageRequest {
+public class PageUpdateRequest {
 
     @NotNull
     private Integer pageNumber;
-
-    private Integer chapterId;
 
     @NotEmpty
     @NotNull
@@ -30,20 +28,11 @@ public class PageRequest {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(Integer chapterId) {
-        this.chapterId = chapterId;
-    }
-
     @Override
     public String toString() {
-        return "PageRequest [chapterId=" + chapterId + ", imageUrl=" + imageUrl + ", pageNumber=" + pageNumber + "]";
+        return "PageUpdateRequest{" +
+                "pageNumber=" + pageNumber +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
-
-    
-
-
 }
