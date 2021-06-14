@@ -6,6 +6,7 @@ import com.manics.rest.rest.request.CategoryRequest;
 import com.manics.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,13 +36,15 @@ public class CategoryRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryRequest request) {
         return ResponseEntity.ok().body(
                 categoryService.createCategory(categoryMapper.categoryRequestToCategory(request))
         );
     }
-
+    
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
                                                    @RequestBody @Valid CategoryRequest request) {
 
@@ -51,6 +54,7 @@ public class CategoryRest {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Category> deleteCategory(@PathVariable Integer id) {
         return ResponseEntity.ok().body(categoryService.deleteCategory(id));
     }
