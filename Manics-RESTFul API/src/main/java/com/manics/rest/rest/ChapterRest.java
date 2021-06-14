@@ -32,7 +32,7 @@ public class ChapterRest {
     private final ChapterMapper chapterMapper;
 
     @Autowired
-    private ChapterRest(ChapterService chapterService, ChapterMapper chapterMapper) {
+    public ChapterRest(ChapterService chapterService, ChapterMapper chapterMapper) {
         this.chapterService = chapterService;
         this.chapterMapper = chapterMapper;
     }

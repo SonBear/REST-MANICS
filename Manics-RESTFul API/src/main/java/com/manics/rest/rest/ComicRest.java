@@ -32,7 +32,7 @@ public class ComicRest {
     private final StoryMapper storyMapper;
 
     @Autowired
-    private ComicRest(ComicService comicService, StoryMapper storyMapper){
+    public ComicRest(ComicService comicService, StoryMapper storyMapper){
         this.comicService = comicService;
         this.storyMapper = storyMapper;
     }

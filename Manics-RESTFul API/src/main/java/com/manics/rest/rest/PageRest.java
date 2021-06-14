@@ -31,7 +31,7 @@ public class PageRest {
     private final PageMapper pageMapper;
 
     @Autowired
-    private PageRest(PageService pageService, PageMapper pageMapper) {
+    public PageRest(PageService pageService, PageMapper pageMapper) {
         this.pageService = pageService;
         this.pageMapper = pageMapper;
     }
