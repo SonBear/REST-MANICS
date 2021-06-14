@@ -1,5 +1,6 @@
 package com.manics.rest.service;
 
+import com.manics.rest.exception.CategoryInUseException;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,19 @@ import java.util.List;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+
+    private final MangaService mangaService;
+
+    private final ComicService comicService;
 
     @Autowired
-    private MangaService mangaService;
-
-    @Autowired
-    private ComicService comicService;
+    private CategoryService(CategoryRepository categoryRepository, MangaService mangaService,
+            ComicService comicService) {
+        this.categoryRepository = categoryRepository;
+        this.mangaService = mangaService;
+        this.comicService = comicService;
+    }
 
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
@@ -49,7 +55,7 @@ public class CategoryService {
         Category category = getCategory(categoryId);
 
         if (mangaService.isCategoryBeingUse(category) || comicService.isCategoryBeingUse(category))
-            throw new RuntimeException("La categoria no puede eliminarse");
+            throw new CategoryInUseException();
 
         categoryRepository.delete(category);
 
