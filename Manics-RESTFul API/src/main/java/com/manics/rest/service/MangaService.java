@@ -51,8 +51,8 @@ public class MangaService extends StoryService {
 
         Category category = categoryService.getCategory(categoryId);
         manga.updateStory(category, newManga);
-
-        return mangaRepository.save(manga);
+        mangaRepository.save(manga);
+        return getMangaById(mangaId);
     }
 
 

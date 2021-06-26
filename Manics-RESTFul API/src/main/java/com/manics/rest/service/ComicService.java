@@ -45,8 +45,8 @@ public class ComicService extends StoryService {
         Category category = categoryService.getCategory(categoryId);
 
         comic.updateStory(category, newComic);
-
-        return comicRepository.save(comic);
+        comicRepository.save(comic);
+        return getComicById(comicId);
     }
 
     public Comic deleteComic(Integer comicId) {
