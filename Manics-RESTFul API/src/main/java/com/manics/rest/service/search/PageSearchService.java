@@ -60,6 +60,7 @@ public class PageSearchService {
                 .orElseThrow(() -> new NotFoundException("Aún no se ha registrado ese pagina"));
     }
 
+    @Async
     public PageSearch updatePageSearch(Integer id, String url) {
         PageSearch pageSearch = getPageSearch(id);
         pageSearch.setUrlImage(url);
