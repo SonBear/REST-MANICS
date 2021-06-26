@@ -5,6 +5,7 @@ import com.manics.rest.model.auth.User;
 import com.manics.rest.rest.request.user.UserAuthorityRequest;
 import com.manics.rest.rest.request.user.UserRequest;
 import com.manics.rest.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class UserRest {
     @PutMapping("/authorities/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> updateUserAuthorities(@PathVariable(name = "id") Integer userId,
-                                                      @RequestBody @Valid UserAuthorityRequest userAuthorityRequest) {
+            @RequestBody @Valid UserAuthorityRequest userAuthorityRequest) {
 
         User user = userService.updateUserRoles(userId, userAuthorityRequest.getRoles());
         return ResponseEntity.ok(user);

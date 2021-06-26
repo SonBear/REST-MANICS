@@ -32,17 +32,10 @@ public class Story {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(
-            mappedBy = "story",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<Chapter> chapters;
 
-    @OneToMany(
-            mappedBy = "story",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Comment> comments;
 
@@ -120,15 +113,9 @@ public class Story {
 
     @Override
     public String toString() {
-        return "Story{" +
-                "storyId=" + id +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", publicationYear=" + publicationYear +
-                ", availableChapters=" + availableChapters +
-                ", category=" + category +
-                ", chapters=" + chapters +
-                '}';
+        return "Story{" + "storyId=" + id + ", name='" + name + '\'' + ", author='" + author + '\''
+                + ", publicationYear=" + publicationYear + ", availableChapters=" + availableChapters + ", category="
+                + category + ", chapters=" + chapters + '}';
     }
 
 }
