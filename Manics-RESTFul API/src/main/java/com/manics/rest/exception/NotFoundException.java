@@ -10,8 +10,8 @@ public class NotFoundException extends RuntimeException {
         super("La entidad no pudo ser encontrada.");
     }
 
-    public NotFoundException(String mensaje) {
-        super(mensaje);
+    public NotFoundException(String message) {
+        super(message);
     }
-    
+
 }

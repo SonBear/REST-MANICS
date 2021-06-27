@@ -1,11 +1,11 @@
 package com.manics.rest.repository;
 
-import com.manics.rest.model.ComentarioManga;
+import com.manics.rest.model.core.Page;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ComentarioMangaRepository extends CrudRepository<ComentarioManga, Integer>{
+public interface PageRepository extends CrudRepository<Page, Integer>{
     
 }

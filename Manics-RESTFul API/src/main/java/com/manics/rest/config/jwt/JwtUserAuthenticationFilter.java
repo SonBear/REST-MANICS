@@ -2,7 +2,7 @@ package com.manics.rest.config.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.manics.rest.model.request.UserRequest;
+import com.manics.rest.rest.request.user.UserRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

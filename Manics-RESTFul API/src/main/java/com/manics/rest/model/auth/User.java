@@ -1,10 +1,13 @@
-package com.manics.rest.model;
+package com.manics.rest.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username", "email"})
@@ -19,11 +22,15 @@ public class User {
     private String username;
 
     @Column
+    private String email;
+
+    @Column
     @JsonIgnore
     private String password;
 
-    @Column
-    private String email;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<UserRole> roles = Sets.newHashSet(UserRole.NORMAL);
 
     @OneToMany( mappedBy="user", fetch = FetchType.LAZY, orphanRemoval = true)
     @Column
@@ -38,6 +45,11 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String email, String password, Set<UserRole> roles) {
+        this(username, email, password);
+        this.roles = roles;
     }
 
     public Integer getUserId() {
@@ -70,6 +82,16 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<SimpleGrantedAuthority> getRoles() {
+        return roles.stream()
+                .flatMap(role -> role.getGrantedAuthorities().stream())
+                .collect(Collectors.toSet());
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 
     @Override
