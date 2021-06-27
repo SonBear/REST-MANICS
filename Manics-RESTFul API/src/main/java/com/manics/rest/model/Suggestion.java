@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import com.manics.rest.model.auth.User;
 @Entity
 @Table(name = "sugerencias")
 public class Suggestion {
@@ -18,7 +19,7 @@ public class Suggestion {
     private Integer Id; 
 
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", nullable =false)
     @JsonBackReference
     private User user;
@@ -29,6 +30,9 @@ public class Suggestion {
 
     @Column(name = "creationDate")
     private ZonedDateTime creationDate = ZonedDateTime.now();
+    public Suggestion(){
+
+    }
 
     public Suggestion(User user, String content){
         this.content = content;
@@ -58,6 +62,9 @@ public class Suggestion {
     
     public void setUser(User user){
         this.user = user;
+    }
+    public void updateContent(Suggestion suggestion){
+        this.content = suggestion.getContent();
     }
 
     @Override

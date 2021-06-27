@@ -7,6 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.*;
+import com.manics.rest.model.Suggestion;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {

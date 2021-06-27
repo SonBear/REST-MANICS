@@ -11,7 +11,7 @@ import com.manics.rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.manics.rest.model.Suggestion;
-import com.manics.rest.model.User;
+import com.manics.rest.model.auth.User;
 @Service 
 public class SuggestionService{
 
@@ -35,11 +35,30 @@ public class SuggestionService{
                 );
     }
 
+    // public List<Suggestion> getSuggestionsByUser(Integer userId){
+    // }
+
     public Suggestion createSuggestion(SuggestionRequest req, String username){
         User user = userRepository.findByUsername(username);
         Suggestion suggestion = new Suggestion(user, req.getContent());
         Suggestion result = suggestionRepository.save(suggestion);
         return result;
     }
+
+
+    public Suggestion updateSuggestion(SuggestionRequest req, Integer id){
+        Suggestion suggestion = getSuggestionById(id);
+        suggestion.setContent(req.getContent());
+        return suggestionRepository.save(suggestion);
+    }
+
+    public Suggestion deleteSuggestion(Integer id){
+        Suggestion suggestion = getSuggestionById(id);
+
+        suggestionRepository.delete(suggestion);
+        return suggestion;
+    }
+
+
 
 }
