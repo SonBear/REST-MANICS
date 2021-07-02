@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PageSearchService {
 
-    public static final String INDEX_PAGE_SEARCH = "pages_searching";
+    public static final String INDEX_PAGE_SEARCH = "pages";
     private final PageSearchRepository pageSearchRepository;
     private final ElasticsearchOperations elasticsearchOperations;
     private final AnalyzerImageService analyzerImageService;
@@ -38,7 +38,6 @@ public class PageSearchService {
     public PageSearch saveSearchPage(Integer id, String url) {
         PageSearch pageSearch = new PageSearch();
         pageSearch.setPageId(id);
-        pageSearch.setUrlImage(url);
         Double[] response;
         try {
             response = analyzerImageService.analyzeImageFormUrl(url);
@@ -63,7 +62,6 @@ public class PageSearchService {
     @Async
     public PageSearch updatePageSearch(Integer id, String url) {
         PageSearch pageSearch = getPageSearch(id);
-        pageSearch.setUrlImage(url);
         Double[] vector;
         try {
             vector = analyzerImageService.analyzeImageFormUrl(url);

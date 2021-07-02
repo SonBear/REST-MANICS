@@ -14,10 +14,7 @@ public class PageSearch {
     @Id
     private Integer id;
 
-    @Field(name = "url_image", type = FieldType.Text)
-    private String urlImage;
-
-    @Field(name = "vector_values", type = FieldType.Dense_Vector, dims = 50)
+    @Field(name = "vector_values", type = FieldType.Dense_Vector, dims = 20)
     private Double[] vector;
 
     public Integer getPageId() {
@@ -26,14 +23,6 @@ public class PageSearch {
 
     public void setPageId(Integer pageId) {
         this.id = pageId;
-    }
-
-    public String getUrlImage() {
-        return urlImage;
-    }
-
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
     }
 
     public Double[] getVector() {
@@ -46,7 +35,7 @@ public class PageSearch {
 
     @Override
     public String toString() {
-        return "PageSearch [pageId=" + id + ", urlImage=" + urlImage + ", vector=" + Arrays.toString(vector) + "]";
+        return "PageSearch [pageId=" + id + "vector=" + Arrays.toString(vector) + "]";
     }
 
 }

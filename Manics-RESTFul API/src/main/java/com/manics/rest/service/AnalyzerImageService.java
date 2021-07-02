@@ -15,7 +15,7 @@ public class AnalyzerImageService {
     public Double[] analyzeImageFormUrl(String urlImage) throws IOException {
         URL imageUrl = new URL(urlImage);
         MultidimensionalHistogram histogram;
-        HistogramModel model = new HistogramModel(50);
+        HistogramModel model = new HistogramModel(20);
         model.estimateModel(ImageUtilities.readMBF(imageUrl));
         histogram = model.histogram.clone();
         Double[] res = Arrays.stream(histogram.values).boxed().toArray(Double[]::new);

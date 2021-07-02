@@ -32,8 +32,7 @@ public class StorySearchService {
 
     public StorySearch saveStorySearch(Story story) {
         StorySearch storySearch = new StorySearch();
-        storySearch.setCatagory(story.getCategory().getName());
-        storySearch.setId(story.getId());
+        storySearch.setStoryId(story.getId());
         storySearch.setName(story.getName());
         return storySearchRepository.save(storySearch);
     }
@@ -46,11 +45,14 @@ public class StorySearchService {
 
     public StorySearch updateStorySearch(Integer id, Story story) {
         StorySearch storySearch = getStorySearch(id);
-        storySearch.setCatagory(story.getCategory().getName());
-        storySearch.setId(story.getId());
+        storySearch.setStoryId(story.getId());
         storySearch.setName(story.getName());
         storySearchRepository.save(storySearch);
         return storySearch;
+    }
+
+    public List<StorySearch> findAllByName(String name) {
+        return storySearchRepository.findByNameLike(name);
     }
 
 }
