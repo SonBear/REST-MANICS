@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.ElasticSearch.PageSearch;
-import com.manics.rest.repository.PageSearchRepository;
+import com.manics.rest.repository.elasticsearch.PageSearchRepository;
 import com.manics.rest.service.AnalyzerImageService;
 
 import org.springframework.beans.factory.annotation.Autowired;

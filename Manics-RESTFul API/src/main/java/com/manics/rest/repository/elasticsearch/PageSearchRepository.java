@@ -1,4 +1,4 @@
-package com.manics.rest.repository;
+package com.manics.rest.repository.elasticsearch;
 
 import com.manics.rest.model.core.ElasticSearch.PageSearch;
 
