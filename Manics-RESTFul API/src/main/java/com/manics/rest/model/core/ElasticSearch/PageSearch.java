@@ -4,11 +4,9 @@ import java.util.Arrays;
 
 import javax.persistence.Id;
 
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "pages")
 public class PageSearch {
 
     @Id

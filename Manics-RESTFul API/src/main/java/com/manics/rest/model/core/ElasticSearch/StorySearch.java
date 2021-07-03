@@ -1,5 +1,7 @@
 package com.manics.rest.model.core.ElasticSearch;
 
+import java.util.List;
+
 import javax.persistence.Id;
 
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -13,6 +15,9 @@ public class StorySearch {
 
     @Field(name = "name", type = FieldType.Text)
     private String name;
+
+    @Field(type = FieldType.Nested)
+    private List<PageSearch> pages;
 
     public Integer getStoryId() {
         return id;
@@ -28,6 +33,14 @@ public class StorySearch {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<PageSearch> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<PageSearch> pages) {
+        this.pages = pages;
     }
 
 }

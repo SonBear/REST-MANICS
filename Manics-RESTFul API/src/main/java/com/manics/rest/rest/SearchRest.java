@@ -29,16 +29,6 @@ public class SearchRest {
         return ResponseEntity.ok().body(searchService.searchStoryByImage(urlImage));
     }
 
-    @GetMapping("/mangas")
-    public ResponseEntity<List<Manga>> searchMangaByName(@RequestParam(name = "q") String name) {
-        return ResponseEntity.ok().body(searchService.searchMangasByName(name));
-    }
-
-    @GetMapping("/comics")
-    public ResponseEntity<List<Comic>> searchComicByName(@RequestParam(name = "q") String name) {
-        return ResponseEntity.ok().body(searchService.searchComicByName(name));
-    }
-
     @GetMapping("/stories")
     public ResponseEntity<List<Story>> searchStoriesByName(@RequestParam(name = "q") String name) {
         return ResponseEntity.ok().body(searchService.searchStoryByName(name));

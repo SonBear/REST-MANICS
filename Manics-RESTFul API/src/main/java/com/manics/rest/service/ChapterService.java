@@ -29,11 +29,8 @@ public class ChapterService {
     }
 
     public Chapter getChapterById(Integer id) {
-        return chapterRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException(String.format("El capitulo con el id: %d no existe", id))
-                );
+        return chapterRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("El capitulo con el id: %d no existe", id)));
     }
 
     public Chapter createChapter(Integer storyId, Chapter chapter) {
@@ -52,6 +49,10 @@ public class ChapterService {
         Chapter chapter = getChapterById(chapterId);
         chapterRepository.delete(chapter);
         return chapter;
+    }
+
+    public void deleteChapterById(Integer chapterId) {
+        chapterRepository.deleteById(chapterId);
     }
 
 }

@@ -33,6 +33,7 @@ public class Story {
     private Category category;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Chapter> chapters;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
