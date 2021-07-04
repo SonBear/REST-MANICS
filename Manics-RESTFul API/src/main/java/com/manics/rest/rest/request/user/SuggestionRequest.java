@@ -1,23 +1,21 @@
-package com.manics.rest.model.request;
-import com.manics.rest.model.Suggestion;
-import com.manics.rest.model.auth.User;
-import java.sql.Date;
-public class SuggestionRequest{
+package com.manics.rest.rest.request.user;
+
+public class SuggestionRequest {
 
     private Integer userId;
 
-    private String content; 
+    private String content;
 
-    public SuggestionRequest(){
+    public SuggestionRequest() {
 
     }
 
-    public Integer getUserId(){
+    public Integer getUserId() {
         return userId;
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 
-} 
+}
