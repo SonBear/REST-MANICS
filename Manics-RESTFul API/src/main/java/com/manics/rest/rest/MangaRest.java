@@ -1,6 +1,5 @@
 package com.manics.rest.rest;
 
-import com.flickr4java.flickr.Response;
 import com.manics.rest.mappers.ChapterMapper;
 import com.manics.rest.mappers.PageMapper;
 import com.manics.rest.mappers.StoryMapper;

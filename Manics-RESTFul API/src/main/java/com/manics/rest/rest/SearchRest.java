@@ -2,8 +2,6 @@ package com.manics.rest.rest;
 
 import java.util.List;
 
-import com.manics.rest.model.Comic;
-import com.manics.rest.model.Manga;
 import com.manics.rest.model.core.Story;
 import com.manics.rest.service.search.SearchService;
 
