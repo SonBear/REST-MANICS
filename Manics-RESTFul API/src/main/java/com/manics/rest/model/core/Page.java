@@ -55,18 +55,14 @@ public class Page {
         this.imageUrl = imageUrl;
     }
 
-    public void updatePage(Page page){
+    public void updatePage(Page page) {
         setImageUrl(page.getImageUrl());
         setPageNumber(page.getPageNumber());
     }
 
     @Override
     public String toString() {
-        return "Page{" +
-                "pageId=" + pageId +
-                ", pageNumber=" + pageNumber +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
+        return "Page{" + "pageId=" + pageId + ", pageNumber=" + pageNumber + ", imageUrl='" + imageUrl + '\'' + '}';
     }
 
 }

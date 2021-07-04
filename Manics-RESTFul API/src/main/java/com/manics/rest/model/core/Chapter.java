@@ -35,6 +35,7 @@ public class Chapter {
     private Integer totalPages;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Page> pages;
 
     public Integer getChapterId() {
@@ -95,7 +96,7 @@ public class Chapter {
         setName(chapter.getName());
         setPublicationDate(chapter.getPublicationDate());
         setTotalPages(chapter.getTotalPages());
-        if(!Objects.isNull(chapter.getPages())){
+        if (!Objects.isNull(chapter.getPages())) {
             chapter.getPages().forEach((page) -> page.setChapter(this));
             setPages(chapter.getPages());
         }
@@ -103,15 +104,9 @@ public class Chapter {
 
     @Override
     public String toString() {
-        return "Chapter{" +
-                "chapterId=" + chapterId +
-                ", story=" + story +
-                ", chapterNumber=" + chapterNumber +
-                ", name='" + name + '\'' +
-                ", publicationDate=" + publicationDate +
-                ", totalPages=" + totalPages +
-                ", pages=" + pages +
-                '}';
+        return "Chapter{" + "chapterId=" + chapterId + ", story=" + story + ", chapterNumber=" + chapterNumber
+                + ", name='" + name + '\'' + ", publicationDate=" + publicationDate + ", totalPages=" + totalPages
+                + ", pages=" + pages + '}';
     }
 
 }

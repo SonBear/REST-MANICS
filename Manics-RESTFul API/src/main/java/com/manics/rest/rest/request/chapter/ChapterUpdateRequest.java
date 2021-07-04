@@ -65,13 +65,9 @@ public class ChapterUpdateRequest {
 
     @Override
     public String toString() {
-        return "ChapterUpdateRequest{" +
-                "chapterNumber=" + chapterNumber +
-                ", name='" + name + '\'' +
-                ", publicationDate='" + publicationDate + '\'' +
-                ", totalPages=" + totalPages +
-                ", pages=" + pages +
-                '}';
+        return "ChapterUpdateRequest{" + "chapterNumber=" + chapterNumber + ", name='" + name + '\''
+                + ", publicationDate='" + publicationDate + '\'' + ", totalPages=" + totalPages + ", pages=" + pages
+                + '}';
     }
 
 }
