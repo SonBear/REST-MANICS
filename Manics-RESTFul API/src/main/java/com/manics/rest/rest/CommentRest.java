@@ -29,7 +29,6 @@ public class CommentRest {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Comment>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());
     }
@@ -72,6 +71,7 @@ public class CommentRest {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Comment> deleteComment(@PathVariable(name = "id") Integer commentId) {
         return ResponseEntity.ok(commentService.deleteComment(commentId));
     }

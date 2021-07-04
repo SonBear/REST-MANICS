@@ -1,10 +1,11 @@
 package com.manics.rest.repository;
-
-import com.manics.rest.model.Comic;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.manics.rest.model.Suggestion;
+import java.util.List;
+
 @Repository
-public interface ComicRepository extends CrudRepository<Comic, Integer> {
+public interface SuggestionRepository extends CrudRepository<Suggestion, Integer>{
 
 }

@@ -23,13 +23,12 @@ public class MangaRest {
     private final StoryMapper storyMapper;
 
     @Autowired
-    private MangaRest(MangaService mangaService, StoryMapper storyMapper) {
+    public MangaRest(MangaService mangaService, StoryMapper storyMapper) {
         this.mangaService = mangaService;
         this.storyMapper = storyMapper;
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Manga>> getMangas() {
         return ResponseEntity.ok().body(mangaService.getMangas());
     }
@@ -40,6 +39,7 @@ public class MangaRest {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> createManga(@RequestBody @Valid StoryRequest request) throws URISyntaxException {
 
         Manga manga = mangaService.createManga(
@@ -47,10 +47,11 @@ public class MangaRest {
                 storyMapper.storyRequestToManga(request)
         );
 
-        return ResponseEntity.created(new URI("/mangas/" + manga.getStoryId())).body(manga);
+        return ResponseEntity.created(new URI("/mangas/" + manga.getId())).body(manga);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> updateManga(@PathVariable Integer id,
                                              @RequestBody @Valid StoryRequest request) {
 
@@ -62,6 +63,7 @@ public class MangaRest {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Manga> deleteManga(@PathVariable(name = "id") Integer mangaId) {
         return ResponseEntity.ok().body(mangaService.deleteManga(mangaId));
     }

@@ -7,6 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.*;
+import com.manics.rest.model.Suggestion;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
@@ -29,8 +31,13 @@ public class User {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    // @JsonIgnore
+    @JsonIgnore
     private Set<UserRole> roles = Sets.newHashSet(UserRole.NORMAL);
+
+    @OneToMany( mappedBy="user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Column
+    @JsonIgnore
+    private List<Suggestion> suggestions;
 
     public User() {
 
@@ -53,6 +60,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public List<Suggestion> getSuggestions(){
+        return suggestions;
     }
 
     public void setUsername(String username) {

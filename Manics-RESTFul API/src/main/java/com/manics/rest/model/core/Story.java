@@ -14,7 +14,7 @@ public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_id")
-    private Integer storyId;
+    private Integer id;
 
     @Column
     private String name;
@@ -48,13 +48,6 @@ public class Story {
 
     public Integer getId() {
         return id;
-    
-    public Integer getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
     }
 
     public void setId(Integer id) {
@@ -119,8 +112,8 @@ public class Story {
         setAuthor(story.getAuthor());
         setAvailableChapters(story.getAvailableChapters());
         setPublicationYear(story.getPublicationYear());
-        if(!Objects.isNull(story.chapters)){
-            story.getChapters().forEach((chapter)-> chapter.setStory(this));
+        if (!Objects.isNull(story.chapters)) {
+            story.getChapters().forEach((chapter) -> chapter.setStory(this));
             setChapters(story.getChapters());
         }
     }
@@ -128,7 +121,7 @@ public class Story {
     @Override
     public String toString() {
         return "Story{" +
-                "storyId=" + storyId +
+                "storyId=" + id +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationYear=" + publicationYear +

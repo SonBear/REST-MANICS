@@ -1,26 +1,28 @@
 package com.manics.rest.rest.request;
 
-import java.util.List;
+import com.manics.rest.rest.request.chapter.ChapterRequest;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class StoryRequest {
-    @NotNull
+
+    @NotNull(message = "El nuevo relato necesita una categoría.")
     private Integer categoryId;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita el nombre del relato para el registro.")
+    @NotEmpty(message = "El nombre del manga no puede estar vacío.")
     private String name;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Se necesita un autor para el registro del relato.")
+    @NotEmpty(message = "El nombre del autor no puede estar vacío.")
     private String author;
 
-    @NotNull
+    @NotNull(message = "Se necesita el año de publicación del relato.")
     private Integer publicationYear;
 
-    @NotNull
+    @NotNull(message = "Los capítulos disponibles son obligatorios.")
     private Integer availableChapters;
 
     private List<ChapterRequest> chapters;
