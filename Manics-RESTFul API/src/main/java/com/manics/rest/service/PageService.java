@@ -4,6 +4,7 @@ import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
 import com.manics.rest.repository.PageRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +30,15 @@ public class PageService {
     }
 
     public Page getPageById(Integer id) {
-        return pageRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException(String.format("La página con el id: %d no existe", id))
-                );
+        return pageRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("La página con el id: %d no existe", id)));
     }
 
     public Page createPage(Integer chapterId, Page page) {
         Chapter chapter = chapterService.getChapterById(chapterId);
         page.setChapter(chapter);
-        return pageRepository.save(page);
+        pageRepository.save(page);
+        return page;
     }
 
     public Page updatePage(Integer pageId, Page newPage) {
@@ -52,6 +51,10 @@ public class PageService {
         Page page = getPageById(id);
         pageRepository.delete(page);
         return page;
+    }
+
+    public void deletePageById(Integer pageId) {
+        pageRepository.deleteById(pageId);
     }
 
 }
