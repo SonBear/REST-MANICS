@@ -38,12 +38,8 @@ public class MangaRest {
     private final ChapterMapper chapterMapper;
 
     @Autowired
-    public MangaRest(MangaService mangaService,
-                     ChapterService chapterService,
-                     PageService pageService,
-                     StoryMapper storyMapper,
-                     PageMapper pageMapper,
-                     ChapterMapper chapterMapper) {
+    public MangaRest(MangaService mangaService, ChapterService chapterService, PageService pageService,
+            StoryMapper storyMapper, PageMapper pageMapper, ChapterMapper chapterMapper) {
 
         this.mangaService = mangaService;
         this.chapterService = chapterService;
@@ -75,16 +71,10 @@ public class MangaRest {
 
     @PutMapping("/{mangaId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Manga> updateManga(@PathVariable Integer mangaId,
-                                             @RequestBody @Valid StoryRequest request) {
+    public ResponseEntity<Manga> updateManga(@PathVariable Integer mangaId, @RequestBody @Valid StoryRequest request) {
 
-        return ResponseEntity.ok()
-                .body(
-                        mangaService.updateManga(
-                                mangaId,
-                                request.getCategoryId(),
-                                storyMapper.storyRequestToManga(request))
-                );
+        return ResponseEntity.ok().body(
+                mangaService.updateManga(mangaId, request.getCategoryId(), storyMapper.storyRequestToManga(request)));
     }
 
     @DeleteMapping("/{mangaId}")
@@ -99,23 +89,20 @@ public class MangaRest {
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}")
-    public ResponseEntity<Chapter> getChapter(@PathVariable Integer mangaId,
-                                              @PathVariable Integer chapterId) {
+    public ResponseEntity<Chapter> getChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
         return ResponseEntity.ok().body(chapterService.getChapter(mangaId, chapterId));
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}/paginas")
-    public ResponseEntity<List<Page>> getPages(@PathVariable Integer mangaId,
-                                               @PathVariable Integer chapterId) {
+    public ResponseEntity<List<Page>> getPages(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
         return ResponseEntity.ok().body(pageService.getPages(mangaId, chapterId));
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
-    public ResponseEntity<Page> getPage(@PathVariable Integer mangaId,
-                                        @PathVariable Integer chapterId,
-                                        @PathVariable Integer pageId) {
+    public ResponseEntity<Page> getPage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
+            @PathVariable Integer pageId) {
 
         return ResponseEntity.ok().body(pageService.getPage(mangaId, chapterId, pageId));
     }
@@ -123,85 +110,55 @@ public class MangaRest {
     @PostMapping("/{mangaId}/capitulos")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> createChapter(@PathVariable Integer mangaId,
-                                                 @RequestBody @Valid ChapterUpdateRequest request) throws URISyntaxException {
+            @RequestBody @Valid ChapterUpdateRequest request) throws URISyntaxException {
 
-        Chapter chapter = chapterService.createChapter(
-                mangaId,
-                chapterMapper.chapterUpdateRequestToChapter(request)
-        );
+        Chapter chapter = chapterService.createChapter(mangaId, chapterMapper.chapterUpdateRequestToChapter(request),
+                ChapterService.TYPE_MANGA);
 
-        return ResponseEntity
-                .created(
-                        new URI("/mangas/" + mangaId + "/capitulos/" + chapter.getChapterId())
-                ).body(chapter);
+        return ResponseEntity.created(new URI("/mangas/" + mangaId + "/capitulos/" + chapter.getChapterId()))
+                .body(chapter);
     }
 
     @PostMapping("/{mangaId}/capitulos/{chapterId}/paginas")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Page> createPage(@PathVariable Integer mangaId,
-                                           @PathVariable Integer chapterId,
-                                           @RequestBody @Valid PageUpdateRequest request) throws URISyntaxException {
+    public ResponseEntity<Page> createPage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
+            @RequestBody @Valid PageUpdateRequest request) throws URISyntaxException {
 
-        Page page = pageService.createPage(
-                mangaId,
-                chapterId,
-                pageMapper.pageUpdateRequestToPage(request)
-        );
+        Page page = pageService.createPage(mangaId, chapterId, pageMapper.pageUpdateRequestToPage(request));
 
         return ResponseEntity
-                .created(
-                        new URI("/mangas/" + mangaId + "/capitulos/" + chapterId + "/" + page.getPageId())
-                ).body(page);
+                .created(new URI("/mangas/" + mangaId + "/capitulos/" + chapterId + "/" + page.getPageId())).body(page);
     }
 
     @PutMapping("/{mangaId}/capitulos/{chapterId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Chapter> updateChapter(@PathVariable Integer mangaId,
-                                                 @PathVariable Integer chapterId,
-                                                 @RequestBody @Valid ChapterUpdateRequest request) {
+    public ResponseEntity<Chapter> updateChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
+            @RequestBody @Valid ChapterUpdateRequest request) {
 
-        return ResponseEntity.ok().body(chapterService.updateChapter(
-                mangaId,
-                chapterId,
-                chapterMapper.chapterUpdateRequestToChapter(request))
-        );
+        return ResponseEntity.ok().body(
+                chapterService.updateChapter(mangaId, chapterId, chapterMapper.chapterUpdateRequestToChapter(request)));
     }
 
     @PutMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Page> updatePage(@PathVariable Integer mangaId,
-                                           @PathVariable Integer chapterId,
-                                           @PathVariable Integer pageId,
-                                           @RequestBody PageUpdateRequest request) {
+    public ResponseEntity<Page> updatePage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
+            @PathVariable Integer pageId, @RequestBody PageUpdateRequest request) {
 
-        return ResponseEntity.ok().body(pageService.updatePage(
-                mangaId,
-                chapterId,
-                pageId,
-                pageMapper.pageUpdateRequestToPage(request))
-        );
+        return ResponseEntity.ok()
+                .body(pageService.updatePage(mangaId, chapterId, pageId, pageMapper.pageUpdateRequestToPage(request)));
     }
 
-    /**
-     * No andan funcionando los deletes---
-     *
-     * @param mangaId
-     * @param chapterId
-     * @return
-     */
     @DeleteMapping("/{mangaId}/capitulos/{chapterId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer mangaId,
-                                                 @PathVariable Integer chapterId) {
+    public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
         return ResponseEntity.ok().body(chapterService.deleteChapter(mangaId, chapterId));
     }
 
     @DeleteMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Page> deletePage(@PathVariable Integer mangaId,
-                                           @PathVariable Integer chapterId,
-                                           @PathVariable Integer pageId) {
+    public ResponseEntity<Page> deletePage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
+            @PathVariable Integer pageId) {
 
         return ResponseEntity.ok().body(pageService.deletePage(mangaId, chapterId, pageId));
     }

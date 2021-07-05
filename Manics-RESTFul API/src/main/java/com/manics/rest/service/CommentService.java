@@ -20,9 +20,7 @@ public class CommentService {
     private final StoryService storyService;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository,
-                          UserService userService,
-                          StoryService storyService) {
+    public CommentService(CommentRepository commentRepository, UserService userService, StoryService storyService) {
 
         this.commentRepository = commentRepository;
         this.userService = userService;
@@ -36,11 +34,8 @@ public class CommentService {
     }
 
     public Comment getCommentById(Integer commentId) {
-        return commentRepository
-                .findById(commentId)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("No encontramos el comentario con el id: %d", commentId))
-                );
+        return commentRepository.findById(commentId).orElseThrow(
+                () -> new NotFoundException(String.format("No encontramos el comentario con el id: %d", commentId)));
     }
 
     public List<Comment> getCommentsByStoryId(Integer storyId) {
