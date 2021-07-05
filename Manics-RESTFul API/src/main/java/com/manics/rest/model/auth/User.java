@@ -13,9 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username", "email"})
-})
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username", "email" }) })
 public class User {
 
     @Id
@@ -41,20 +39,14 @@ public class User {
     private List<Suggestion> suggestions;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "likes",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "story_id")}
-    )
+    @JoinTable(name = "likes", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "story_id") })
     @JsonIgnore
     private Set<Story> likes = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "read_later",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "story_id")}
-    )
+    @JoinTable(name = "read_later", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "story_id") })
     @JsonIgnore
     private Set<Story> readLater = new HashSet<>();
 
@@ -106,9 +98,7 @@ public class User {
     }
 
     public Set<SimpleGrantedAuthority> getRoles() {
-        return roles.stream()
-                .flatMap(role -> role.getGrantedAuthorities().stream())
-                .collect(Collectors.toSet());
+        return roles.stream().flatMap(role -> role.getGrantedAuthorities().stream()).collect(Collectors.toSet());
     }
 
     public void setRoles(Set<UserRole> roles) {
@@ -147,13 +137,14 @@ public class User {
         return readLater.stream().anyMatch(story -> story.getId().equals(storyId));
     }
 
+    @JsonIgnore
+    public Set<Story> getLikes() {
+        return likes;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "User{" + "userId=" + userId + ", username='" + username + '\'' + ", password='" + password + '\''
+                + ", email='" + email + '\'' + '}';
     }
 }
