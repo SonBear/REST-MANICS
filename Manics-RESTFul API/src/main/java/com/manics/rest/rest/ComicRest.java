@@ -125,7 +125,7 @@ public class ComicRest {
     @PutMapping("/{comicId}/capitulos/{chapterId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> updateChapter(@PathVariable(name = "comicId") Integer comicId,
-            @PathVariable(name = "chapterId") Integer chapterId, @Valid ChapterUpdateRequest request) {
+            @PathVariable(name = "chapterId") Integer chapterId, @RequestBody @Valid ChapterUpdateRequest request) {
         return ResponseEntity.ok().body(comicService.updateChapterOfComic(comicId, chapterId,
                 chapterMapper.chapterUpdateRequestToChapter(request)));
     }

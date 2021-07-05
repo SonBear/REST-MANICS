@@ -97,6 +97,9 @@ public class ComicService extends StoryService {
     }
 
     public Chapter createChapterOfComic(Integer comicId, Chapter chapter) {
+        if (!isComic(comicId)) {
+            throw new NotFoundException("El comic con el id:" + comicId + " no existe");
+        }
         return chapterService.createChapter(comicId, chapter);
     }
 
@@ -132,16 +135,14 @@ public class ComicService extends StoryService {
      */
     public Chapter deleteChapterOfComic(Integer comicId, Integer chapterId) {
         Chapter chapter = getChapterOfComic(comicId, chapterId);
-        chapterService.deleteChapterById(chapterId);
         searchService.deleteAllPagesOfChapter(chapter, comicId); // Esto si funciona
-        return chapter;
+        return chapterService.deleteChapter(chapterId);
     }
 
     public Page deletePageOfChapterComic(Integer comicId, Integer chapterId, Integer pageId) {
         Page page = getPageOfChapterComic(comicId, chapterId, pageId);
-        pageService.deletePageById(page.getPageId());
         searchService.deletePageOnStory(comicId, page); // Esto si funciona
-        return page;
+        return pageService.deletePage(pageId);
     }
     // ---------------------------------------
 
@@ -151,6 +152,10 @@ public class ComicService extends StoryService {
 
     private boolean checkChapterContainsPage(Chapter chapter, Page page) {
         return chapter.getPages().contains(page);
+    }
+
+    private boolean isComic(Integer storyId) {
+        return comicRepository.existsById(storyId);
     }
 
     private Chapter getChapterOfComic(Integer comicId, Integer chapterId) {

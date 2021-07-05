@@ -47,12 +47,8 @@ public class ChapterService {
 
     public Chapter deleteChapter(Integer chapterId) {
         Chapter chapter = getChapterById(chapterId);
-        chapterRepository.delete(chapter);
-        return chapter;
-    }
-
-    public void deleteChapterById(Integer chapterId) {
         chapterRepository.deleteById(chapterId);
+        return chapter;
     }
 
 }

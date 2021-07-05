@@ -1,10 +1,7 @@
 package com.manics.rest.rest.request.chapter;
 
-import com.manics.rest.rest.request.page.PageRequest;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class ChapterUpdateRequest {
 
@@ -20,8 +17,6 @@ public class ChapterUpdateRequest {
 
     @NotNull
     private Integer totalPages;
-
-    private List<PageRequest> pages;
 
     public Integer getChapterNumber() {
         return chapterNumber;
@@ -55,19 +50,9 @@ public class ChapterUpdateRequest {
         this.totalPages = totalPages;
     }
 
-    public List<PageRequest> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<PageRequest> pages) {
-        this.pages = pages;
-    }
-
     @Override
     public String toString() {
         return "ChapterUpdateRequest{" + "chapterNumber=" + chapterNumber + ", name='" + name + '\''
-                + ", publicationDate='" + publicationDate + '\'' + ", totalPages=" + totalPages + ", pages=" + pages
-                + '}';
+                + ", publicationDate='" + publicationDate + '\'' + ", totalPages=" + totalPages;
     }
-
 }

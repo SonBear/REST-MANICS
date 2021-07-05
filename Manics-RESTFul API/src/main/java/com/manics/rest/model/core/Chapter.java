@@ -1,6 +1,5 @@
 package com.manics.rest.model.core;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,7 +18,6 @@ public class Chapter {
 
     @ManyToOne
     @JoinColumn(name = "story_id")
-    @JsonBackReference
     private Story story;
 
     @Column
@@ -34,7 +32,7 @@ public class Chapter {
     @Column
     private Integer totalPages;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Page> pages;
 

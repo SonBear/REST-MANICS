@@ -53,8 +53,4 @@ public class PageService {
         return page;
     }
 
-    public void deletePageById(Integer pageId) {
-        pageRepository.deleteById(pageId);
-    }
-
 }
