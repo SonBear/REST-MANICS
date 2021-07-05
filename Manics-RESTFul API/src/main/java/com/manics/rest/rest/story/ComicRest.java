@@ -6,6 +6,7 @@ import com.manics.rest.mappers.StoryMapper;
 import com.manics.rest.model.Comic;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
+import com.manics.rest.model.core.Story;
 import com.manics.rest.rest.request.StoryRequest;
 import com.manics.rest.rest.request.chapter.ChapterUpdateRequest;
 import com.manics.rest.rest.request.page.PageUpdateRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -195,6 +197,11 @@ public class ComicRest {
                                            @PathVariable Integer pageId) {
 
         return ResponseEntity.ok().body(pageService.deletePage(comicId, chapterId, pageId));
+    }
+
+    @PostMapping("/{comicId}/toggle-like")
+    public ResponseEntity<Story> toggleLike(@PathVariable Integer comicId, Principal principal) {
+        return ResponseEntity.ok().body(comicService.toggleLike(comicId, principal.getName()));
     }
 
 }
