@@ -93,6 +93,9 @@ public class MangaService extends StoryService {
     }
 
     public Chapter createChapterOfManga(Integer mangaId, Chapter chapter) {
+        if (!isManga(mangaId)) {
+            throw new NotFoundException("El manga con el id:" + mangaId + " no existe");
+        }
         return chapterService.createChapter(mangaId, chapter);
     }
 
@@ -117,18 +120,17 @@ public class MangaService extends StoryService {
     /**
      * Delete no están funcionando.....
      */
+
     public Chapter deleteChapterOfManga(Integer mangaId, Integer chapterId) {
         Chapter chapter = getChapterOfManga(mangaId, chapterId);
-        chapterService.deleteChapterById(chapterId);
         searchService.deleteAllPagesOfChapter(chapter, mangaId); // Esto si funciona
-        return chapter;
+        return chapterService.deleteChapter(chapterId);
     }
 
     public Page deletePageOfChapterManga(Integer mangaId, Integer chapterId, Integer pageId) {
         Page page = getPageOfChapterManga(mangaId, chapterId, pageId);
-        pageService.deletePageById(page.getPageId());
         searchService.deletePageOnStory(mangaId, page); // Esto si funciona
-        return page;
+        return pageService.deletePage(pageId);
     }
     // ---------------------------------------
 
@@ -138,6 +140,10 @@ public class MangaService extends StoryService {
 
     private boolean checkChapterContainsPage(Chapter chapter, Page page) {
         return chapter.getPages().contains(page);
+    }
+
+    private boolean isManga(Integer storyId) {
+        return mangaRepository.existsById(storyId);
     }
 
     private Chapter getChapterOfManga(Integer mangaId, Integer chapterId) {
