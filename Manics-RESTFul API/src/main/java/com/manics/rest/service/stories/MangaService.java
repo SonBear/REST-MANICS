@@ -1,6 +1,5 @@
 package com.manics.rest.service.stories;
 
-import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.Manga;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.MangaRepository;
@@ -22,12 +21,8 @@ public class MangaService extends StoryService {
         return mangas;
     }
 
-    public Manga getMangaById(Integer id) {
-        return mangaRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException(String.format("No encontramos el manga con el id: %d", id))
-                );
+    public Manga getMangaById(Integer mangaId) {
+        return super.getStoryById(mangaId, Manga.class);
     }
 
     public Manga createManga(Integer categoryId, Manga manga) {

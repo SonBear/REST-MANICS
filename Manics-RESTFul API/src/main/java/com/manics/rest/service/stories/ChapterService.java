@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ChapterService {
+public class ChapterService<T extends Story> {
 
     public static int TYPE_MANGA = 1;
     public static int TYPE_COMIC = 0;
@@ -35,8 +35,9 @@ public class ChapterService {
         return chapters;
     }
 
-    public List<Chapter> getChaptersByStoryId(Integer storyId) {
-        return chapterRepository.getChaptersByStory_Id(storyId);
+    public List<Chapter> getChaptersByStoryId(Integer storyId, Class<T> clazz) {
+        Story story = storyService.getStoryById(storyId, clazz);
+        return chapterRepository.getChaptersByStory_Id(story.getId());
     }
 
     @Deprecated
@@ -45,8 +46,8 @@ public class ChapterService {
                 () -> new NotFoundException(String.format("El capítulo con el id: %d no existe", chapterId)));
     }
 
-    public Chapter getChapter(Integer storyId, Integer chapterId) {
-        List<Chapter> chapters = getChaptersByStoryId(storyId);
+    public Chapter getChapter(Integer storyId, Integer chapterId, Class<T> clazz) {
+        List<Chapter> chapters = getChaptersByStoryId(storyId, clazz);
 
         chapters.stream().filter(chapter -> chapter.getChapterId().equals(chapterId)).findAny()
                 .orElseThrow(() -> new BadRequestException(String
@@ -55,28 +56,14 @@ public class ChapterService {
         return getChapter(chapterId);
     }
 
-    public Chapter createChapter(Integer storyId, Chapter chapter, int storyType) {
-        Story story = storyService.getStoryById(storyId);
-        if (storyType == TYPE_MANGA) {
-            if (story instanceof Manga) {
-                chapter.setStory(story);
-                chapterRepository.save(chapter);
-                return chapter;
-            } else {
-                throw new NotFoundException("El manga con el id: " + storyId + " No existe");
-            }
-        } else {
-            if (story instanceof Comic) {
-                chapter.setStory(story);
-                chapterRepository.save(chapter);
-                return chapter;
-            }
-            throw new NotFoundException("El comic con el id: " + storyId + " No existe");
-        }
+    public Chapter createChapter(Integer storyId, Chapter chapter, Class<T> clazz) {
+        Story story = storyService.getStoryById(storyId, clazz);
+        chapter.setStory(story);
+        return chapterRepository.save(chapter);
     }
 
-    public Chapter updateChapter(Integer storyId, Integer chapterId, Chapter newChapter) {
-        checkIfChapterExists(storyId, chapterId);
+    public Chapter updateChapter(Integer storyId, Integer chapterId, Chapter newChapter, Class<T> clazz) {
+        checkIfChapterExists(storyId, chapterId, clazz);
 
         Chapter chapter = getChapter(chapterId);
         chapter.updateChapter(newChapter);
@@ -84,8 +71,8 @@ public class ChapterService {
         return chapterRepository.save(chapter);
     }
 
-    public Chapter deleteChapter(Integer storyId, Integer chapterId) {
-        Chapter chapter = getChapter(storyId, chapterId);
+    public Chapter deleteChapter(Integer storyId, Integer chapterId, Class<T> clazz) {
+        Chapter chapter = getChapter(storyId, chapterId, clazz);
 
         searchService.deleteIndexedChapter(storyId, chapter);
         chapterRepository.deleteById(chapter.getChapterId());
@@ -93,8 +80,8 @@ public class ChapterService {
         return chapter;
     }
 
-    public void checkIfChapterExists(Integer storyId, Integer chapterId) {
-        getChapter(storyId, chapterId);
+    public void checkIfChapterExists(Integer storyId, Integer chapterId, Class<T> clazz) {
+        getChapter(storyId, chapterId, clazz);
     }
 
 }

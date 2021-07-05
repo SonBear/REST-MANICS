@@ -1,6 +1,5 @@
 package com.manics.rest.service.stories;
 
-import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.Comic;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.ComicRepository;
@@ -22,9 +21,8 @@ public class ComicService extends StoryService {
         return comics;
     }
 
-    public Comic getComicById(Integer id) {
-        return comicRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("No se encontró el comic con el id: %d", id)));
+    public Comic getComicById(Integer comicId) {
+        return super.getStoryById(comicId, Comic.class);
     }
 
     public Comic createComic(Integer categoryId, Comic comic) {

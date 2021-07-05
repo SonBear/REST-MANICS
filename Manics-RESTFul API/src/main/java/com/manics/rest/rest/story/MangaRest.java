@@ -3,6 +3,7 @@ package com.manics.rest.rest.story;
 import com.manics.rest.mappers.ChapterMapper;
 import com.manics.rest.mappers.PageMapper;
 import com.manics.rest.mappers.StoryMapper;
+import com.manics.rest.model.Comic;
 import com.manics.rest.model.Manga;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
@@ -11,8 +12,8 @@ import com.manics.rest.rest.request.StoryRequest;
 import com.manics.rest.rest.request.chapter.ChapterUpdateRequest;
 import com.manics.rest.rest.request.page.PageUpdateRequest;
 import com.manics.rest.service.stories.ChapterService;
-import com.manics.rest.service.stories.PageService;
 import com.manics.rest.service.stories.MangaService;
+import com.manics.rest.service.stories.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,26 +86,26 @@ public class MangaRest {
 
     @GetMapping("/{mangaId}/capitulos")
     public ResponseEntity<List<Chapter>> getChapters(@PathVariable Integer mangaId) {
-        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(mangaId));
+        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(mangaId, Manga.class));
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}")
     public ResponseEntity<Chapter> getChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.getChapter(mangaId, chapterId));
+        return ResponseEntity.ok().body(chapterService.getChapter(mangaId, chapterId, Manga.class));
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}/paginas")
     public ResponseEntity<List<Page>> getPages(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(pageService.getPages(mangaId, chapterId));
+        return ResponseEntity.ok().body(pageService.getPages(mangaId, chapterId, Manga.class));
     }
 
     @GetMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
     public ResponseEntity<Page> getPage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.getPage(mangaId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.getPage(mangaId, chapterId, pageId, Manga.class));
     }
 
     @PostMapping("/{mangaId}/capitulos")
@@ -113,7 +114,7 @@ public class MangaRest {
             @RequestBody @Valid ChapterUpdateRequest request) throws URISyntaxException {
 
         Chapter chapter = chapterService.createChapter(mangaId, chapterMapper.chapterUpdateRequestToChapter(request),
-                ChapterService.TYPE_MANGA);
+                Manga.class);
 
         return ResponseEntity.created(new URI("/mangas/" + mangaId + "/capitulos/" + chapter.getChapterId()))
                 .body(chapter);
@@ -124,7 +125,8 @@ public class MangaRest {
     public ResponseEntity<Page> createPage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
             @RequestBody @Valid PageUpdateRequest request) throws URISyntaxException {
 
-        Page page = pageService.createPage(mangaId, chapterId, pageMapper.pageUpdateRequestToPage(request));
+        Page page = pageService.createPage(mangaId, chapterId, pageMapper.pageUpdateRequestToPage(request),
+                Comic.class);
 
         return ResponseEntity
                 .created(new URI("/mangas/" + mangaId + "/capitulos/" + chapterId + "/" + page.getPageId())).body(page);
@@ -135,8 +137,8 @@ public class MangaRest {
     public ResponseEntity<Chapter> updateChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
             @RequestBody @Valid ChapterUpdateRequest request) {
 
-        return ResponseEntity.ok().body(
-                chapterService.updateChapter(mangaId, chapterId, chapterMapper.chapterUpdateRequestToChapter(request)));
+        return ResponseEntity.ok().body(chapterService.updateChapter(mangaId, chapterId,
+                chapterMapper.chapterUpdateRequestToChapter(request), Manga.class));
     }
 
     @PutMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -144,15 +146,15 @@ public class MangaRest {
     public ResponseEntity<Page> updatePage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId, @RequestBody PageUpdateRequest request) {
 
-        return ResponseEntity.ok()
-                .body(pageService.updatePage(mangaId, chapterId, pageId, pageMapper.pageUpdateRequestToPage(request)));
+        return ResponseEntity.ok().body(pageService.updatePage(mangaId, chapterId, pageId,
+                pageMapper.pageUpdateRequestToPage(request), Manga.class));
     }
 
     @DeleteMapping("/{mangaId}/capitulos/{chapterId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer mangaId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.deleteChapter(mangaId, chapterId));
+        return ResponseEntity.ok().body(chapterService.deleteChapter(mangaId, chapterId, Manga.class));
     }
 
     @DeleteMapping("/{mangaId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -160,12 +162,17 @@ public class MangaRest {
     public ResponseEntity<Page> deletePage(@PathVariable Integer mangaId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.deletePage(mangaId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.deletePage(mangaId, chapterId, pageId, Manga.class));
     }
 
-    @PostMapping("/{mangaId}/toggle-like")
+    @PutMapping("/{mangaId}/toggle-like")
     public ResponseEntity<Story> toggleLike(@PathVariable Integer mangaId, Principal principal) {
         return ResponseEntity.ok().body(mangaService.toggleLike(mangaId, principal.getName()));
+    }
+
+    @PutMapping("/{mangaId}/toggle-read-later")
+    public ResponseEntity<Story> toggleReadLater(@PathVariable Integer mangaId, Principal principal) {
+        return ResponseEntity.ok().body(mangaService.toggleReadLater(mangaId, principal.getName()));
     }
 
 }

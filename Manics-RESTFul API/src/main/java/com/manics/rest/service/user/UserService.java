@@ -86,12 +86,12 @@ public class UserService {
 
     public User deleteUser(Integer userId) {
         User user = getUserById(userId);
+
+        user.setLikes(null);
+        user.setReadLater(null);
+
         userRepo.deleteById(userId);
         return user;
-    }
-
-    public boolean existsUser(String username) {
-        return !Objects.isNull(userRepo.findByUsername(username));
     }
 
     public void checkIfUserExist(Integer userId) {

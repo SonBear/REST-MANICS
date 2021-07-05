@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "usuarios", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username", "email"})
 })
 public class User {
@@ -37,11 +37,10 @@ public class User {
     private Set<UserRole> roles = Sets.newHashSet(UserRole.NORMAL);
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    @Column
     @JsonIgnore
     private List<Suggestion> suggestions;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "likes",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -49,6 +48,15 @@ public class User {
     )
     @JsonIgnore
     private Set<Story> likes = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "read_later",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "story_id")}
+    )
+    @JsonIgnore
+    private Set<Story> readLater = new HashSet<>();
 
     public User() {
 
@@ -107,8 +115,8 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Story> getLikes() {
-        return likes;
+    public void setLikes(Set<Story> likes) {
+        this.likes = likes;
     }
 
     public void addLike(Story story) {
@@ -117,6 +125,26 @@ public class User {
 
     public void removeLike(Integer storyId) {
         this.likes.removeIf(story -> story.getId().equals(storyId));
+    }
+
+    public Set<Story> getReadLater() {
+        return readLater;
+    }
+
+    public void setReadLater(Set<Story> readLater) {
+        this.readLater = readLater;
+    }
+
+    public void addToReadLater(Story story) {
+        readLater.add(story);
+    }
+
+    public void removeFromReadLater(Integer storyId) {
+        readLater.removeIf(story -> story.getId().equals(storyId));
+    }
+
+    public boolean isSavedInReadLater(Integer storyId) {
+        return readLater.stream().anyMatch(story -> story.getId().equals(storyId));
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.manics.rest.rest.user;
 
 import com.manics.rest.mappers.UserMapper;
 import com.manics.rest.model.auth.User;
+import com.manics.rest.model.core.Story;
 import com.manics.rest.rest.request.user.UserAuthorityRequest;
 import com.manics.rest.rest.request.user.UserRequest;
+import com.manics.rest.service.stories.StoryService;
 import com.manics.rest.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,18 +14,25 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("usuarios")
 public class UserRest {
 
     private final UserService userService;
+    private final StoryService storyService;
     private final UserMapper userMapper;
 
     @Autowired
-    public UserRest(UserService userService, UserMapper userMapper) {
+    public UserRest(UserService userService,
+                    StoryService storyService,
+                    UserMapper userMapper) {
+
         this.userService = userService;
+        this.storyService = storyService;
         this.userMapper = userMapper;
     }
 
@@ -36,6 +45,17 @@ public class UserRest {
     public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
         User user = userService.getUserById(userId);
         return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping("/{userId}/read-later")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Set<Story>> getReadLater(@PathVariable Integer userId) {
+        return ResponseEntity.ok().body(storyService.getReadLater(userId));
+    }
+
+    @GetMapping("/self/read-later")
+    public ResponseEntity<Set<Story>> getReadLater(Principal principal) {
+        return ResponseEntity.ok().body(storyService.getReadLater(principal.getName()));
     }
 
     @PutMapping("/{userId}")

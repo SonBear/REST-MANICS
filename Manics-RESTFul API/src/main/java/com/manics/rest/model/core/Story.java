@@ -47,6 +47,10 @@ public class Story {
     @JsonIgnore
     private Set<User> likedBy = new HashSet<>();
 
+    public Story() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -134,6 +138,10 @@ public class Story {
 
     public void removeLikedBy(Integer userId) {
         this.likedBy.removeIf(user -> user.getUserId().equals(userId));
+    }
+
+    public boolean isLikedBy(Integer userId) {
+        return getLikedBy().stream().anyMatch(user -> user.getUserId().equals(userId));
     }
 
     @Override

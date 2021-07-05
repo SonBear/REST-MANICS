@@ -87,26 +87,26 @@ public class ComicRest {
 
     @GetMapping("/{comicId}/capitulos")
     public ResponseEntity<List<Chapter>> getChapters(@PathVariable Integer comicId) {
-        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(comicId));
+        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(comicId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}")
     public ResponseEntity<Chapter> getChapter(@PathVariable Integer comicId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.getChapter(comicId, chapterId));
+        return ResponseEntity.ok().body(chapterService.getChapter(comicId, chapterId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}/paginas")
     public ResponseEntity<List<Page>> getPages(@PathVariable Integer comicId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(pageService.getPages(comicId, chapterId));
+        return ResponseEntity.ok().body(pageService.getPages(comicId, chapterId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}/paginas/{pageId}")
     public ResponseEntity<Page> getPage(@PathVariable Integer comicId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.getPage(comicId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.getPage(comicId, chapterId, pageId, Comic.class));
     }
 
     @PostMapping("/{comicId}/capitulos")
@@ -115,7 +115,7 @@ public class ComicRest {
             @RequestBody @Valid ChapterUpdateRequest request) throws URISyntaxException {
 
         Chapter chapter = chapterService.createChapter(comicId, chapterMapper.chapterUpdateRequestToChapter(request),
-                ChapterService.TYPE_COMIC);
+                Comic.class);
 
         return ResponseEntity.created(new URI("/comics/" + comicId + "/capitulos/" + chapter.getChapterId()))
                 .body(chapter);
@@ -126,7 +126,8 @@ public class ComicRest {
     public ResponseEntity<Page> createPage(@PathVariable Integer comicId, @PathVariable Integer chapterId,
             @RequestBody @Valid PageUpdateRequest request) throws URISyntaxException {
 
-        Page page = pageService.createPage(comicId, chapterId, pageMapper.pageUpdateRequestToPage(request));
+        Page page = pageService.createPage(comicId, chapterId, pageMapper.pageUpdateRequestToPage(request),
+                Comic.class);
 
         return ResponseEntity
                 .created(new URI("/comics/" + comicId + "/capitulos/" + chapterId + "/" + page.getPageId())).body(page);
@@ -137,8 +138,8 @@ public class ComicRest {
     public ResponseEntity<Chapter> updateChapter(@PathVariable Integer comicId, @PathVariable Integer chapterId,
             @RequestBody @Valid ChapterUpdateRequest request) {
 
-        return ResponseEntity.ok().body(
-                chapterService.updateChapter(comicId, chapterId, chapterMapper.chapterUpdateRequestToChapter(request)));
+        return ResponseEntity.ok().body(chapterService.updateChapter(comicId, chapterId,
+                chapterMapper.chapterUpdateRequestToChapter(request), Comic.class));
     }
 
     @PutMapping("/{comicId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -146,15 +147,15 @@ public class ComicRest {
     public ResponseEntity<Page> updatePage(@PathVariable Integer comicId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId, @RequestBody PageUpdateRequest request) {
 
-        return ResponseEntity.ok()
-                .body(pageService.updatePage(comicId, chapterId, pageId, pageMapper.pageUpdateRequestToPage(request)));
+        return ResponseEntity.ok().body(pageService.updatePage(comicId, chapterId, pageId,
+                pageMapper.pageUpdateRequestToPage(request), Comic.class));
     }
 
     @DeleteMapping("/{comicId}/capitulos/{chapterId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer comicId, @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.deleteChapter(comicId, chapterId));
+        return ResponseEntity.ok().body(chapterService.deleteChapter(comicId, chapterId, Comic.class));
     }
 
     @DeleteMapping("/{comicId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -162,12 +163,17 @@ public class ComicRest {
     public ResponseEntity<Page> deletePage(@PathVariable Integer comicId, @PathVariable Integer chapterId,
             @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.deletePage(comicId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.deletePage(comicId, chapterId, pageId, Comic.class));
     }
 
-    @PostMapping("/{comicId}/toggle-like")
+    @PutMapping("/{comicId}/toggle-like")
     public ResponseEntity<Story> toggleLike(@PathVariable Integer comicId, Principal principal) {
         return ResponseEntity.ok().body(comicService.toggleLike(comicId, principal.getName()));
+    }
+
+    @PutMapping("/{comicId}/toggle-read-later")
+    public ResponseEntity<Story> toggleReadLater(@PathVariable Integer comicId, Principal principal) {
+        return ResponseEntity.ok().body(comicService.toggleReadLater(comicId, principal.getName()));
     }
 
 }

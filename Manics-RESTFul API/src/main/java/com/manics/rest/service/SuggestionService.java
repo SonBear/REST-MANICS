@@ -1,26 +1,25 @@
 package com.manics.rest.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.manics.rest.exception.NotFoundException;
+import com.manics.rest.model.Suggestion;
+import com.manics.rest.model.auth.User;
 import com.manics.rest.repository.SuggestionRepository;
 import com.manics.rest.repository.UserRepository;
 import com.manics.rest.rest.request.user.SuggestionRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.manics.rest.model.Suggestion;
-import com.manics.rest.model.auth.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SuggestionService {
 
     @Autowired
-    SuggestionRepository suggestionRepository;
+    private SuggestionRepository suggestionRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public List<Suggestion> getSuggestion() {
         List<Suggestion> suggestions = new ArrayList<>();
@@ -32,9 +31,6 @@ public class SuggestionService {
         return suggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> new NotFoundException("No se encontro la sugerencia con Id " + suggestionId));
     }
-
-    // public List<Suggestion> getSuggestionsByUser(Integer userId){
-    // }
 
     public Suggestion createSuggestion(SuggestionRequest req, String username) {
         User user = userRepository.findByUsername(username);
