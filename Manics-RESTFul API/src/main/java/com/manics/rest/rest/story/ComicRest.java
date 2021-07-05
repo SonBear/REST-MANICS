@@ -95,21 +95,21 @@ public class ComicRest {
 
     @GetMapping("/{comicId}/capitulos")
     public ResponseEntity<List<Chapter>> getChapters(@PathVariable Integer comicId) {
-        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(comicId));
+        return ResponseEntity.ok().body(chapterService.getChaptersByStoryId(comicId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}")
     public ResponseEntity<Chapter> getChapter(@PathVariable Integer comicId,
                                               @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.getChapter(comicId, chapterId));
+        return ResponseEntity.ok().body(chapterService.getChapter(comicId, chapterId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}/paginas")
     public ResponseEntity<List<Page>> getPages(@PathVariable Integer comicId,
                                                @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(pageService.getPages(comicId, chapterId));
+        return ResponseEntity.ok().body(pageService.getPages(comicId, chapterId, Comic.class));
     }
 
     @GetMapping("/{comicId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -117,7 +117,7 @@ public class ComicRest {
                                         @PathVariable Integer chapterId,
                                         @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.getPage(comicId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.getPage(comicId, chapterId, pageId, Comic.class));
     }
 
     @PostMapping("/{comicId}/capitulos")
@@ -127,7 +127,8 @@ public class ComicRest {
 
         Chapter chapter = chapterService.createChapter(
                 comicId,
-                chapterMapper.chapterUpdateRequestToChapter(request)
+                chapterMapper.chapterUpdateRequestToChapter(request),
+                Comic.class
         );
 
         return ResponseEntity
@@ -145,7 +146,8 @@ public class ComicRest {
         Page page = pageService.createPage(
                 comicId,
                 chapterId,
-                pageMapper.pageUpdateRequestToPage(request)
+                pageMapper.pageUpdateRequestToPage(request),
+                Comic.class
         );
 
         return ResponseEntity
@@ -163,7 +165,8 @@ public class ComicRest {
         return ResponseEntity.ok().body(chapterService.updateChapter(
                 comicId,
                 chapterId,
-                chapterMapper.chapterUpdateRequestToChapter(request))
+                chapterMapper.chapterUpdateRequestToChapter(request),
+                Comic.class)
         );
     }
 
@@ -178,7 +181,8 @@ public class ComicRest {
                 comicId,
                 chapterId,
                 pageId,
-                pageMapper.pageUpdateRequestToPage(request))
+                pageMapper.pageUpdateRequestToPage(request),
+                Comic.class)
         );
     }
 
@@ -187,7 +191,7 @@ public class ComicRest {
     public ResponseEntity<Chapter> deleteChapter(@PathVariable Integer comicId,
                                                  @PathVariable Integer chapterId) {
 
-        return ResponseEntity.ok().body(chapterService.deleteChapter(comicId, chapterId));
+        return ResponseEntity.ok().body(chapterService.deleteChapter(comicId, chapterId, Comic.class));
     }
 
     @DeleteMapping("/{comicId}/capitulos/{chapterId}/paginas/{pageId}")
@@ -196,12 +200,17 @@ public class ComicRest {
                                            @PathVariable Integer chapterId,
                                            @PathVariable Integer pageId) {
 
-        return ResponseEntity.ok().body(pageService.deletePage(comicId, chapterId, pageId));
+        return ResponseEntity.ok().body(pageService.deletePage(comicId, chapterId, pageId, Comic.class));
     }
 
-    @PostMapping("/{comicId}/toggle-like")
+    @PutMapping("/{comicId}/toggle-like")
     public ResponseEntity<Story> toggleLike(@PathVariable Integer comicId, Principal principal) {
         return ResponseEntity.ok().body(comicService.toggleLike(comicId, principal.getName()));
+    }
+
+    @PutMapping("/{comicId}/toggle-read-later")
+    public ResponseEntity<Story> toggleReadLater(@PathVariable Integer comicId, Principal principal) {
+        return ResponseEntity.ok().body(comicService.toggleReadLater(comicId, principal.getName()));
     }
 
 }

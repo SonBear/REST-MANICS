@@ -1,12 +1,8 @@
 package com.manics.rest.service.stories;
 
-import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.Comic;
 import com.manics.rest.model.core.Category;
-import com.manics.rest.model.core.Chapter;
-import com.manics.rest.model.core.Page;
 import com.manics.rest.repository.ComicRepository;
-import com.manics.rest.rest.request.LikesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +21,8 @@ public class ComicService extends StoryService {
         return comics;
     }
 
-    public Comic getComicById(Integer id) {
-        return comicRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException(String.format("No se encontró el comic con el id: %d", id))
-                );
+    public Comic getComicById(Integer comicId) {
+        return super.getStoryById(comicId, Comic.class);
     }
 
     public Comic createComic(Integer categoryId, Comic comic) {

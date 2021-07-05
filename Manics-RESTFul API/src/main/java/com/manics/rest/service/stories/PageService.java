@@ -4,6 +4,7 @@ import com.manics.rest.exception.BadRequestException;
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
+import com.manics.rest.model.core.Story;
 import com.manics.rest.repository.PageRepository;
 import com.manics.rest.service.search.StorySearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PageService {
+public class PageService<T extends Story> {
 
     private final StorySearchService searchService;
-    private final ChapterService chapterService;
+    private final ChapterService<T> chapterService;
     private final PageRepository pageRepository;
 
     @Autowired
     private PageService(StorySearchService searchService,
-                        ChapterService chapterService,
+                        ChapterService<T> chapterService,
                         PageRepository pageRepository) {
 
         this.searchService = searchService;
@@ -28,8 +29,8 @@ public class PageService {
         this.pageRepository = pageRepository;
     }
 
-    public List<Page> getPages(Integer storyId, Integer chapterId) {
-        chapterService.checkIfChapterExists(storyId, chapterId);
+    public List<Page> getPages(Integer storyId, Integer chapterId, Class<T> clazz) {
+        chapterService.checkIfChapterExists(storyId, chapterId, clazz);
 
         return pageRepository.getPagesByChapter_ChapterId(chapterId);
     }
@@ -41,10 +42,8 @@ public class PageService {
                 );
     }
 
-    public Page getPage(Integer storyId, Integer chapterId, Integer pageId) {
-        chapterService.checkIfChapterExists(storyId, chapterId);
-
-        getPages(storyId, chapterId)
+    public Page getPage(Integer storyId, Integer chapterId, Integer pageId, Class<T> clazz) {
+        getPages(storyId, chapterId, clazz)
                 .stream()
                 .filter(page -> page.getPageId().equals(pageId))
                 .findAny()
@@ -56,10 +55,8 @@ public class PageService {
     }
 
 
-    public Page createPage(Integer storyId, Integer chapterId, Page page) {
-        chapterService.checkIfChapterExists(storyId, chapterId);
-
-        Chapter chapter = chapterService.getChapter(storyId, chapterId);
+    public Page createPage(Integer storyId, Integer chapterId, Page page, Class<T> clazz) {
+        Chapter chapter = chapterService.getChapter(storyId, chapterId, clazz);
         page.setChapter(chapter);
 
         Page newPage = pageRepository.save(page);
@@ -69,8 +66,8 @@ public class PageService {
         return newPage;
     }
 
-    public Page updatePage(Integer storyId, Integer chapterId, Integer pageId, Page newPage) {
-        Page page = getPage(storyId, chapterId, pageId);
+    public Page updatePage(Integer storyId, Integer chapterId, Integer pageId, Page newPage, Class<T> clazz) {
+        Page page = getPage(storyId, chapterId, pageId, clazz);
 
         searchService.updateIndexedPage(storyId, page);
         page.updatePage(newPage);
@@ -78,8 +75,8 @@ public class PageService {
         return pageRepository.save(page);
     }
 
-    public Page deletePage(Integer storyId, Integer chapterId, Integer pageId) {
-        Page page = getPage(storyId, chapterId, pageId);
+    public Page deletePage(Integer storyId, Integer chapterId, Integer pageId, Class<T> clazz) {
+        Page page = getPage(storyId, chapterId, pageId, clazz);
 
         searchService.deleteIndexedPage(storyId, page);
         pageRepository.deleteById(pageId);

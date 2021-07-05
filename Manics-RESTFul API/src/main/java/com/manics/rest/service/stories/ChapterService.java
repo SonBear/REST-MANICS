@@ -6,7 +6,6 @@ import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Story;
 import com.manics.rest.repository.ChapterRepository;
 import com.manics.rest.service.search.StorySearchService;
-import com.manics.rest.service.stories.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ChapterService {
+public class ChapterService<T extends Story> {
 
     @Autowired
     private StoryService storyService;
@@ -32,8 +31,9 @@ public class ChapterService {
         return chapters;
     }
 
-    public List<Chapter> getChaptersByStoryId(Integer storyId) {
-        return chapterRepository.getChaptersByStory_Id(storyId);
+    public List<Chapter> getChaptersByStoryId(Integer storyId, Class<T> clazz) {
+        Story story = storyService.getStoryById(storyId, clazz);
+        return chapterRepository.getChaptersByStory_Id(story.getId());
     }
 
     @Deprecated
@@ -45,8 +45,8 @@ public class ChapterService {
                 );
     }
 
-    public Chapter getChapter(Integer storyId, Integer chapterId) {
-        List<Chapter> chapters = getChaptersByStoryId(storyId);
+    public Chapter getChapter(Integer storyId, Integer chapterId, Class<T> clazz) {
+        List<Chapter> chapters = getChaptersByStoryId(storyId, clazz);
 
         chapters.stream()
                 .filter(chapter -> chapter.getChapterId().equals(chapterId))
@@ -58,14 +58,14 @@ public class ChapterService {
         return getChapter(chapterId);
     }
 
-    public Chapter createChapter(Integer storyId, Chapter chapter) {
-        Story story = storyService.getStoryById(storyId);
+    public Chapter createChapter(Integer storyId, Chapter chapter, Class<T> clazz) {
+        Story story = storyService.getStoryById(storyId, clazz);
         chapter.setStory(story);
         return chapterRepository.save(chapter);
     }
 
-    public Chapter updateChapter(Integer storyId, Integer chapterId, Chapter newChapter) {
-        checkIfChapterExists(storyId, chapterId);
+    public Chapter updateChapter(Integer storyId, Integer chapterId, Chapter newChapter, Class<T> clazz) {
+        checkIfChapterExists(storyId, chapterId, clazz);
 
         Chapter chapter = getChapter(chapterId);
         chapter.updateChapter(newChapter);
@@ -73,8 +73,8 @@ public class ChapterService {
         return chapterRepository.save(chapter);
     }
 
-    public Chapter deleteChapter(Integer storyId, Integer chapterId) {
-        Chapter chapter = getChapter(storyId, chapterId);
+    public Chapter deleteChapter(Integer storyId, Integer chapterId, Class<T> clazz) {
+        Chapter chapter = getChapter(storyId, chapterId, clazz);
 
         searchService.deleteIndexedChapter(storyId, chapter);
         chapterRepository.deleteById(chapter.getChapterId());
@@ -82,8 +82,8 @@ public class ChapterService {
         return chapter;
     }
 
-    public void checkIfChapterExists(Integer storyId, Integer chapterId) {
-        getChapter(storyId, chapterId);
+    public void checkIfChapterExists(Integer storyId, Integer chapterId, Class<T> clazz) {
+        getChapter(storyId, chapterId, clazz);
     }
 
 }
