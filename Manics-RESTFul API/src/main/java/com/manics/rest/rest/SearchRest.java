@@ -22,7 +22,7 @@ public class SearchRest {
         this.searchService = searchService;
     }
 
-    @GetMapping("/catalogo/byUrlImge")
+    @GetMapping("/catalogo/img")
     public ResponseEntity<List<Story>> searchStoriesByUrlImage(@RequestParam(name = "urlImage") String urlImage) {
         return ResponseEntity.ok().body(searchService.searchStoryByImage(urlImage));
     }

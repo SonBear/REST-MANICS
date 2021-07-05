@@ -20,7 +20,6 @@ import com.manics.rest.service.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.Comparators;
 
 @Service
 public class SearchService {
@@ -29,7 +28,6 @@ public class SearchService {
     private final StorySearchService storySearchService;
     private final StoryService storyService;
     private final UserService userService;
-    private final CategoryService categoryService;
 
     @Autowired
     public SearchService(AnalyzerImageService analyzerImageService, StorySearchService storySearchService,
@@ -38,7 +36,6 @@ public class SearchService {
         this.storySearchService = storySearchService;
         this.storyService = storyService;
         this.userService = userService;
-        this.categoryService = categoryService;
     }
 
     public List<Story> searchStoryByImage(String urlImage) {
