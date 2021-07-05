@@ -6,6 +6,7 @@ import com.manics.rest.mappers.StoryMapper;
 import com.manics.rest.model.Comic;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
+import com.manics.rest.rest.request.LikesRequest;
 import com.manics.rest.rest.request.StoryRequest;
 import com.manics.rest.rest.request.chapter.ChapterUpdateRequest;
 import com.manics.rest.rest.request.page.PageUpdateRequest;
@@ -136,6 +137,13 @@ public class ComicRest {
             @RequestBody PageUpdateRequest request) {
         return ResponseEntity.ok().body(comicService.updatePageOfChapterComic(comicId, chapterId, pageId,
                 pageMapper.pageUpdateRequestToPage(request)));
+    }
+
+    @PutMapping("/{comicId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Comic> addLikeToComicById(@PathVariable(name = "comicId") Integer comicId, 
+    @RequestBody LikesRequest request ){
+        return ResponseEntity.ok().body(comicService.updateLikesOfComic(comicId, request));
     }
 
     @DeleteMapping("/{comicId}/capitulos/{chapterId}")

@@ -28,6 +28,12 @@ public class Story {
     @Column
     private Integer availableChapters;
 
+    @Column 
+    private Integer likes;
+
+    @Column
+    private Integer dislikes;
+
     @OneToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -58,6 +64,22 @@ public class Story {
 
     public String getAuthor() {
         return author;
+    }
+
+    public Integer getLikes(){
+        return likes;
+    }
+
+    public void setLikes(Integer like){
+        this.likes = like;
+    }
+
+    public Integer getDislikes(){
+        return dislikes;
+    }
+
+    public void setDislikes(Integer dislikes){
+        this.dislikes = dislikes;
     }
 
     public void setAuthor(String author) {

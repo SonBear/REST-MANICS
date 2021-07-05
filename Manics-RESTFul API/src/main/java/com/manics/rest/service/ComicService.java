@@ -6,6 +6,7 @@ import com.manics.rest.model.core.Category;
 import com.manics.rest.model.core.Chapter;
 import com.manics.rest.model.core.Page;
 import com.manics.rest.repository.ComicRepository;
+import com.manics.rest.rest.request.LikesRequest;
 import com.manics.rest.service.search.StorySearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,15 @@ public class ComicService extends StoryService {
         Page page = getPageOfChapterComic(comicId, chapterId, pageId);
         searchService.updatePageOnStory(comicId, page);
         return pageService.updatePage(page.getPageId(), newPage);
+    }
+
+    public Comic updateLikesOfComic(Integer comidId, LikesRequest request){
+
+        Comic comic = getComicById(comidId);
+        comic.setLikes(request.getLikes());
+        comic.setDislikes(request.getDislikes());
+        return comic;
+
     }
 
     /**
