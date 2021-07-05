@@ -126,7 +126,7 @@ public class MangaRest {
             @RequestBody @Valid PageUpdateRequest request) throws URISyntaxException {
 
         Page page = pageService.createPage(mangaId, chapterId, pageMapper.pageUpdateRequestToPage(request),
-                Comic.class);
+                Manga.class);
 
         return ResponseEntity
                 .created(new URI("/mangas/" + mangaId + "/capitulos/" + chapterId + "/" + page.getPageId())).body(page);

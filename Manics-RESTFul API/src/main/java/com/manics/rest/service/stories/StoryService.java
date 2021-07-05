@@ -103,7 +103,7 @@ public class StoryService {
 
     public List<Story> getStoriesByCategory(Category category, int maxResults) {
         List<Story> stories = storyRepository.findAllByCategory(category);
-        int limit = maxResults < stories.size() ? maxResults : stories.size() - 1;
+        int limit = maxResults < stories.size() ? maxResults : stories.size();
         return stories.subList(0, limit);
     }
 
