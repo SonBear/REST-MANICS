@@ -1,5 +1,7 @@
 package com.manics.rest.service.stories;
 
+import java.util.List;
+
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.auth.User;
 import com.manics.rest.model.core.Category;
@@ -36,11 +38,8 @@ public class StoryService {
     }
 
     public Story getStoryById(Integer storyId) {
-        return storyRepository
-                .findById(storyId)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("No encontramos el relato con el id: %d", storyId))
-                );
+        return storyRepository.findById(storyId).orElseThrow(
+                () -> new NotFoundException(String.format("No encontramos el relato con el id: %d", storyId)));
     }
 
     public Story toggleLike(Integer storyId, String username) {
@@ -63,6 +62,12 @@ public class StoryService {
 
     public boolean isCategoryBeingUse(Category category) {
         return storyRepository.findAllByCategory(category).size() > 0;
+    }
+
+    public List<Story> getStoriesByCategory(Category category, int maxResults) {
+        List<Story> stories = storyRepository.findAllByCategory(category);
+        int limit = maxResults < stories.size() ? maxResults : stories.size() - 1;
+        return stories.subList(0, limit);
     }
 
 }
