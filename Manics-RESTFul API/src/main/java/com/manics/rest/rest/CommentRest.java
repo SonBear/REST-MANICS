@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@Deprecated
 @RequestMapping("comentarios")
 public class CommentRest {
 

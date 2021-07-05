@@ -1,6 +1,5 @@
 package com.manics.rest.model.core;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -15,9 +14,8 @@ public class Page {
     @Column
     private Integer pageId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "chapter_id")
-    @JsonBackReference
     private Chapter chapter;
 
     @Column

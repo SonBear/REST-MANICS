@@ -1,10 +1,13 @@
 package com.manics.rest.model.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.manics.rest.model.auth.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "stories")
@@ -36,9 +39,17 @@ public class Story {
     @JsonIgnore
     private List<Chapter> chapters;
 
-    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Comment> comments;
+
+    @ManyToMany(mappedBy = "likes")
+    @JsonIgnore
+    private Set<User> likedBy = new HashSet<>();
+
+    public Story() {
+
+    }
 
     public Integer getId() {
         return id;
@@ -100,23 +111,44 @@ public class Story {
         return comments;
     }
 
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public Integer getLikesCount() {
+        return likedBy.size();
+    }
+
     public void updateStory(Category category, Story story) {
         setCategory(category);
         setName(story.getName());
         setAuthor(story.getAuthor());
         setAvailableChapters(story.getAvailableChapters());
         setPublicationYear(story.getPublicationYear());
+
         if (!Objects.isNull(story.chapters)) {
             story.getChapters().forEach((chapter) -> chapter.setStory(this));
             setChapters(story.getChapters());
         }
     }
 
+    public void addLikedBy(User user) {
+        this.likedBy.add(user);
+    }
+
+    public void removeLikedBy(Integer userId) {
+        this.likedBy.removeIf(user -> user.getUserId().equals(userId));
+    }
+
+    public boolean isLikedBy(Integer userId) {
+        return getLikedBy().stream().anyMatch(user -> user.getUserId().equals(userId));
+    }
+
     @Override
     public String toString() {
         return "Story{" + "storyId=" + id + ", name='" + name + '\'' + ", author='" + author + '\''
                 + ", publicationYear=" + publicationYear + ", availableChapters=" + availableChapters + ", category="
-                + category + ", chapters=" + chapters + '}';
+                + category + '}';
     }
 
 }

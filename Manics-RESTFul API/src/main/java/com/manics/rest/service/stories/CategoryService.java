@@ -1,4 +1,4 @@
-package com.manics.rest.service;
+package com.manics.rest.service.stories;
 
 import com.manics.rest.exception.CategoryInUseException;
 import com.manics.rest.exception.NotFoundException;
@@ -30,11 +30,8 @@ public class CategoryService {
     }
 
     public Category getCategory(Integer categoryId) {
-        return categoryRepository
-                .findById(categoryId)
-                .orElseThrow(() ->
-                        new NotFoundException(String.format("No encontramos la categoria con el id: %d", categoryId))
-                );
+        return categoryRepository.findById(categoryId).orElseThrow(
+                () -> new NotFoundException(String.format("No encontramos la categoria con el id: %d", categoryId)));
     }
 
     public Category createCategory(Category category) {
@@ -60,6 +57,5 @@ public class CategoryService {
 
         return category;
     }
-
 
 }

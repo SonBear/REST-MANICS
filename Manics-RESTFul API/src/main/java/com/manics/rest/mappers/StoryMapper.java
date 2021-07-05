@@ -15,11 +15,14 @@ public abstract class StoryMapper {
 
     @AfterMapping
     protected void updateBidirectionalRelationships(@MappingTarget Story story) {
-        if (!Objects.isNull(story.getChapters()))
+        if (!Objects.isNull(story.getChapters())) {
             story.getChapters().forEach(chapter -> {
-                chapter.getPages().forEach(page -> page.setChapter(chapter));
-                chapter.setStory(story);
+                if (!Objects.isNull(chapter.getPages())) {
+                    chapter.getPages().forEach(page -> page.setChapter(chapter));
+                    chapter.setStory(story);
+                }
             });
+        }
     }
 
     public abstract Manga storyRequestToManga(StoryRequest storyRequest);

@@ -1,21 +1,13 @@
 package com.manics.rest.service.search;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Chapter;
+import com.manics.rest.model.core.elasticsearch.PageSearch;
+import com.manics.rest.model.core.elasticsearch.StorySearch;
 import com.manics.rest.model.core.Page;
 import com.manics.rest.model.core.Story;
-import com.manics.rest.model.core.ElasticSearch.PageSearch;
-import com.manics.rest.model.core.ElasticSearch.StorySearch;
 import com.manics.rest.repository.elasticsearch.StorySearchRepository;
-import com.manics.rest.service.AnalyzerImageService;
-
+import com.manics.rest.service.elasticsearch.AnalyzerImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -24,16 +16,27 @@ import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Service
 public class StorySearchService {
+
+    public static final String INDEX_PAGE_SEARCH = "stories";
+
     private final StorySearchRepository storySearchRepository;
     private final AnalyzerImageService imageService;
-    public static final String INDEX_PAGE_SEARCH = "stories";
     private final ElasticsearchOperations elasticsearchOperations;
 
     @Autowired
-    public StorySearchService(StorySearchRepository storySearchRepository, AnalyzerImageService imageService,
-            ElasticsearchOperations elasticsearchOperations) {
+    public StorySearchService(StorySearchRepository storySearchRepository,
+                              AnalyzerImageService imageService,
+                              ElasticsearchOperations elasticsearchOperations) {
+
         this.storySearchRepository = storySearchRepository;
         this.imageService = imageService;
         this.elasticsearchOperations = elasticsearchOperations;
@@ -72,7 +75,7 @@ public class StorySearchService {
     }
 
     @Async
-    public void savePageOnStory(Integer storyId, Page page) {
+    public void indexPage(Integer storyId, Page page) {
         StorySearch storySearch = getStorySearch(storyId);
         PageSearch pageSearch = new PageSearch();
         pageSearch.setPageId(page.getPageId());
@@ -90,7 +93,7 @@ public class StorySearchService {
     }
 
     @Async
-    public void updatePageOnStory(Integer storyId, Page page) {
+    public void updateIndexedPage(Integer storyId, Page page) {
         StorySearch storySearch = getStorySearch(storyId);
         List<PageSearch> pageSearchs = getPageSearchs(storySearch);
         pageSearchs.forEach((p) -> {
@@ -107,7 +110,7 @@ public class StorySearchService {
         storySearchRepository.save(storySearch);
     }
 
-    public void deleteAllPagesOfChapter(Chapter chapter, Integer storyId) {
+    public void deleteIndexedChapter(Integer storyId, Chapter chapter) {
         StorySearch storySearch = getStorySearch(storyId);
         List<PageSearch> pageSearchs = getPageSearchs(storySearch);
         List<Page> pages = chapter.getPages();
@@ -123,7 +126,7 @@ public class StorySearchService {
         storySearchRepository.save(storySearch);
     }
 
-    public void deletePageOnStory(Integer storyId, Page page) {
+    public void deleteIndexedPage(Integer storyId, Page page) {
         StorySearch storySearch = getStorySearch(storyId);
         List<PageSearch> pageSearchs = getPageSearchs(storySearch);
         pageSearchs.removeIf((pageSearch) -> pageSearch.getPageId().equals(page.getPageId()));

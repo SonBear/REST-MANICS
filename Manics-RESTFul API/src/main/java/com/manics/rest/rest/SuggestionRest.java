@@ -1,16 +1,17 @@
 package com.manics.rest.rest;
 
+import com.manics.rest.model.Suggestion;
+import com.manics.rest.rest.request.user.SuggestionRequest;
+import com.manics.rest.service.SuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
+
 import javax.validation.Valid;
-import com.manics.rest.service.SuggestionService;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import com.manics.rest.model.Suggestion;
-import com.manics.rest.rest.request.user.SuggestionRequest;
 
 @RestController
 public class SuggestionRest {
@@ -31,16 +32,22 @@ public class SuggestionRest {
 
     @PostMapping("/sugerencias/{username}")
     public ResponseEntity<Suggestion> createSuggestion(@RequestBody @Valid SuggestionRequest request,
-            @PathVariable(name = "username") String username) throws URISyntaxException {
+                                                       @PathVariable String username) throws URISyntaxException {
+
         Suggestion suggestion = suggestionService.createSuggestion(request, username);
         return ResponseEntity.created(new URI("/sugerencias/" + suggestion.getId())).body(suggestion);
     }
 
     @PutMapping("/sugerencias/{id}")
-    public ResponseEntity<Suggestion> updateSuggestion(@RequestBody @Valid SuggestionRequest request,
-            @PathVariable(name = "id") Integer id) throws URISyntaxException {
+    public ResponseEntity<Suggestion> updateSuggestion(@PathVariable Integer id,
+                                                       @RequestBody @Valid SuggestionRequest request) throws URISyntaxException {
+
         Suggestion suggestion = suggestionService.updateSuggestion(request, id);
-        return ResponseEntity.created(new URI("sugerencias/" + suggestion.getId())).body(suggestion);
+
+        return ResponseEntity
+                .created(
+                        new URI("sugerencias/" + suggestion.getId())
+                ).body(suggestion);
     }
 
     @DeleteMapping("/sugerencias/{id}")

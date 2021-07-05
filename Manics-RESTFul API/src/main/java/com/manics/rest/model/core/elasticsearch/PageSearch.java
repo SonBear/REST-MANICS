@@ -1,4 +1,4 @@
-package com.manics.rest.model.core.ElasticSearch;
+package com.manics.rest.model.core.elasticsearch;
 
 import java.util.Arrays;
 

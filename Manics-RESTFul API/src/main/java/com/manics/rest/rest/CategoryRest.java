@@ -3,7 +3,7 @@ package com.manics.rest.rest;
 import com.manics.rest.mappers.CategoryMapper;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.rest.request.CategoryRequest;
-import com.manics.rest.service.CategoryService;
+import com.manics.rest.service.stories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
