@@ -1,4 +1,4 @@
-package com.manics.rest.service;
+package com.manics.rest.service.elasticsearch;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,9 +1,10 @@
-package com.manics.rest.service;
+package com.manics.rest.service.stories;
 
 import com.manics.rest.exception.CategoryInUseException;
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Category;
 import com.manics.rest.repository.CategoryRepository;
+import com.manics.rest.service.stories.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

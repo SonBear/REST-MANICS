@@ -1,4 +1,4 @@
-package com.manics.rest.service;
+package com.manics.rest.service.user;
 
 import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.exception.UsuarioRegistradoException;
@@ -38,6 +38,15 @@ public class UserService {
                 );
     }
 
+    public User getUserByUsername(String username) {
+        User user = userRepo.findByUsername(username);
+
+        if (Objects.isNull(user))
+            throw new NotFoundException(String.format("No se encontró el usuario con el username: %s", username));
+
+        return user;
+    }
+
     public User createUser(User newUser) {
         User user = userRepo.findByUsername(newUser.getUsername());
 
@@ -46,6 +55,10 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         return userRepo.save(newUser);
+    }
+
+    public User saveUser(User user) {
+        return userRepo.save(user);
     }
 
     public User updateUser(Integer userId, User user) {

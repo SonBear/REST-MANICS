@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.manics.rest.model.core.Story;
-import com.manics.rest.model.core.ElasticSearch.StorySearch;
-import com.manics.rest.service.AnalyzerImageService;
-import com.manics.rest.service.StoryService;
+import com.manics.rest.model.core.elasticsearch.StorySearch;
+import com.manics.rest.service.elasticsearch.AnalyzerImageService;
+import com.manics.rest.service.stories.StoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

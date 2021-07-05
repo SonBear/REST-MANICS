@@ -4,6 +4,8 @@ import com.manics.rest.exception.NotFoundException;
 import com.manics.rest.model.core.Comment;
 import com.manics.rest.model.core.Story;
 import com.manics.rest.repository.CommentRepository;
+import com.manics.rest.service.stories.StoryService;
+import com.manics.rest.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

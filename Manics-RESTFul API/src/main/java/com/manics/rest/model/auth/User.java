@@ -2,13 +2,15 @@ package com.manics.rest.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
+import com.manics.rest.model.Suggestion;
+import com.manics.rest.model.core.Story;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.*;
-import com.manics.rest.model.Suggestion;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {
@@ -34,10 +36,19 @@ public class User {
     @JsonIgnore
     private Set<UserRole> roles = Sets.newHashSet(UserRole.NORMAL);
 
-    @OneToMany( mappedBy="user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     @Column
     @JsonIgnore
     private List<Suggestion> suggestions;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "likes",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "story_id")}
+    )
+    @JsonIgnore
+    private Set<Story> likes = new HashSet<>();
 
     public User() {
 
@@ -62,12 +73,12 @@ public class User {
         return username;
     }
 
-    public List<Suggestion> getSuggestions(){
-        return suggestions;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Suggestion> getSuggestions() {
+        return suggestions;
     }
 
     public String getPassword() {
@@ -94,6 +105,18 @@ public class User {
 
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
+    }
+
+    public Set<Story> getLikes() {
+        return likes;
+    }
+
+    public void addLike(Story story) {
+        this.likes.add(story);
+    }
+
+    public void removeLike(Integer storyId) {
+        this.likes.removeIf(story -> story.getId().equals(storyId));
     }
 
     @Override

@@ -94,6 +94,7 @@ public class Chapter {
         setName(chapter.getName());
         setPublicationDate(chapter.getPublicationDate());
         setTotalPages(chapter.getTotalPages());
+
         if (!Objects.isNull(chapter.getPages())) {
             chapter.getPages().forEach((page) -> page.setChapter(this));
             setPages(chapter.getPages());
